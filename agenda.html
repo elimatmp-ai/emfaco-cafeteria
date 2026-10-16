@@ -497,7 +497,8 @@ form.addEventListener("submit",async e=>{
   playBtn.textContent=playing?"❚❚":"▶";
   let st;track.addEventListener("scroll",()=>{clearTimeout(st);st=setTimeout(()=>{const i=Math.round(track.scrollLeft/track.clientWidth);if(i!==cur){cur=i;mark();arm()}},120)});
   ["touchstart","pointerdown","keydown"].forEach(e=>track.addEventListener(e,user,{passive:true}));
-  new IntersectionObserver(es=>{visible=es[0].isIntersecting&&es[0].intersectionRatio>.4;visible?arm():stopAll()},{threshold:[0,.4,.7]}).observe(track);
+  function chk(){const r=track.getBoundingClientRect(),h=innerHeight||document.documentElement.clientHeight;const vis=Math.min(r.bottom,h)-Math.max(r.top,0);const v=!document.hidden&&r.height>0&&vis>r.height*.3;if(v!==visible){visible=v;visible?arm():stopAll()}}
+  window.addEventListener("scroll",chk,{passive:true});window.addEventListener("resize",chk);document.addEventListener("visibilitychange",chk);setInterval(chk,700);chk();
   window.addEventListener("resize",()=>track.scrollTo({left:cur*track.clientWidth,behavior:"auto"}));
   mark();
 })();
@@ -505,4 +506,4 @@ form.addEventListener("submit",async e=>{
 </body>
 </html>
 
-<!-- v2 -->
+<!-- v3 -->
