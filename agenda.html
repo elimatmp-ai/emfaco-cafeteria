@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Agendá tu capacitación · EMFACO Cafetería</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0D0C; --card:#1A1714; --card2:#221E19; --ink:#F2EBDD; --muted:#A59C8C; --gold:#D4A64A; --gold-d:#8A6A26;
+  --line:#302B24; --good:#46B37A; --alert:#E5604F;
+  --display:"Bricolage Grotesque","Arial Black",system-ui,sans-serif; --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+header.hero{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(120% 140% at 85% 40%,#1B1713 0%,#0E0D0C 62%);padding:64px 0 56px}
+header.hero .hero-art{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.45) 40%,#000 75%);mask-image:linear-gradient(90deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.45) 40%,#000 75%)}
+header.hero .hero-art svg{width:100%;height:100%;display:block}
+header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(14,13,12,0),#0E0D0C)}
+header.hero .wrap{position:relative;z-index:3}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.04;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,6.4vw,68px);margin:12px 0 16px;max-width:14ch}
+h1 em,h2 em{font-style:normal;color:var(--gold)}
+h2{font-size:clamp(28px,4vw,40px)}
+.lead{color:var(--muted);max-width:54ch;font-size:17px;margin:0 0 26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#17120A;font-weight:700;border:0;border-radius:999px;padding:14px 26px;font-size:16px;cursor:pointer;text-decoration:none;font-family:var(--body)}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.slot:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+section{padding:54px 0}
+.sub{color:var(--muted);max-width:60ch;margin:10px 0 28px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px}
+.stat b{display:block;font-family:var(--display);font-size:42px;line-height:1;color:var(--gold);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px}
+.chart h3{margin:0 0 4px;font-size:15px;font-weight:600}
+.chart p{margin:0 0 14px;color:var(--muted);font-size:13px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px}
+.bar{justify-content:flex-end}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%;min-width:0}
+.bar i{display:block;width:100%;background:var(--gold-d);border-radius:8px 8px 3px 3px}
+.bar.last i{background:var(--gold)}
+.bar em{font-style:normal;font-size:12px;color:var(--ink);font-variant-numeric:tabular-nums}
+.bar small{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px}
+label,.lbl{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+.field{margin-bottom:18px}
+select,input[type=text],input[type=tel],input[type=number],textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:13px 14px;font:inherit;font-size:16px}
+textarea{min-height:84px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+.days{display:flex;flex-direction:column;gap:12px}
+.day{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--bg)}
+.day h4{margin:0 0 8px;font-size:14px;font-weight:600}
+.day h4 small{color:var(--muted);font-weight:400}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;cursor:pointer;font-variant-numeric:tabular-nums}
+.slot:hover{border-color:var(--gold)}
+.slot[aria-pressed=true]{background:var(--gold);color:#17120A;border-color:var(--gold);font-weight:700}
+.picked{margin-top:10px;font-size:14px;color:var(--gold);min-height:20px}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.msg{margin-top:14px;padding:14px 16px;border-radius:14px;font-size:15px;display:none}
+.msg.ok{display:block;background:rgba(70,179,122,.14);border:1px solid rgba(70,179,122,.4)}
+.msg.err{display:block;background:rgba(229,96,79,.14);border:1px solid rgba(229,96,79,.4)}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.mine{position:sticky;top:18px}
+@media(max-width:860px){.mine{position:static}}
+.mine h3{font-family:var(--display);font-size:26px;margin:0 0 4px}
+.mine .empty{color:var(--muted)}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.kv div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kv b{display:block;font-family:var(--display);font-size:26px;color:var(--gold);font-variant-numeric:tabular-nums}
+.kv span{font-size:12px;color:var(--muted)}
+.trend{font-size:15px;margin:6px 0 12px}
+.trend.up{color:var(--good)} .trend.down{color:var(--gold)}
+svg.spark{width:100%;height:84px;display:block}
+.foot{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="hero-art" aria-hidden="true">
+<svg viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#D4A64A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+  <defs>
+    <radialGradient id="ha-glow" cx="78%" cy="45%" r="55%"><stop offset="0" stop-color="#D4A64A" stop-opacity=".16"/><stop offset="1" stop-color="#D4A64A" stop-opacity="0"/></radialGradient>
+    <pattern id="ha-dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="1" fill="#D4A64A" stroke="none" opacity=".35"/></pattern>
+    <g id="ha-bean"><ellipse rx="15" ry="10"/><path d="M-13,-1 C-5,-7 5,5 13,-1" /></g>
+  </defs>
+  <rect width="1400" height="600" fill="url(#ha-glow)" stroke="none"/>
+
+  <!-- anillos de medición / canasto visto desde arriba, detrás del video -->
+  <g transform="translate(1130 300)" opacity=".55">
+    <circle r="250" stroke-dasharray="2 7"/>
+    <circle r="205"/>
+    <circle r="160" stroke-dasharray="14 6"/>
+    <circle r="118" fill="url(#ha-dots)" stroke="none"/>
+    <circle r="118"/>
+    <g opacity=".7"><path d="M0,-262 V-246 M0,262 V246 M-262,0 H-246 M262,0 H246 M185,-185 l-11,11 M-185,185 l11,-11 M185,185 l-11,-11 M-185,-185 l11,11"/></g>
+  </g>
+
+  <!-- máquina de espresso -->
+  <g transform="translate(610 330)" opacity=".9">
+    <rect x="-130" y="-92" width="260" height="120" rx="14"/>
+    <path d="M-130,-60 H130"/>
+    <rect x="-112" y="-86" width="224" height="20" rx="6" opacity=".6"/>
+    <circle cx="-86" cy="-30" r="17"/><path d="M-86,-30 L-79,-40"/><circle cx="-86" cy="-30" r="22" stroke-dasharray="1 4"/>
+    <circle cx="86" cy="-30" r="12"/><circle cx="86" cy="-30" r="4"/>
+    <rect x="-34" y="-18" width="68" height="22" rx="5"/>
+    <path d="M-22,4 V16 M22,4 V16"/>
+    <path d="M-18,16 H18 L12,26 H-12 Z"/>
+    <path d="M18,22 L98,34" stroke-width="3.2"/>
+    <path d="M-140,28 H140 V46 H-140 Z"/>
+    <path d="M-150,46 H150"/>
+    <path d="M118,-60 V-8 C118,8 140,8 140,-8 V-4"/>
+    <rect x="-24" y="50" width="48" height="30" rx="6"/><path d="M24,58 C40,58 40,74 24,74"/>
+    <path d="M-10,38 C-14,32 -6,28 -10,20 M2,38 C-2,32 6,28 2,20 M14,38 C10,32 18,28 14,20" opacity=".6" transform="translate(0 28)"/>
+  </g>
+
+  <!-- V60 + jarra -->
+  <g transform="translate(905 120)">
+    <path d="M-62,-62 H62 L16,12 H-16 Z"/>
+    <ellipse cx="0" cy="-62" rx="62" ry="9"/>
+    <path d="M-40,-60 L-9,10 M-14,-58 L-3,11 M14,-58 L3,11 M40,-60 L9,10" opacity=".55"/>
+    <path d="M-20,12 H20 V20 H-20 Z"/>
+    <path d="M-44,24 C-58,52 -64,96 -44,132 H44 C64,96 58,52 44,24 Z" />
+    <path d="M-52,70 H52" stroke-dasharray="3 4" opacity=".7"/>
+    <path d="M44,40 C72,40 72,92 46,96"/>
+    <path d="M-30,132 H30" opacity=".6"/>
+    <path d="M-4,22 V36 M4,22 V30" opacity=".7"/>
+  </g>
+
+  <!-- moka -->
+  <g transform="translate(1280 150) scale(.95)">
+    <path d="M-30,-96 H30 L42,-14 H-42 Z"/>
+    <path d="M-34,-96 C-34,-112 34,-112 34,-96"/>
+    <circle cx="0" cy="-116" r="6"/>
+    <path d="M-30,-96 L-44,-104"/>
+    <path d="M-26,-14 H26 V-2 H-26 Z"/>
+    <path d="M-26,-2 H26 L46,86 H-46 Z"/>
+    <path d="M-34,26 H34" opacity=".5"/>
+    <path d="M40,-84 C82,-84 86,-26 46,-26" stroke-width="2"/>
+    <path d="M-6,-70 V-30 M6,-70 V-30" opacity=".45"/>
+  </g>
+
+  <!-- molino -->
+  <g transform="translate(120 140) rotate(-6)">
+    <path d="M-34,-92 H34 L22,-30 H-22 Z"/>
+    <ellipse cx="0" cy="-92" rx="34" ry="6"/>
+    <rect x="-40" y="-30" width="80" height="22" rx="4"/>
+    <rect x="-44" y="-8" width="88" height="86" rx="8"/>
+    <rect x="-28" y="14" width="56" height="36" rx="4" opacity=".7"/>
+    <path d="M-20,32 H20 M0,22 V42" opacity=".6"/>
+    <path d="M40,-19 H78 M78,-19 V-44 M72,-44 H88"/>
+    <path d="M-44,78 H44 V92 H-44 Z"/>
+  </g>
+
+  <!-- balanza -->
+  <g transform="translate(360 470)">
+    <rect x="-70" y="-24" width="140" height="48" rx="12"/>
+    <rect x="-46" y="-12" width="92" height="22" rx="4" opacity=".7"/>
+    <text x="0" y="5" font-family="Instrument Sans, monospace" font-size="15" letter-spacing="2" fill="#D4A64A" stroke="none" text-anchor="middle" opacity=".9">18.0 g</text>
+    <path d="M-60,24 V32 M60,24 V32"/>
+  </g>
+
+  <!-- tamper -->
+  <g transform="translate(70 440) rotate(14)">
+    <path d="M-20,-72 C-26,-84 26,-84 20,-72 C14,-60 -14,-60 -20,-72 Z"/>
+    <path d="M-6,-62 V-12 M6,-62 V-12"/>
+    <rect x="-30" y="-12" width="60" height="16" rx="3"/>
+    <path d="M-28,4 H28 V12 H-28 Z" opacity=".7"/>
+  </g>
+
+  <!-- jarra de leche + termómetro -->
+  <g transform="translate(830 480)">
+    <path d="M-42,-56 H42 L34,34 C34,42 26,46 18,46 H-18 C-26,46 -34,42 -34,34 Z"/>
+    <path d="M-42,-56 L-56,-64"/>
+    <path d="M42,-40 C76,-40 76,6 38,8"/>
+    <path d="M-34,-24 H34" stroke-dasharray="3 4" opacity=".6"/>
+    <g transform="translate(-6 -88) rotate(8)"><path d="M0,-6 V70"/><circle cx="0" cy="-6" r="9"/><path d="M0,-6 L5,-10"/></g>
+  </g>
+
+  <!-- pava cuello de cisne -->
+  <g transform="translate(1000 480)">
+    <path d="M-40,-30 C-40,-48 40,-48 40,-30 L48,32 C48,46 -48,46 -48,32 Z"/>
+    <path d="M-30,-40 C-30,-52 30,-52 30,-40"/>
+    <path d="M-46,18 C-84,0 -96,-52 -118,-84 L-108,-88"/>
+    <path d="M40,-30 C74,-30 78,10 44,14"/>
+    <circle cx="0" cy="-54" r="5"/>
+  </g>
+
+  <!-- taza y plato -->
+  <g transform="translate(1240 470)">
+    <path d="M-48,-30 H48 C48,0 30,26 0,26 C-30,26 -48,0 -48,-30 Z"/>
+    <ellipse cx="0" cy="-30" rx="48" ry="8"/>
+    <path d="M48,-20 C76,-20 76,6 44,6"/>
+    <ellipse cx="0" cy="30" rx="72" ry="10"/>
+    <path d="M-12,-52 C-20,-64 -4,-70 -12,-84 M6,-52 C-2,-64 14,-70 6,-84 M24,-52 C16,-64 32,-70 24,-84" opacity=".6"/>
+  </g>
+
+  <!-- granos -->
+  <g opacity=".8">
+    <use href="#ha-bean" transform="translate(240 300) rotate(-25)"/>
+    <use href="#ha-bean" transform="translate(300 360) rotate(30)"/>
+    <use href="#ha-bean" transform="translate(470 120) rotate(15)"/>
+    <use href="#ha-bean" transform="translate(520 520) rotate(-40)"/>
+    <use href="#ha-bean" transform="translate(760 60) rotate(40)"/>
+    <use href="#ha-bean" transform="translate(1360 330) rotate(-10)"/>
+    <use href="#ha-bean" transform="translate(1330 560) rotate(35)"/>
+    <use href="#ha-bean" transform="translate(690 570) rotate(-15)"/>
+    <use href="#ha-bean" transform="translate(40 300) rotate(50)"/>
+  </g>
+
+  <!-- anotaciones técnicas -->
+  <g font-family="Instrument Sans, monospace" font-size="11" letter-spacing="2.2" fill="#D4A64A" stroke="none" opacity=".85">
+    <text x="662" y="226">18 G · DOSIS</text>
+    <text x="1040" y="62">93 °C</text>
+    <text x="1180" y="560">25–30 S</text>
+    <text x="380" y="540">1 : 2 · RATIO</text>
+    <text x="860" y="560">65 °C · LECHE</text>
+    <text x="150" y="40">MOLIENDA · EXTRACCIÓN · TEXTURA</text>
+  </g>
+  <g stroke-width="1" opacity=".55">
+    <path d="M656 222 L626 258"/><path d="M1036 58 L1000 90"/><path d="M1176 556 L1210 520"/><path d="M376 536 L370 498"/>
+  </g>
+</svg>
+</div>
+
+  <div class="wrap">
+    <div class="eyebrow">Capacitación · Grupo EMFACO · Sector cafetería</div>
+    <h1>Agendá tu <em>capacitación</em>.</h1>
+    <p class="lead">Mirá cómo viene la red, elegí el día y el horario que mejor te quede y pedí tu turno. Después te confirmo por WhatsApp.</p>
+    <a class="btn" href="#agenda">Elegir fecha y horario</a>
+  </div>
+</header>
+
+<main>
+<section id="avances"><div class="wrap">
+  <div class="eyebrow">Avances</div>
+  <h2>Así viene <em>la red</em></h2>
+  <p class="sub">El desperdicio de café baja cuando capacitamos y hacemos seguimiento. Estos son los números de septiembre.</p>
+  <div class="stats">
+    <div class="stat"><b id="s-ratio">–</b><span>de desperdicio por bolsa en la red, comparado con febrero</span></div>
+    <div class="stat"><b>19</b><span>estaciones auditadas en septiembre</span></div>
+    <div class="stat"><b>7</b><span>capacitaciones y 7 repasos con referente en septiembre</span></div>
+    <div class="stat"><b>86,6%</b><span>promedio de las auditorías de septiembre</span></div>
+  </div>
+  <div class="chart">
+    <h3>Desperdicio por bolsa, promedio de la red</h3>
+    <p>Cuanto más bajo, mejor. Febrero a septiembre.</p>
+    <div class="bars" id="bars" role="img" aria-label="Desperdicio por bolsa por mes"></div>
+  </div>
+</div></section>
+
+<section id="agenda" style="padding-top:20px"><div class="wrap">
+  <div class="eyebrow">Agenda</div>
+  <h2>Pedí tu <em>turno</em></h2>
+  <p class="sub">Elegí tu estación para ver cómo viene, y marcá el día y horario que te convenga. Los horarios son a confirmar según la demanda de cada sucursal.</p>
+  <div class="grid">
+    <form class="panel" name="agenda" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" id="form" novalidate>
+      <input type="hidden" name="form-name" value="agenda">
+      <p class="hp"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="field"><label for="estacion">Estación</label>
+        <select id="estacion" name="estacion" required><option value="">Elegí tu estación</option></select></div>
+      <div class="row2">
+        <div class="field"><label for="nombre">Tu nombre</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
+        <div class="field"><label for="tel">WhatsApp</label><input type="tel" id="tel" name="whatsapp" inputmode="tel" autocomplete="tel" required></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="tema">Tema</label>
+          <select id="tema" name="tema" required>
+            <option value="">Elegí un tema</option>
+            <option>Espresso: dosis, tiempo y rendimiento</option>
+            <option>Leche: temperatura y textura</option>
+            <option>Latte art</option>
+            <option>Control de desperdicio y descarte</option>
+            <option>Registro de vale y faltantes</option>
+            <option>Repaso general del estándar</option>
+          </select></div>
+        <div class="field"><label for="personas">Personas a capacitar</label><input type="number" id="personas" name="personas" min="1" max="20" value="1" inputmode="numeric"></div>
+      </div>
+      <div class="field"><span class="lbl">Día y horario</span>
+        <div class="days" id="days"></div>
+        <input type="hidden" name="turno" id="turno" value="">
+        <div class="picked" id="picked" aria-live="polite"></div></div>
+      <div class="field"><label for="comentario">Comentario (opcional)</label><textarea id="comentario" name="comentario" placeholder="Algo que quieras reforzar o un horario alternativo"></textarea></div>
+      <button class="btn" type="submit" id="send">Pedir turno</button>
+      <div class="msg" id="msg" role="status"></div>
+      <p class="note">Tu pedido llega directo a Elías. Se confirma por WhatsApp antes de la fecha.</p>
+    </form>
+
+    <aside class="panel mine" id="mine" aria-live="polite">
+      <div class="eyebrow">Tu estación</div>
+      <p class="empty" id="mine-empty">Elegí tu estación y mirá cómo viene mes a mes.</p>
+      <div id="mine-body" hidden></div>
+    </aside>
+  </div>
+</div></section>
+</main>
+<div class="foot"><div class="wrap">EMFACO S.A. · Capacitación sector cafetería · Elías Jiménez</div></div>
+
+<script>
+const D={"meses":["Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"],"net":[3.583,1.947,2.569,1.962,1.891,1.926,1.491,1.868],"st":[{"n":"Barcala","r":[0.26,0.556,1.279,0.412,0.491,0.0,0.0,0.46],"a":null,"c":null},{"n":"Beschetd","r":[4.529,2.404,4.167,3.609,1.824,0.806,0.902,0.345],"a":null,"c":null},{"n":"Boulevard","r":[0.789,2.759,0.222,0.522,0.0,0.826,0.543,0.48],"a":["21/07",97],"c":null},{"n":"Camaño","r":[2.158,0.0,3.791,3.027,1.186,2.268,2.194,2.953],"a":["09/09",92],"c":null},{"n":"Catamarca","r":[2.533,2.312,1.529,1.789,4.368,4.545,3.077,3.5],"a":["16/09",85],"c":"17/09"},{"n":"Constitucion","r":[1.939,2.031,1.098,1.909,1.794,1.714,1.023,1.179],"a":["17/09",83],"c":"19/09"},{"n":"Gaucho","r":[2.214,1.318,1.143,4.444,2.048,3.421,2.321,2.6],"a":["18/09",91],"c":null},{"n":"Gbell","r":[11.909,6.625,8.214,2.647,2.25,3.706,2.632,2.105],"a":null,"c":null},{"n":"Gnecco 1","r":[3.286,1.186,1.171,1.75,0.912,0.778,0.462,0.353],"a":["23/09",65],"c":null},{"n":"Gnecco 2","r":[1.667,0.592,0.731,0.355,1.156,0.5,0.935,0.655],"a":["23/09",83],"c":null},{"n":"Gorritti","r":[1.619,0.627,0.667,0.591,null,0.061,0.5,0.409],"a":["07/07",92],"c":null},{"n":"Guemes","r":[1.913,6.074,2.077,0.0,1.419,0.607,2.067,0.783],"a":null,"c":null},{"n":"Hudson","r":[3.722,2.803,3.396,2.132,6.386,6.093,2.116,1.25],"a":["12/09",71],"c":null},{"n":"Jara","r":[2.308,1.0,0.75,2.583,4.308,2.286,5.8,0.0],"a":["16/09",92],"c":"18/09"},{"n":"Jauregui","r":[1.0,2.02,4.423,1.509,1.079,2.111,1.411,2.143],"a":null,"c":"07/09"},{"n":"Leloir","r":[1.386,3.392,2.358,0.0,1.101,1.694,0.857,0.614],"a":["06/07",81],"c":null},{"n":"Libertador","r":[0.857,0.212,0.188,0.489,0.474,0.897,0.375,0.562],"a":["08/09",93],"c":null},{"n":"Lujanera","r":[3.118,1.353,2.053,0.0,3.0,2.111,0.0,0.706],"a":null,"c":null},{"n":"Luro","r":[32.75,1.4,10.4,4.25,3.4,6.6,4.3,11.0],"a":["18/09",88],"c":"18/09"},{"n":"Moreno","r":[0.667,0.645,2.4,0.0,0.042,0.478,0.853,0.356],"a":["08/09",93],"c":null},{"n":"Peralta","r":[2.0,2.394,0.0,3.429,4.385,4.227,1.188,4.824],"a":null,"c":"17/09"},{"n":"Pilar del Este","r":[null,null,null,7.045,1.298,1.579,0.629,1.2],"a":["11/09",92],"c":"28/08"},{"n":"Puertos","r":[6.571,2.919,6.171,6.794,3.583,3.158,1.585,3.028],"a":["10/06",91],"c":null},{"n":"Ribera","r":[1.25,0.735,0.865,0.541,0.571,0.405,0.6,0.744],"a":null,"c":null},{"n":"Ruta 14","r":[1.392,1.457,0.34,0.0,0.618,0.43,0.513,1.6],"a":null,"c":null},{"n":"Ruta 25","r":[3.227,2.586,6.556,2.069,2.542,0.0,2.792,2.379],"a":null,"c":null},{"n":"Ruta3","r":[1.154,5.933,1.944,2.591,0.444,1.65,1.233,2.55],"a":null,"c":null},{"n":"San Justo","r":[2.083,0.688,2.75,0.0,1.355,1.37,1.0,1.5],"a":["11/06",96],"c":null},{"n":"San Vicente","r":[5.453,1.782,5.413,5.241,2.732,1.585,2.298,5.018],"a":["22/09",69],"c":null},{"n":"Tesei","r":[4.733,0.147,1.391,2.4,2.5,3.16,1.8,2.227],"a":["04/06",92],"c":null},{"n":"Victorica","r":[0.905,1.321,1.625,0.4,0.741,1.208,0.647,0.385],"a":null,"c":null},{"n":"Zeballos","r":[1.694,1.093,0.525,0.258,0.603,1.35,1.067,1.864],"a":null,"c":null}]};
+const MES=D.meses;
+const fmt=n=>n==null?"–":n.toFixed(2).replace(".",",");
+(function(){
+  const a=D.net[0],b=D.net[D.net.length-1],pct=Math.round((1-b/a)*100);
+  document.getElementById("s-ratio").textContent="−"+pct+"%";
+  const mx=Math.max(...D.net);
+  document.getElementById("bars").innerHTML=D.net.map((v,i)=>'<div class="bar'+(i===D.net.length-1?' last':'')+'"><em>'+fmt(v)+'</em><i style="height:'+Math.max(6,Math.round(v/mx*100))+'px"></i><small>'+MES[i]+'</small></div>').join("");
+})();
+const sel=document.getElementById("estacion");
+D.st.forEach((s,i)=>{const o=document.createElement("option");o.value=s.n;o.textContent=s.n;o.dataset.i=i;sel.appendChild(o)});
+function spark(vals){
+  const pts=vals.map((v,i)=>({v,i})).filter(p=>p.v!=null);
+  const w=300,h=70,pad=6,mx=Math.max(...pts.map(p=>p.v),1),n=vals.length-1;
+  const x=i=>pad+i*(w-2*pad)/n,y=v=>h-pad-(v/mx)*(h-2*pad);
+  const d=pts.map((p,k)=>(k?"L":"M")+x(p.i).toFixed(1)+","+y(p.v).toFixed(1)).join(" ");
+  const last=pts[pts.length-1];
+  return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img" aria-label="Evolución del desperdicio por bolsa"><path d="'+d+'" fill="none" stroke="#D4A64A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="'+x(last.i)+'" cy="'+y(last.v)+'" r="4" fill="#D4A64A"/></svg>';
+}
+function showStation(){
+  const o=sel.options[sel.selectedIndex];
+  const empty=document.getElementById("mine-empty"),body=document.getElementById("mine-body");
+  if(!o||!o.dataset.i){empty.hidden=false;body.hidden=true;return}
+  const s=D.st[+o.dataset.i],r=s.r,last=r[r.length-1],prev=r[r.length-2];
+  let t="";
+  if(last!=null&&prev!=null){
+    if(last<prev) t='<p class="trend up">Bajó el desperdicio respecto de agosto. Buen camino.</p>';
+    else if(last>prev) t='<p class="trend down">Subió respecto de agosto. Una capacitación ayuda a corregirlo.</p>';
+    else t='<p class="trend">Se mantuvo igual que en agosto.</p>';
+  }
+  body.innerHTML='<h3>'+s.n+'</h3>'+t+spark(r)+
+   '<div class="kv"><div><b>'+fmt(last)+'</b><span>desperdicio por bolsa en septiembre</span></div>'+
+   '<div><b>'+(s.a?s.a[1]:"–")+'</b><span>'+(s.a?'última auditoría ('+s.a[0]+')':'sin auditoría reciente')+'</span></div></div>'+
+   '<p class="note">'+(s.c?'Última capacitación: '+s.c+'.':'Sin capacitación registrada en los últimos meses.')+'</p>';
+  empty.hidden=true;body.hidden=false;
+}
+sel.addEventListener("change",showStation);
+
+// DISPONIBILIDAD: editar acá. Días de la semana (1=lunes) y horarios. BLOQUEADOS = ["2026-10-20 09:00"].
+const DISPONIBILIDAD={1:["09:00","11:00","15:00"],2:["09:00","11:00","15:00"],3:["09:00","11:00","15:00"],4:["09:00","11:00","15:00"],5:["09:00","11:00"]};
+const BLOQUEADOS=[];
+const DIAS=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MESES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+(function(){
+  const box=document.getElementById("days");const hoy=new Date();hoy.setHours(0,0,0,0);
+  let n=0;
+  for(let k=1;k<=21&&n<10;k++){
+    const d=new Date(hoy);d.setDate(hoy.getDate()+k);
+    const hs=DISPONIBILIDAD[d.getDay()];if(!hs)continue;
+    const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    const libres=hs.filter(h=>!BLOQUEADOS.includes(iso+" "+h));if(!libres.length)continue;
+    const div=document.createElement("div");div.className="day";
+    div.innerHTML='<h4>'+DIAS[d.getDay()][0].toUpperCase()+DIAS[d.getDay()].slice(1)+' '+d.getDate()+' <small>de '+MESES[d.getMonth()]+'</small></h4><div class="slots"></div>';
+    libres.forEach(h=>{
+      const b=document.createElement("button");b.type="button";b.className="slot";b.textContent=h+" hs";b.setAttribute("aria-pressed","false");
+      b.dataset.v=DIAS[d.getDay()]+" "+d.getDate()+" de "+MESES[d.getMonth()]+" · "+h+" hs ("+iso+")";
+      b.addEventListener("click",()=>{
+        document.querySelectorAll(".slot").forEach(x=>x.setAttribute("aria-pressed","false"));
+        b.setAttribute("aria-pressed","true");
+        document.getElementById("turno").value=b.dataset.v;
+        document.getElementById("picked").textContent="Elegiste: "+b.dataset.v.replace(/ \(.*\)/,"");
+      });
+      div.querySelector(".slots").appendChild(b);
+    });
+    box.appendChild(div);n++;
+  }
+})();
+
+const form=document.getElementById("form"),msg=document.getElementById("msg"),send=document.getElementById("send");
+form.addEventListener("submit",async e=>{
+  e.preventDefault();msg.className="msg";msg.textContent="";
+  const miss=[];
+  if(!form.estacion.value)miss.push("la estación");
+  if(!form.nombre.value.trim())miss.push("tu nombre");
+  if(!form.whatsapp.value.trim())miss.push("tu WhatsApp");
+  if(!form.tema.value)miss.push("el tema");
+  if(!form.turno.value)miss.push("un día y horario");
+  if(miss.length){msg.className="msg err";msg.textContent="Falta completar: "+miss.join(", ")+".";return}
+  send.disabled=true;send.textContent="Enviando…";
+  try{
+    const body=new URLSearchParams(new FormData(form)).toString();
+    const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});
+    if(!r.ok)throw new Error(r.status);
+    msg.className="msg ok";msg.textContent="¡Listo! Recibí tu pedido. Te confirmo el turno por WhatsApp.";
+    form.reset();document.querySelectorAll(".slot").forEach(x=>x.setAttribute("aria-pressed","false"));
+    document.getElementById("picked").textContent="";document.getElementById("turno").value="";showStation();
+  }catch(err){
+    msg.className="msg err";msg.textContent="No se pudo enviar. Probá de nuevo en un momento.";
+  }
+  send.disabled=false;send.textContent="Pedir turno";
+});
+</script>
+</body>
+</html>
