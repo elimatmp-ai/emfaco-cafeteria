@@ -866,8 +866,8 @@ body{background:#0E0D0C;}
     <div class="section-title">Estándar <em>en la barra</em></div>
     <div class="section-sub">Cada paso de la preparación tiene un parámetro medible: se calibra, se mide y se repite igual en todas las estaciones.</div>
     <div class="gallery" id="gallery">
-      <figure hidden><video data-src="media/leche.mp4" data-alt="https://elias-cafe-consultor.netlify.app/media/leche.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Leche a temperatura justa</b><br>Termómetro, purga y textura antes de servir.</figcaption></figure>
-      <figure hidden><video data-src="media/espresso.mp4" data-alt="https://elias-cafe-consultor.netlify.app/media/espresso.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Espresso calibrado</b><br>Dosis, tiempo y rendimiento fijos en cada taza.</figcaption></figure>
+      <figure hidden><video data-src="media/espresso.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Espresso calibrado</b><br>Dosis, tiempo y rendimiento fijos en cada taza.</figcaption></figure>
+      <figure hidden><video data-src="media/extraccion.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Extracción pareja</b><br>El mismo flujo y el mismo tiempo en cada servicio.</figcaption></figure>
     </div>
   </section>
 
@@ -1911,9 +1911,9 @@ renderAll();
     v.src=urls[0];
   }
   var hv=document.getElementById("hero-video"), hf=document.getElementById("media-hero");
-  load(hv,["media/latte.mp4",REMOTE+"latte.mp4"],function(){ hv.hidden=false; hf.hidden=false; });
+  load(hv,["media/latte.mp4"],function(){ hv.hidden=false; hf.hidden=false; });
   document.querySelectorAll("#gallery video[data-src]").forEach(function(v){
-    load(v,[v.getAttribute("data-src"),v.getAttribute("data-alt")],function(){ v.hidden=false; v.closest("figure").hidden=false; v.closest("section").hidden=false; });
+    load(v,[v.getAttribute("data-src")],function(){ v.hidden=false; v.closest("figure").hidden=false; v.closest("section").hidden=false; });
   });
 })();
 </script>
