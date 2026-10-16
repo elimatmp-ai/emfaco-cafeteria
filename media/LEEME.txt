@@ -1,0 +1,6 @@
+Videos (opcional, para que el sitio sea autónomo):
+Descargá estos 3 videos de tu landing y ponelos en esta carpeta con estos nombres:
+  latte.mp4    (arte latte, va arriba en la portada)
+  leche.mp4    (estándar: leche a temperatura justa)
+  espresso.mp4 (estándar: espresso calibrado)
+Si no están acá, el sitio los carga directo desde elias-cafe-consultor.netlify.app.

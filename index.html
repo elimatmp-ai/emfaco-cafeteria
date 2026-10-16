@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMFACO · Sector Cafetería</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Informe del sector cafetería de Grupo EMFACO: desperdicio de café, vale por faltante y seguimiento por estación.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+
+:root{
+  --navy:#1E2761; --navy-dark:#141C4A; --amber:#D98A2B; --amber-light:#F3D9AE;
+  --cream:#F7F3EC; --text-muted:#6B7290; --gray-line:#E4E1D8; --white:#FFFFFF;
+  --green:#3C9A5F; --green-bg:#EAF6EE; --red:#B33333;
+}
+*{box-sizing:border-box;}
+html{overflow-x:hidden;}
+body{margin:0; font-family:Calibri,'Segoe UI',Arial,sans-serif; color:#1a2040; background:var(--cream);}
+h1,h2,h3{font-family:Cambria,Georgia,serif; margin:0;}
+
+.app-shell{display:flex; min-height:100vh;}
+
+.sidebar{width:250px; flex-shrink:0; background:var(--navy); color:#fff; display:flex; flex-direction:column;
+         padding:26px 18px; position:fixed; top:0; left:0; bottom:0; overflow-y:auto;}
+.brand{display:flex; align-items:center; gap:12px; padding:0 8px 26px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1);}
+.brand-mark{width:38px; height:38px; border-radius:10px; background:var(--amber); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.brand-name{font-size:16px; font-weight:bold; color:#fff; letter-spacing:0.3px; font-family:Cambria,Georgia,serif;}
+.brand-sub{font-size:9px; color:var(--amber-light); letter-spacing:1.5px; margin-top:1px;}
+
+.nav{display:flex; flex-direction:column; gap:3px; flex:1;}
+.nav-item{display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:9px; color:#C9CCE8;
+          text-decoration:none; font-size:13.5px; font-weight:bold; cursor:pointer; transition:all .15s; border:none; background:none; text-align:left; width:100%; font-family:inherit;}
+.nav-item:hover{background:rgba(255,255,255,0.06); color:#fff;}
+.nav-item.active{background:var(--amber); color:#fff;}
+.nav-item svg{flex-shrink:0; width:18px; height:18px;}
+.nav-item .soon{margin-left:auto; font-size:8.5px; font-weight:bold; background:rgba(255,255,255,0.12); padding:2px 6px; border-radius:8px; letter-spacing:0.3px;}
+.nav-item.active .soon{background:rgba(255,255,255,0.25);}
+
+.profile{display:flex; align-items:center; gap:10px; padding:14px 10px 4px; border-top:1px solid rgba(255,255,255,0.1); margin-top:12px;}
+.avatar{width:36px; height:36px; border-radius:50%; background:var(--amber-light); color:var(--navy); display:flex;
+        align-items:center; justify-content:center; font-weight:bold; font-family:Cambria,Georgia,serif; font-size:14px; flex-shrink:0;}
+.profile-name{font-size:12.5px; font-weight:bold; color:#fff;}
+.profile-role{font-size:10px; color:#9095c0;}
+
+.update-badge{display:flex; align-items:center; gap:8px; padding:10px 10px 4px; font-size:9.5px; color:#9095c0;}
+.update-badge .dot{width:6px; height:6px; border-radius:50%; background:#5FBE84; flex-shrink:0; box-shadow:0 0 5px #5FBE84;}
+.update-badge b{color:#fff; font-weight:bold; font-size:10.5px;}
+
+.update-banner{display:flex; align-items:center; gap:10px; background:var(--green-bg); border:1px solid #C7E8D2;
+               border-radius:10px; padding:10px 16px; font-size:11.5px; color:#276240; margin:16px 0 22px;}
+.update-banner .dot{width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; box-shadow:0 0 6px var(--green);}
+.update-banner b{color:#1a4a30;}
+.update-banner #banner-text{flex:1;}
+.update-edit-btn{background:none; border:none; color:#276240; opacity:0.55; cursor:pointer; padding:4px; border-radius:6px; flex-shrink:0; display:flex;}
+.update-edit-btn:hover{opacity:1; background:rgba(39,98,64,0.1);}
+.update-edit-btn svg{width:14px; height:14px;}
+.update-date-input{border:1.5px solid var(--green); border-radius:6px; padding:5px 9px; font-family:inherit; font-size:11.5px;
+                    color:#1a4a30; flex:1; min-width:160px;}
+.update-save-btn{background:var(--green); color:#fff; border:none; border-radius:6px; padding:6px 14px; font-size:11px;
+                  font-weight:bold; cursor:pointer; flex-shrink:0;}
+.update-save-btn:hover{background:#2f7d4f;}
+
+.content{margin-left:250px; flex:1; min-width:0;}
+.page{display:none;}
+.page.active{display:block;}
+
+.inicio-wrap{padding:44px 48px; max-width:1300px; box-sizing:border-box; overflow-x:hidden;}
+.inicio-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; flex-wrap:wrap; gap:16px;}
+.inicio-greet{font-size:32px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif; min-width:0;}
+.inicio-date{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--text-muted); text-align:right; flex-shrink:0; white-space:nowrap;}
+.inicio-date svg{color:var(--navy); flex-shrink:0;}
+.inicio-sub{font-size:14px; color:var(--amber); font-weight:bold; margin:6px 0 28px;}
+
+.kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:44px;}
+.kpi-box{background:#fff; border:1px solid var(--gray-line); border-radius:14px; padding:22px 20px; text-align:center;
+         box-shadow:0 1px 3px rgba(20,28,74,0.04);}
+.kpi-icon{width:44px; height:44px; margin:0 auto 14px; border-radius:12px; display:flex; align-items:center; justify-content:center;}
+.kpi-icon.blue{background:#EAF2FA; color:#2E7EBD;} .kpi-icon.green{background:var(--green-bg); color:var(--green);}
+.kpi-icon.amber{background:#FBF1E2; color:var(--amber);}
+.kpi-num{font-size:30px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif; margin-bottom:4px;}
+.kpi-label{font-size:12.5px; color:var(--text-muted); line-height:1.4;}
+
+.modules-title{font-size:17px; color:var(--navy); margin-bottom:18px; font-family:Cambria,Georgia,serif;}
+.modules-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.mod-card{background:#fff; border:1px solid var(--gray-line); border-radius:14px; padding:26px 22px; text-align:center;
+          box-shadow:0 1px 3px rgba(20,28,74,0.04); display:flex; flex-direction:column; align-items:center;}
+.mod-icon{width:52px; height:52px; border-radius:50%; background:var(--cream); display:flex; align-items:center; justify-content:center;
+           color:var(--navy); margin-bottom:14px;}
+.mod-title{font-size:15.5px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif; margin-bottom:10px;}
+.mod-desc{font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:18px; flex:1;}
+.mod-btn{border:none; border-radius:22px; padding:9px 18px; font-size:12.5px; font-weight:bold; cursor:pointer; font-family:inherit;
+         display:inline-flex; align-items:center; gap:6px; text-decoration:none; color:inherit;}
+.mod-btn.go{background:var(--amber); color:#fff;}
+.mod-btn.go:hover{background:#C27A22;}
+.mod-btn.soon{background:#E4E1D8; color:var(--text-muted); cursor:default;}
+
+.placeholder-page{padding:60px; text-align:center; max-width:560px; margin:0 auto;}
+.placeholder-page .ico{width:64px; height:64px; margin:0 auto 20px; border-radius:16px; background:var(--cream);
+        display:flex; align-items:center; justify-content:center; color:var(--text-muted);}
+.placeholder-page h2{font-size:22px; color:var(--navy); margin-bottom:10px;}
+.placeholder-page p{font-size:13px; color:var(--text-muted); line-height:1.6;}
+
+@media (max-width:1100px){
+  .kpi-grid, .modules-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:820px){
+  .app-shell{flex-direction:column;}
+  .sidebar{position:sticky; top:0; z-index:50; width:100%; height:auto; flex-direction:column; padding:0;
+           box-shadow:0 2px 10px rgba(0,0,0,0.15);}
+  .content{margin-left:0; width:100%;}
+  .brand{border-bottom:none; padding:10px 14px; margin:0; flex-direction:row; align-items:center;}
+  .brand-sub{display:none;}
+  .nav{flex-direction:row; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+       padding:0 10px 10px; gap:6px; margin:0;}
+  .nav-item{flex-direction:column; gap:3px; padding:8px 12px; white-space:nowrap; flex-shrink:0; width:auto; font-size:9.5px;}
+  .nav-item svg{width:16px; height:16px;}
+  .nav-item .soon{margin-left:0; font-size:7px; padding:1px 4px;}
+  .profile{display:none;}
+  .update-badge{display:none;}
+  .inicio-wrap{padding:22px 18px;}
+  .inicio-top{flex-direction:column; align-items:flex-start; gap:10px;}
+  .inicio-date{text-align:left;}
+  .inicio-greet{font-size:22px;}
+  .update-banner{flex-wrap:wrap;}
+  .kpi-grid, .modules-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:520px){
+  .kpi-grid, .modules-grid{grid-template-columns:1fr;}
+}
+
+:root {
+    --navy:#1E2761; --navy-dark:#141C4A; --amber:#D98A2B; --amber-light:#F3D9AE;
+    --cream:#F7F3EC; --text-muted:#6B7290; --gray-line:#E4E1D8; --white:#FFFFFF;
+    --green:#1E7A3A; --green-bg:#EAF6EE; --red:#B33333; --red-bg:#FBEAE8;
+    --a:#3C9A5F; --a-bg:#EAF6EE; --b:#C0392B; --b-bg:#FBEAE8;
+    --c:#2E7EBD; --c-bg:#EAF2FA; --d:#C7821A; --d-bg:#FBF1E2; --sin:#8A8F9E; --sin-bg:#EEEEF0;
+    --emfaco:#D9922A; --eli:#7CB342; --luarca:#2E9BD6; --lomfaco:#2E9E6B; --salinas:#C0392B; --exfaco:#9096A8;
+  }
+* {box-sizing:border-box;}
+#page-cafeteria {margin:0; font-family:Calibri,'Segoe UI',Arial,sans-serif; color:var(--navy-dark); background:var(--cream); -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+#page-cafeteria h1, #page-cafeteria h2, #page-cafeteria h3 {font-family:Cambria,Georgia,serif; margin:0;}
+#page-cafeteria a {color:inherit;}
+#page-cafeteria svg text {font-family:Calibri,Arial,sans-serif;}
+#page-cafeteria .grid-2 > *, #page-cafeteria .grid-3 > * {min-width:0;}
+#page-cafeteria header {background:var(--navy); color:#fff; padding:26px 40px 24px; position:relative; overflow:hidden;}
+#page-cafeteria header::before {content:"";position:absolute; top:-90px; right:-60px; width:260px; height:260px; border-radius:50%; background:var(--navy-dark); z-index:0;}
+#page-cafeteria header::after {content:"";position:absolute; bottom:-150px; left:32%; width:240px; height:240px; border-radius:50%; background:var(--navy-dark); z-index:0;}
+#page-cafeteria .coffee-pattern {position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none;}
+#page-cafeteria .header-scrim {position:absolute; inset:0; z-index:2; background:linear-gradient(100deg, rgba(20,28,74,0.55) 0%, rgba(20,28,74,0.32) 55%, rgba(20,28,74,0.5) 100%); pointer-events:none;}
+#page-cafeteria .header-inner {position:relative; z-index:3; max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;}
+#page-cafeteria .eyebrow {color:var(--amber); font-size:11px; letter-spacing:2.5px; font-weight:bold; margin-bottom:8px;}
+#page-cafeteria header h1 {font-size:25px; color:#fff; margin-bottom:5px;}
+#page-cafeteria header p {font-size:12.5px; color:#C9CCE8; margin:0; max-width:560px; line-height:1.5;}
+#page-cafeteria .header-period {font-size:11px; color:var(--amber-light); text-align:right;}
+#page-cafeteria .header-period b {display:block; font-size:14px; color:#fff; font-family:Cambria,serif;}
+#page-cafeteria #period-select {display:block; margin-top:4px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.25); color:#fff; font-family:Cambria,Georgia,serif; font-size:14px; padding:5px 10px; border-radius:8px; cursor:pointer; outline:none;}
+#page-cafeteria #period-select:hover {border-color:var(--amber);}
+#page-cafeteria #period-select option {color:var(--navy-dark); background:#fff; font-family:Calibri,Arial,sans-serif;}
+#page-cafeteria main {max-width:1400px; margin:0 auto; padding:22px 40px 60px;}
+#page-cafeteria section {margin-bottom:26px;}
+#page-cafeteria .section-title {font-size:17px; color:var(--navy); margin-bottom:2px; display:flex; align-items:center; gap:8px;}
+#page-cafeteria .section-sub {font-size:11.5px; color:var(--text-muted); margin-bottom:14px;}
+#page-cafeteria .panel {background:var(--white); border:1px solid var(--gray-line); border-radius:14px; padding:18px 20px;}
+#page-cafeteria .grid-2 {display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+#page-cafeteria .grid-3 {display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;}
+/* ---- hero status banner ---- */
+#page-cafeteria .hero {background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); border-radius:16px; padding:22px 28px; color:#fff; display:flex; align-items:center; gap:28px; flex-wrap:wrap; margin-bottom:22px; position:relative; overflow:hidden;}
+#page-cafeteria .hero::after {content:"";position:absolute; top:-60px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(255,255,255,0.04);}
+#page-cafeteria .hero-verdict {display:flex; align-items:center; gap:14px; z-index:1;}
+#page-cafeteria .hero-dot {width:16px; height:16px; border-radius:50%; flex-shrink:0; box-shadow:0 0 0 5px rgba(255,255,255,0.12);}
+#page-cafeteria .hero-verdict-text b {display:block; font-size:16px; font-family:Cambria,serif;}
+#page-cafeteria .hero-verdict-text span {font-size:11.5px; color:#C9CCE8;}
+#page-cafeteria .hero-stats {display:flex; gap:30px; margin-left:auto; z-index:1; flex-wrap:wrap;}
+#page-cafeteria .hero-stat {text-align:right;}
+#page-cafeteria .hero-stat .v {font-size:22px; font-weight:bold; font-family:Cambria,serif;}
+#page-cafeteria .hero-stat .l {font-size:10px; color:#B7BBE0; text-transform:uppercase; letter-spacing:0.4px;}
+#page-cafeteria .hero-stat .trend {font-size:11px; margin-top:2px;}
+#page-cafeteria .trend.up {color:#7FE3A3;}
+#page-cafeteria .trend.down {color:#FF9B9B;}
+/* ---- upload panel ---- */
+#page-cafeteria .upload-panel {background:#fff; border:1.5px dashed var(--gray-line); border-radius:14px; padding:16px 20px; margin-bottom:22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+#page-cafeteria .upload-panel.dragover {border-color:var(--amber); background:var(--amber-light);}
+#page-cafeteria .upload-icon {width:38px; height:38px; border-radius:10px; background:var(--cream); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--navy);}
+#page-cafeteria .upload-text {flex:1; min-width:220px;}
+#page-cafeteria .upload-text b {font-size:13px; color:var(--navy); display:block; margin-bottom:2px;}
+#page-cafeteria .upload-text span {font-size:11px; color:var(--text-muted);}
+#page-cafeteria .upload-actions {display:flex; gap:9px; align-items:center; flex-wrap:wrap;}
+#page-cafeteria .btn {border:none; border-radius:20px; padding:8px 16px; font-size:12px; font-weight:bold; cursor:pointer; font-family:inherit;}
+#page-cafeteria .btn-primary {background:var(--navy); color:#fff;}
+#page-cafeteria .btn-primary:hover {background:var(--navy-dark);}
+#page-cafeteria .btn-ghost {background:transparent; color:var(--navy); border:1.5px solid var(--gray-line);}
+#page-cafeteria .btn-ghost:hover {border-color:var(--navy);}
+#page-cafeteria #file-input {display:none;}
+#page-cafeteria .data-status {font-size:11px; color:var(--text-muted); margin-top:2px;}
+#page-cafeteria .data-status b {color:var(--navy);}
+#page-cafeteria .upload-error {background:var(--red-bg); color:var(--red); border-radius:8px; padding:8px 12px; font-size:11px; margin-top:4px; display:none;}
+#page-cafeteria .upload-error.show {display:block;}
+/* ---- filters ---- */
+#page-cafeteria .filter-bar {display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+#page-cafeteria .filter-group {display:flex; gap:6px; flex-wrap:wrap; align-items:center; padding-right:12px; border-right:1px solid var(--gray-line); margin-right:4px;}
+#page-cafeteria .filter-group:last-of-type {border-right:none;}
+#page-cafeteria .filter-label {font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; margin-right:2px;}
+#page-cafeteria .chip {border:1.5px solid var(--gray-line); background:#fff; border-radius:16px; padding:5px 12px; font-size:11.5px; font-weight:bold; cursor:pointer; color:var(--navy); transition:all .15s; user-select:none; white-space:nowrap;}
+#page-cafeteria .chip:hover {border-color:var(--navy);}
+#page-cafeteria .chip.active {background:var(--navy); border-color:var(--navy); color:#fff;}
+#page-cafeteria .chip .dot {display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+#page-cafeteria .search-box {margin-left:auto; position:relative;}
+#page-cafeteria .search-box input {border:1.5px solid var(--gray-line); border-radius:20px; padding:7px 14px 7px 30px; font-size:12px; font-family:inherit; width:200px; outline:none;}
+#page-cafeteria .search-box input:focus {border-color:var(--navy);}
+#page-cafeteria .search-box svg {position:absolute; left:10px; top:50%; transform:translateY(-50%); width:12px; height:12px; opacity:.45;}
+/* ---- KPI ---- */
+#page-cafeteria .kpi-row {display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:14px;}
+#page-cafeteria .kpi-card {background:#fff; border:1px solid var(--gray-line); border-radius:12px; padding:13px 15px; box-shadow:0 1px 3px rgba(20,28,74,0.04); position:relative;}
+#page-cafeteria .kpi-icon {position:absolute; top:13px; right:13px; width:22px; height:22px; opacity:.35; color:var(--navy);}
+#page-cafeteria .kpi-label {font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px; padding-right:24px;}
+#page-cafeteria .kpi-value {font-size:22px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif;}
+#page-cafeteria .kpi-value.warn {color:var(--red);}
+#page-cafeteria .kpi-value.good {color:var(--green);}
+#page-cafeteria .kpi-note {font-size:10px; color:var(--text-muted); margin-top:2px;}
+#page-cafeteria .kpi-note.up {color:var(--red);}
+#page-cafeteria .kpi-note.down {color:var(--green);}
+/* ---- scatter ---- */
+#page-cafeteria #scatter-wrap {position:relative;}
+#page-cafeteria #scatter {width:100%; height:auto; display:block;}
+#page-cafeteria .pt {cursor:pointer; transition:opacity .15s;}
+#page-cafeteria .pt.dim {opacity:.13;}
+#page-cafeteria .pt-label {font-size:8.5px; fill:var(--navy-dark); pointer-events:none;}
+#page-cafeteria .pt-label.dim {opacity:.13;}
+#page-cafeteria #tooltip {position:absolute; pointer-events:none; background:var(--navy-dark); color:#fff; padding:8px 11px; border-radius:8px; font-size:11px; line-height:1.5; box-shadow:0 6px 18px rgba(0,0,0,.25); opacity:0; transition:opacity .1s; z-index:20; white-space:nowrap;}
+#page-cafeteria #tooltip b {color:var(--amber-light);}
+#page-cafeteria .cluster-card {border:1.5px solid var(--gray-line); border-left:5px solid; border-radius:10px; padding:11px 13px; margin-bottom:8px; cursor:pointer; transition:transform .12s;}
+#page-cafeteria .cluster-card:hover {transform:translateX(2px);}
+#page-cafeteria .cluster-card .ct {display:flex; justify-content:space-between; align-items:baseline;}
+#page-cafeteria .cluster-card .ct b {font-size:12.5px; color:var(--navy);}
+#page-cafeteria .cluster-card .ct span {font-size:10.5px; color:var(--text-muted);}
+#page-cafeteria .cluster-card .cs {font-size:11px; color:var(--text-muted); margin-top:2px;}
+#page-cafeteria .cluster-card .stats {display:flex; gap:12px; margin-top:7px; font-size:10px; color:var(--navy);}
+#page-cafeteria .cluster-card .stats b {font-family:Cambria,Georgia,serif; font-size:12px;}
+#page-cafeteria .note-box {background:var(--amber-light); border-left:3px solid var(--amber); border-radius:8px; padding:10px 13px; font-size:11px; color:#6B4E1E; line-height:1.5; margin-top:12px;}
+#page-cafeteria .note-box b {color:#4A3510;}
+/* ---- donut / gauge ---- */
+#page-cafeteria .viz-card {text-align:center;}
+#page-cafeteria .viz-card h3 {font-size:12.5px; color:var(--navy); margin-bottom:2px;}
+#page-cafeteria .viz-card .viz-sub {font-size:10px; color:var(--text-muted); margin-bottom:10px;}
+#page-cafeteria .donut-legend {display:flex; flex-wrap:wrap; gap:6px 12px; justify-content:center; margin-top:10px;}
+#page-cafeteria .donut-legend .li {font-size:10px; color:var(--navy); display:flex; align-items:center; gap:5px;}
+#page-cafeteria .donut-legend .sw {width:8px; height:8px; border-radius:50%;}
+#page-cafeteria .gauge-value {font-size:26px; font-weight:bold; color:var(--navy); font-family:Cambria,serif; margin-top:-46px;}
+#page-cafeteria .gauge-label {font-size:10px; color:var(--text-muted); margin-top:2px;}
+/* ---- bar list (css bars) ---- */
+#page-cafeteria .bar-row {display:grid; grid-template-columns:120px 1fr 70px; align-items:center; gap:10px; margin-bottom:7px; font-size:11px;}
+#page-cafeteria .bar-row .lbl {color:var(--navy); font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+#page-cafeteria .bar-track {background:var(--cream); border-radius:5px; height:14px; overflow:hidden; position:relative;}
+#page-cafeteria .bar-fill {height:100%; border-radius:5px; transition:width .3s;}
+#page-cafeteria .bar-val {text-align:right; color:var(--text-muted); font-size:10.5px; white-space:nowrap;}
+/* ---- grouped trend bars ---- */
+#page-cafeteria .trend-chart {display:flex; align-items:flex-end; gap:14px; height:180px; padding:0 4px; border-bottom:1.5px solid var(--gray-line); margin-bottom:6px;}
+#page-cafeteria .trend-group {display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; min-width:0;}
+#page-cafeteria .trend-bars {display:flex; align-items:flex-end; gap:3px; height:100%; width:100%; justify-content:center;}
+#page-cafeteria .trend-bar {width:13px; border-radius:3px 3px 0 0; position:relative;}
+#page-cafeteria .trend-bar.prev {background:var(--gray-line);}
+#page-cafeteria .trend-bar.cur {background:var(--navy);}
+#page-cafeteria .trend-glabel {font-size:8.5px; color:var(--text-muted); margin-top:6px; text-align:center; max-width:60px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+#page-cafeteria .trend-legend {display:flex; gap:16px; justify-content:center; font-size:10.5px; color:var(--navy); margin-top:4px;}
+#page-cafeteria .trend-legend .li {display:flex; align-items:center; gap:5px;}
+#page-cafeteria .trend-legend .sw {width:10px; height:10px; border-radius:3px;}
+/* ---- dumbbell chart (all stations, prev vs current) ---- */
+#page-cafeteria .dumbbell-wrap {max-height:560px; overflow-y:auto; padding-right:4px;}
+#page-cafeteria .dumbbell-row {display:grid; grid-template-columns:104px 1fr 76px; align-items:center; gap:10px; padding:5px 0;}
+#page-cafeteria .dumbbell-row .lbl {font-size:10.5px; font-weight:bold; color:var(--navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+#page-cafeteria .dumbbell-track {position:relative; height:16px; background:var(--cream); border-radius:8px;}
+#page-cafeteria .dumbbell-fill {position:absolute; top:0; bottom:0; border-radius:8px; opacity:0.35;}
+#page-cafeteria .dumbbell-prev {position:absolute; top:50%; width:9px; height:9px; border-radius:50%; background:var(--text-muted); transform:translate(-50%,-50%); border:1.5px solid white; z-index:2;}
+#page-cafeteria .dumbbell-cur {position:absolute; top:50%; width:10px; height:10px; border-radius:50%; transform:translate(-50%,-50%); border:1.5px solid white; z-index:3;}
+#page-cafeteria .dumbbell-val {font-size:10px; text-align:right; white-space:nowrap;}
+#page-cafeteria .dumbbell-val b {font-size:10.5px;}
+#page-cafeteria .dumbbell-legend {display:flex; gap:16px; font-size:10.5px; color:var(--navy); margin-bottom:10px;}
+#page-cafeteria .dumbbell-legend .li {display:flex; align-items:center; gap:5px;}
+#page-cafeteria .dumbbell-legend .dot {width:9px; height:9px; border-radius:50%; border:1.5px solid white; box-shadow:0 0 0 1px var(--gray-line);}
+/* ---- consumo band chart ---- */
+#page-cafeteria .consumo-chart {position:relative; height:200px; padding:10px 4px 0;}
+#page-cafeteria .consumo-band {position:absolute; left:0; right:0; background:var(--green-bg); border-top:1px dashed #9BC9A9; border-bottom:1px dashed #9BC9A9;}
+#page-cafeteria .consumo-bars {display:flex; align-items:flex-end; height:100%; gap:3px; position:relative; z-index:1;}
+#page-cafeteria .consumo-bar {flex:1; border-radius:2px 2px 0 0; min-width:2px; cursor:pointer;}
+/* ---- ranking cards ---- */
+#page-cafeteria .rank-item {display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--gray-line);}
+#page-cafeteria .rank-item:last-child {border-bottom:none;}
+#page-cafeteria .rank-medal {width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:bold; color:#fff; flex-shrink:0; font-family:Cambria,serif;}
+#page-cafeteria .rank-info {flex:1; min-width:0;}
+#page-cafeteria .rank-info .n {font-size:12px; font-weight:bold; color:var(--navy);}
+#page-cafeteria .rank-info .track {background:var(--cream); border-radius:4px; height:6px; margin-top:4px; overflow:hidden;}
+#page-cafeteria .rank-info .fill {height:100%; border-radius:4px;}
+#page-cafeteria .rank-val {font-size:12px; font-weight:bold; color:var(--navy); white-space:nowrap;}
+/* ---- heatmap ---- */
+#page-cafeteria .heat-table {width:100%; border-collapse:collapse; font-size:11px;}
+#page-cafeteria .heat-table th {font-size:10px; color:var(--text-muted); font-weight:normal; padding:6px 8px; text-align:center;}
+#page-cafeteria .heat-table th:first-child {text-align:left;}
+#page-cafeteria .heat-table td {text-align:center; padding:8px; border:1px solid var(--white);}
+#page-cafeteria .heat-table td:first-child {text-align:left; font-weight:bold; color:var(--navy); font-size:10.5px;}
+#page-cafeteria .heat-cell {border-radius:6px; font-weight:bold; color:var(--navy-dark);}
+/* ---- accordion ---- */
+#page-cafeteria .accordion-item {border:1px solid var(--gray-line); border-radius:10px; margin-bottom:9px; overflow:hidden;}
+#page-cafeteria .accordion-head {display:flex; align-items:center; gap:12px; padding:12px 15px; cursor:pointer; background:#fff;}
+#page-cafeteria .accordion-head:hover {background:#FAFAF7;}
+#page-cafeteria .badge {width:28px; height:28px; border-radius:8px; color:#fff; font-weight:bold; font-family:Cambria,Georgia,serif; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px;}
+#page-cafeteria .accordion-head .h-title {font-size:12.5px; font-weight:bold; color:var(--navy);}
+#page-cafeteria .accordion-head .h-sub {font-size:10.5px; color:var(--text-muted);}
+#page-cafeteria .accordion-head .chev {margin-left:auto; transition:transform .2s; color:var(--text-muted); font-size:11px;}
+#page-cafeteria .accordion-item.open .chev {transform:rotate(180deg);}
+#page-cafeteria .accordion-body {max-height:0; overflow:hidden; transition:max-height .25s ease;}
+#page-cafeteria .accordion-item.open .accordion-body {max-height:400px;}
+#page-cafeteria .accordion-body ul {margin:0; padding:4px 18px 14px 34px;}
+#page-cafeteria .accordion-body li {font-size:11.5px; line-height:1.55; color:#333A5C; margin-bottom:6px;}
+/* ---- table ---- */
+#page-cafeteria table.data-table {width:100%; border-collapse:collapse; font-size:11.5px;}
+#page-cafeteria table.data-table thead th {background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:10px; cursor:pointer; user-select:none; white-space:nowrap;}
+#page-cafeteria table.data-table thead th:hover {background:var(--navy-dark);}
+#page-cafeteria table.data-table thead th .arrow {font-size:8px; opacity:.6; margin-left:2px;}
+#page-cafeteria table.data-table th.num, #page-cafeteria table.data-table td.num {text-align:right;}
+#page-cafeteria table.data-table tbody td {padding:7px 10px; border-bottom:1px solid var(--gray-line);}
+#page-cafeteria table.data-table tbody tr:hover {background:#FAFAF7;}
+#page-cafeteria table.data-table tbody tr.hidden {display:none;}
+#page-cafeteria td.name {font-weight:bold; color:var(--navy);}
+#page-cafeteria td.muted {color:var(--text-muted); font-size:10.5px;}
+#page-cafeteria td.pos {color:var(--green); font-weight:bold;}
+#page-cafeteria td.neg {color:var(--red); font-weight:bold;}
+#page-cafeteria .cluster-tag {display:inline-block; font-size:9px; font-weight:bold; padding:2px 6px; border-radius:10px; color:#fff;}
+#page-cafeteria .mini-bar-cell {display:flex; align-items:center; gap:6px;}
+#page-cafeteria .mini-bar-track {width:44px; height:6px; background:var(--cream); border-radius:3px; overflow:hidden;}
+#page-cafeteria .mini-bar-fill {height:100%; background:var(--navy); border-radius:3px;}
+#page-cafeteria .trend-arrow {font-size:10px; margin-left:4px;}
+#page-cafeteria .trend-arrow.up {color:var(--red);}
+#page-cafeteria .trend-arrow.down {color:var(--green);}
+#page-cafeteria footer {text-align:center; font-size:10.5px; color:var(--text-muted); padding:20px 0 36px;}
+#page-cafeteria footer .signature {display:block; margin-top:6px; font-family:Cambria,Georgia,serif; font-style:italic; font-size:11.5px; letter-spacing:0.4px; color:var(--navy);}
+@media (max-width:1000px){#page-cafeteria .grid-2, #page-cafeteria .grid-3 {grid-template-columns:1fr;}
+#page-cafeteria .grid-2 > *, #page-cafeteria .grid-3 > * {min-width:0;}
+#page-cafeteria .kpi-row {grid-template-columns:repeat(2,1fr);}
+#page-cafeteria header, #page-cafeteria main {padding-left:18px; padding-right:18px;}
+#page-cafeteria .hero {flex-direction:column; align-items:flex-start;}
+#page-cafeteria .hero-stats {margin-left:0;}}
+@media (max-width:520px){#page-cafeteria header, #page-cafeteria main {padding-left:14px; padding-right:14px;}
+#page-cafeteria .kpi-row {grid-template-columns:1fr 1fr; gap:8px;}
+#page-cafeteria .bar-row {grid-template-columns:80px 1fr 56px; gap:6px;}
+#page-cafeteria .hero-stats {gap:16px;}
+#page-cafeteria .filter-group {border-right:none; padding-right:0; margin-right:0;}
+#page-cafeteria .search-box {margin-left:0; width:100%;}
+#page-cafeteria .search-box input {width:100%;}}
+#page-cafeteria main, #page-cafeteria .panel, #page-cafeteria .kpi-card, #page-cafeteria .hero {min-width:0;}
+:root {
+    --navy:#1E2761; --navy-dark:#141C4A; --amber:#D98A2B; --amber-light:#F3D9AE;
+    --cream:#F7F3EC; --text-muted:#6B7290; --gray-line:#E4E1D8; --white:#FFFFFF;
+    --green:#3C9A5F; --green-bg:#EAF6EE; --amber2:#C7821A; --amber2-bg:#FBF1E2;
+    --red:#C0392B; --red-bg:#FBEAE8; --sin:#9096A8; --sin-bg:#EEEEF0;
+  }
+* {box-sizing:border-box;}
+html {overflow-x:hidden;}
+#page-auditorias {margin:0; font-family:Calibri,'Segoe UI',Arial,sans-serif; color:#1a2040; background:var(--cream);}
+#page-auditorias h1, #page-auditorias h2, #page-auditorias h3 {font-family:Cambria,Georgia,serif; margin:0;}
+#page-auditorias header {background:var(--navy); color:#fff; padding:26px 40px 24px; position:relative; overflow:hidden;}
+#page-auditorias header::before {content:"";position:absolute; top:-90px; right:-60px; width:260px; height:260px; border-radius:50%; background:var(--navy-dark); z-index:0;}
+#page-auditorias header::after {content:"";position:absolute; bottom:-150px; left:32%; width:240px; height:240px; border-radius:50%; background:var(--navy-dark); z-index:0;}
+#page-auditorias .coffee-pattern {position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none;}
+#page-auditorias .header-scrim {position:absolute; inset:0; z-index:2; background:linear-gradient(100deg, rgba(20,28,74,0.55) 0%, rgba(20,28,74,0.32) 55%, rgba(20,28,74,0.5) 100%); pointer-events:none;}
+#page-auditorias .header-inner {position:relative; z-index:3; max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;}
+#page-auditorias .eyebrow {color:var(--amber); font-size:11px; letter-spacing:2.5px; font-weight:bold; margin-bottom:8px;}
+#page-auditorias header h1 {font-size:25px; color:#fff; margin-bottom:5px;}
+#page-auditorias header p {font-size:12.5px; color:#C9CCE8; margin:0; max-width:560px; line-height:1.5;}
+#page-auditorias .back-link {position:relative; z-index:3; display:inline-flex; align-items:center; gap:6px; color:var(--amber-light); font-size:12px; text-decoration:none; margin-bottom:14px;}
+#page-auditorias .back-link:hover {color:#fff;}
+#page-auditorias main {max-width:1300px; margin:0 auto; padding:22px 40px 60px;}
+#page-auditorias section {margin-bottom:26px;}
+#page-auditorias .section-title {font-size:17px; color:var(--navy); margin-bottom:2px;}
+#page-auditorias .section-sub {font-size:11.5px; color:var(--text-muted); margin-bottom:14px;}
+#page-auditorias .panel {background:var(--white); border:1px solid var(--gray-line); border-radius:14px; padding:18px 20px;}
+#page-auditorias .kpi-row {display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:22px;}
+#page-auditorias .kpi-card {background:#fff; border:1px solid var(--gray-line); border-radius:12px; padding:14px 16px; box-shadow:0 1px 3px rgba(20,28,74,0.04);}
+#page-auditorias .kpi-label {font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;}
+#page-auditorias .kpi-value {font-size:24px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif;}
+#page-auditorias .kpi-note {font-size:10px; color:var(--text-muted); margin-top:2px;}
+#page-auditorias .toolbar {display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+#page-auditorias .upload-panel {background:#fff; border:1.5px dashed var(--gray-line); border-radius:14px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+#page-auditorias .upload-panel.dragover {border-color:var(--amber); background:var(--amber-light);}
+#page-auditorias .upload-icon {width:38px; height:38px; border-radius:10px; background:var(--cream); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--navy);}
+#page-auditorias .upload-text {flex:1; min-width:220px;}
+#page-auditorias .upload-text b {font-size:13px; color:var(--navy); display:block; margin-bottom:2px;}
+#page-auditorias .upload-text span {font-size:11px; color:var(--text-muted);}
+#page-auditorias .upload-actions {display:flex; gap:9px; align-items:center; flex-wrap:wrap;}
+#page-auditorias .upload-error {background:var(--red-bg); color:var(--red); border-radius:8px; padding:8px 12px; font-size:11px; margin-top:6px; display:none;}
+#page-auditorias .upload-error.show {display:block;}
+#page-auditorias #aud-file-input {display:none;}
+#page-auditorias .btn {border:none; border-radius:20px; padding:8px 16px; font-size:12px; font-weight:bold; cursor:pointer; font-family:inherit;}
+#page-auditorias .btn-primary {background:var(--navy); color:#fff;}
+#page-auditorias .btn-primary:hover {background:var(--navy-dark);}
+#page-auditorias .btn-ghost {background:transparent; color:var(--navy); border:1.5px solid var(--gray-line);}
+#page-auditorias .btn-ghost:hover {border-color:var(--navy);}
+#page-auditorias .save-indicator {font-size:11px; color:var(--green); opacity:0; transition:opacity .3s; margin-left:4px;}
+#page-auditorias .save-indicator.show {opacity:1;}
+#page-auditorias .search-box {margin-left:auto; position:relative;}
+#page-auditorias .search-box input {border:1.5px solid var(--gray-line); border-radius:20px; padding:7px 14px 7px 30px; font-size:12px; font-family:inherit; width:220px; outline:none;}
+#page-auditorias .search-box input:focus {border-color:var(--navy);}
+#page-auditorias .search-box svg {position:absolute; left:10px; top:50%; transform:translateY(-50%); width:12px; height:12px; opacity:.45;}
+#page-auditorias #aud-bar-chart {width:100%; height:auto; display:block;}
+#page-auditorias .bar-tip {position:relative;}
+#page-auditorias #aud-tooltip {position:absolute; pointer-events:none; background:var(--navy-dark); color:#fff; padding:8px 11px; border-radius:8px; font-size:11px; line-height:1.5; box-shadow:0 6px 18px rgba(0,0,0,.25); opacity:0; transition:opacity .1s; z-index:20; white-space:nowrap;}
+#page-auditorias table.data-table {width:100%; border-collapse:collapse; font-size:12px;}
+#page-auditorias table.data-table thead th {background:var(--navy); color:#fff; text-align:left; padding:9px 12px; font-size:10.5px; cursor:pointer; user-select:none; white-space:nowrap;}
+#page-auditorias table.data-table thead th:hover {background:var(--navy-dark);}
+#page-auditorias table.data-table th.num, #page-auditorias table.data-table td.num {text-align:right;}
+#page-auditorias table.data-table tbody td {padding:6px 12px; border-bottom:1px solid var(--gray-line); vertical-align:middle;}
+#page-auditorias table.data-table tbody tr:hover {background:#FAFAF7;}
+#page-auditorias td.name {font-weight:bold; color:var(--navy);}
+#page-auditorias td.muted {color:var(--text-muted); font-size:11px;}
+#page-auditorias .status-chip {display:inline-block; font-size:10px; font-weight:bold; padding:3px 10px; border-radius:12px;}
+#page-auditorias .status-ok {background:var(--green-bg); color:var(--green);}
+#page-auditorias .status-atencion {background:var(--amber2-bg); color:var(--amber2);}
+#page-auditorias .status-critico {background:var(--red-bg); color:var(--red);}
+#page-auditorias .status-sin {background:var(--sin-bg); color:var(--sin);}
+#page-auditorias .edit-input {width:64px; text-align:right; border:1.5px solid var(--gray-line); border-radius:6px; padding:5px 7px; font-family:inherit; font-size:12px; color:var(--navy); font-weight:bold;}
+#page-auditorias .edit-input:focus {border-color:var(--navy); outline:none; background:var(--amber-light);}
+#page-auditorias .edit-text {width:100%; border:1.5px solid transparent; border-radius:6px; padding:4px 6px; font-family:inherit; font-size:11.5px; color:#333; background:transparent;}
+#page-auditorias .edit-text:hover {border-color:var(--gray-line);}
+#page-auditorias .edit-text:focus {border-color:var(--navy); outline:none; background:var(--cream);}
+#page-auditorias .editable-col-label {font-size:9px; text-transform:none; opacity:.75;}
+#page-auditorias footer {text-align:center; font-size:10.5px; color:var(--text-muted); padding:20px 0 36px;}
+#page-auditorias footer .signature {display:block; margin-top:6px; font-family:Cambria,Georgia,serif; font-style:italic; font-size:11.5px; color:var(--navy);}
+@media (max-width:900px){#page-auditorias .kpi-row {grid-template-columns:repeat(2,1fr);}
+#page-auditorias header, #page-auditorias main {padding-left:18px; padding-right:18px;}}
+
+/* ---- Cronograma ---- */
+#page-cronograma{padding:34px 40px; max-width:1240px; margin:0 auto;}
+.cron-top{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:22px; flex-wrap:wrap; gap:16px;}
+.cron-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; border-bottom:1px solid var(--gray-line); padding-bottom:0;}
+.cron-tab{background:none; border:none; border-bottom:3px solid transparent; padding:9px 4px; margin-bottom:-1px;
+          font-size:12.5px; font-weight:bold; color:var(--text-muted); cursor:pointer; font-family:inherit;}
+.cron-tab:hover{color:var(--navy);}
+.cron-tab.active{color:var(--navy); border-bottom-color:var(--amber);}
+.cron-tab-add{color:var(--amber); margin-left:auto; opacity:0.8;}
+.cron-tab-add:hover{opacity:1;}
+.cron-title{font-size:24px; color:var(--navy); font-family:Cambria,Georgia,serif; font-weight:bold;}
+.cron-sub{font-size:12.5px; color:var(--text-muted); margin-top:4px;}
+.cron-progress-wrap{min-width:280px;}
+.cron-progress-label{font-size:11px; color:var(--text-muted); margin-bottom:6px; display:flex; justify-content:space-between;}
+.cron-progress-label b{color:var(--navy); font-size:13px;}
+.cron-bar{height:10px; background:var(--gray-line); border-radius:6px; overflow:hidden;}
+.cron-bar-fill{height:100%; background:linear-gradient(90deg, var(--amber), var(--green)); border-radius:6px; transition:width .4s;}
+
+.cron-kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:26px;}
+.cron-kpi{background:#fff; border:1px solid var(--gray-line); border-radius:12px; padding:14px 16px;}
+.cron-kpi .n{font-size:22px; font-weight:bold; color:var(--navy); font-family:Cambria,Georgia,serif;}
+.cron-kpi .l{font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.4px; margin-top:2px;}
+
+.cron-section-title{font-size:15px; color:var(--navy); font-weight:bold; margin:26px 0 12px; font-family:Cambria,Georgia,serif;}
+.cron-section-sub{font-size:11px; color:var(--text-muted); margin:-6px 0 12px;}
+
+.cron-tecnicas-empty{background:#fff; border:1px dashed var(--gray-line); border-radius:10px; padding:18px; text-align:center;
+                      font-size:11.5px; color:var(--text-muted);}
+.cron-tec-row{display:grid; grid-template-columns:140px 1fr 60px 140px 1fr; gap:12px; align-items:center;
+              background:#fff; border:1px solid var(--gray-line); border-radius:8px; padding:10px 14px; margin-bottom:6px; font-size:11px;}
+.cron-tec-station{font-weight:bold; color:var(--navy);}
+.cron-tec-name{color:#1E4E7A;}
+.cron-tec-date{color:var(--text-muted); font-size:10px;}
+.cron-tec-ref{color:var(--text-muted); font-size:10px;}
+.cron-tec-ref b{color:var(--navy);}
+.cron-tec-result{font-size:10px; font-weight:bold; text-align:right;}
+.cron-tec-result.pending{color:#C7821A;}
+.cron-tec-result.mejoro{color:var(--green);}
+.cron-tec-result.empeoro{color:var(--red);}
+
+@media (max-width:900px){
+  .cron-tec-row{grid-template-columns:1fr; text-align:left;}
+  .cron-tec-result{text-align:left;}
+}
+
+.cron-weekdays{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:6px;}
+.cron-weekdays div{text-align:center; font-size:9.5px; font-weight:bold; letter-spacing:0.8px; color:var(--navy);
+                    padding:6px 0; background:var(--cream); border-radius:6px;}
+.cron-week{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:6px;}
+.cron-cell{border:1px solid var(--gray-line); border-radius:8px; min-height:92px; padding:7px; position:relative; background:#fff;}
+.cron-cell.empty{border:none; background:none;}
+.cron-cell.sunday{background:#FAFAF8;}
+.cron-daynum{font-size:10.5px; font-weight:bold; color:var(--navy); margin-bottom:5px;}
+.cron-rest{font-size:9px; color:#B0B4C4; font-style:italic; margin-top:24px; text-align:center;}
+.cron-station{border-left:3px solid; border-radius:5px; padding:5px 6px; margin-top:2px; cursor:pointer; transition:opacity .15s;}
+.cron-station-name{font-size:10.5px; font-weight:bold; line-height:1.2;}
+.cron-note{font-size:8.3px; margin-top:2px; line-height:1.2; opacity:0.85;}
+.cron-tecnica{font-size:8px; margin-top:3px; line-height:1.25; color:#1E4E7A; background:#E8F1FB; border-radius:3px; padding:2px 4px; display:inline-block;}
+.cron-f-tecnica{width:100%; margin-bottom:5px; font-size:9.5px; padding:5px 6px; border:1px solid var(--gray-line);
+                 border-radius:5px; font-family:inherit; color:var(--navy);}
+.cron-check{display:flex; align-items:center; gap:4px; margin-top:5px; font-size:8.5px; font-weight:bold;}
+.cron-check input{width:11px; height:11px; cursor:pointer; accent-color:#3C9A5F;}
+.cron-station.done{opacity:0.5;}
+.cron-station.done .cron-station-name{text-decoration:line-through;}
+
+.cron-cell{position:relative;}
+.cron-edit-btn{position:absolute; top:5px; right:5px; width:18px; height:18px; border:none; background:rgba(30,39,97,0.08);
+               color:var(--navy); border-radius:5px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+               font-size:12px; font-weight:bold; line-height:1; padding:0; opacity:0.5; transition:opacity .15s;}
+.cron-edit-btn:hover{opacity:1;}
+.cron-edit-btn svg{width:10px; height:10px;}
+.cron-edit-form{display:none; position:absolute; top:26px; left:0; right:0; z-index:10; background:#fff;
+                border:1.5px solid var(--navy); border-radius:8px; padding:8px; box-shadow:0 8px 22px rgba(0,0,0,0.18);}
+.cron-cell.editing .cron-station{display:none;}
+.cron-cell.editing .cron-edit-form{display:block;}
+.cron-f-name, .cron-f-tipo{width:100%; margin-bottom:5px; font-size:9.5px; padding:5px 6px; border:1px solid var(--gray-line);
+                            border-radius:5px; font-family:inherit; color:var(--navy);}
+.cron-f-note{width:100%; margin-bottom:6px; font-size:9.5px; padding:5px 6px; border:1px solid var(--gray-line);
+             border-radius:5px; font-family:inherit; box-sizing:border-box;}
+.cron-f-actions{display:flex; gap:4px; flex-wrap:wrap;}
+.cron-f-actions button{flex:1; min-width:56px; font-size:8.5px; font-weight:bold; padding:5px 4px; border-radius:5px;
+                        border:none; cursor:pointer;}
+.cron-f-save{background:var(--green); color:#fff;}
+.cron-f-clear{background:var(--red-bg); color:var(--red);}
+.cron-f-cancel{background:var(--cream); color:var(--text-muted);}
+
+.cron-legend{display:flex; gap:14px; margin:16px 0 8px; flex-wrap:wrap; font-size:9.5px; color:var(--navy);}
+.cron-legend .li{display:flex; align-items:center; gap:5px;}
+.cron-legend .sw{width:9px; height:9px; border-radius:3px;}
+
+.cron-roster{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+.cron-r-card{background:#fff; border:1px solid var(--gray-line); border-radius:10px; padding:11px 13px;}
+.cron-r-name{font-size:12px; font-weight:bold; color:var(--navy); margin-bottom:4px;}
+.cron-r-status{display:inline-flex; align-items:center; gap:5px; font-size:9px; font-weight:bold; padding:3px 9px; border-radius:10px;}
+.cron-r-status.audit{background:var(--green-bg); color:var(--green);}
+.cron-r-status.sched{background:#FBF1E2; color:#C7821A;}
+.cron-r-status.pend{background:var(--sin-bg); color:var(--sin);}
+.cron-r-date{font-size:9px; color:var(--text-muted); margin-top:4px;}
+
+@media (max-width:1100px){.cron-kpi-row{grid-template-columns:repeat(2,1fr);} .cron-roster{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:700px){
+  #page-cronograma{padding:24px 18px;}
+  .cron-roster{grid-template-columns:1fr;}
+  .cron-calendar-scroll{overflow-x:auto; margin:0 -18px; padding:0 18px;}
+  .cron-calendar-inner{min-width:600px;}
+}
+
+/* ===== Cafetería · estilo landing (paper / roast / cherry / crema) ===== */
+#page-cafeteria{--paper:#F4F2EE; --roast:#2A211C; --roast-fg:#F4EEE6; --cherry:#B8322A; --crema:#D9A35B;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif; --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --navy:#2A211C; --navy-dark:#191512; --amber:#B8322A; --amber-light:#F3DEDA; --cream:#F4F2EE; --text-muted:#6B625B; --gray-line:#E2DDD6;
+  font-family:var(--body); color:#191512; background:var(--paper);}
+#page-cafeteria svg text{font-family:var(--body);}
+#page-cafeteria h1,#page-cafeteria h2,#page-cafeteria h3,#page-cafeteria .kpi-value,#page-cafeteria .gauge-value,#page-cafeteria .hero-stat .v,#page-cafeteria .hero-verdict-text b,#page-cafeteria .badge{font-family:var(--display);}
+#page-cafeteria header.cafe-hero{background:var(--paper); color:#191512; padding:56px 40px 28px; overflow:visible;}
+#page-cafeteria header.cafe-hero::before,#page-cafeteria header.cafe-hero::after{display:none;}
+#page-cafeteria header.cafe-hero .header-inner{align-items:flex-end;}
+#page-cafeteria header.cafe-hero h1{font-size:clamp(34px,5.4vw,58px); line-height:1.02; font-weight:800; letter-spacing:-0.02em; color:#191512; margin:10px 0 14px; max-width:15ch; text-wrap:balance;}
+#page-cafeteria header.cafe-hero h1 em,#page-cafeteria .section-title em{font-style:normal; color:var(--cherry);}
+#page-cafeteria header.cafe-hero p{font-size:15.5px; line-height:1.55; color:var(--text-muted); max-width:52ch;}
+#page-cafeteria .eyebrow{color:var(--cherry); font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:600; margin-bottom:6px;}
+#page-cafeteria .header-period{color:var(--text-muted); font-size:12px; text-align:left; text-transform:uppercase; letter-spacing:.12em;}
+#page-cafeteria #period-select{background:#fff; color:#191512; border:1px solid var(--gray-line); border-radius:999px; font-family:var(--body); font-size:14px; font-weight:500; padding:9px 18px; text-transform:none; letter-spacing:0;}
+#page-cafeteria #period-select:hover{border-color:var(--cherry);}
+#page-cafeteria main{padding:8px 40px 80px;}
+#page-cafeteria section{margin-bottom:56px;}
+#page-cafeteria .section-title{font-family:var(--display); font-size:clamp(24px,3.4vw,34px); font-weight:800; letter-spacing:-0.015em; color:#191512; line-height:1.1; margin-bottom:6px;}
+#page-cafeteria .section-sub{font-size:14px; line-height:1.5; max-width:70ch; margin-bottom:20px;}
+#page-cafeteria .panel,#page-cafeteria .upload-panel{border-radius:22px; border-color:var(--gray-line);}
+#page-cafeteria .hero{background:var(--roast); border-radius:22px; padding:36px 40px; gap:32px; color:var(--roast-fg);}
+#page-cafeteria .hero::after{display:none;}
+#page-cafeteria .hero-verdict-text b{font-size:20px; font-weight:700;}
+#page-cafeteria .hero-verdict-text span{color:rgba(244,238,230,.72); font-size:13px;}
+#page-cafeteria .hero-stats{gap:40px;}
+#page-cafeteria .hero-stat .v{font-size:clamp(34px,4.6vw,54px); font-weight:800; line-height:1; color:var(--crema); letter-spacing:-0.02em;}
+#page-cafeteria .hero-stat .l{color:rgba(244,238,230,.72); font-size:11.5px; letter-spacing:.1em; margin-top:8px;}
+#page-cafeteria .btn{border-radius:999px; padding:10px 20px; font-size:13px; font-weight:600; font-family:var(--body);}
+#page-cafeteria .btn-primary{background:var(--cherry);}
+#page-cafeteria .btn-primary:hover{background:#9C2A23;}
+#page-cafeteria .btn-ghost{color:#191512; border:1px solid #191512;}
+#page-cafeteria .btn-ghost:hover{border-color:var(--cherry); color:var(--cherry);}
+#page-cafeteria .kpi-value{font-weight:800; letter-spacing:-0.01em;}
+@media (max-width:720px){
+  #page-cafeteria header.cafe-hero{padding:36px 18px 20px;}
+  #page-cafeteria main{padding:6px 16px 60px;}
+  #page-cafeteria .hero{padding:26px 22px;}
+  #page-cafeteria .hero-stats{margin-left:0; gap:24px;}
+  #page-cafeteria .hero-stat{text-align:left;}
+}
+</style>
+
+<style>
+/* ===== Sitio de gerencia ===== */
+.content{margin-left:0;}
+#page-cafeteria #upload-panel{display:none;}
+#page-cafeteria .media-hero{margin:0; width:min(320px,100%); flex-shrink:0;}
+#page-cafeteria .media-hero video,#page-cafeteria .media-hero img{display:block; width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:28px; background:#2A211C;}
+#page-cafeteria .media-hero figcaption{font-size:12px; color:var(--text-muted); margin-top:8px;}
+#page-cafeteria .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;}
+#page-cafeteria .gallery figure{margin:0; background:#fff; border:1px solid var(--gray-line); border-radius:22px; overflow:hidden;}
+#page-cafeteria .gallery img,#page-cafeteria .gallery video{display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:#2A211C;}
+#page-cafeteria .gallery figcaption{padding:12px 16px; font-size:13px; color:var(--text-muted);}
+#page-cafeteria [hidden]{display:none !important;}
+@media (max-width:720px){#page-cafeteria .media-hero{width:100%;} #page-cafeteria .media-hero video,#page-cafeteria .media-hero img{aspect-ratio:16/10;}}
+#page-cafeteria header.cafe-hero .header-inner{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px 48px; align-items:center;}
+#page-cafeteria header.cafe-hero .header-period{grid-column:1; grid-row:2; justify-self:start;}
+#page-cafeteria .media-hero{grid-column:2; grid-row:1 / span 2; justify-self:end;}
+#page-cafeteria header.cafe-hero .header-inner{width:100%;}
+#page-cafeteria header.cafe-hero h1{max-width:20ch;}
+@media (max-width:720px){#page-cafeteria header.cafe-hero .header-inner{grid-template-columns:1fr;} #page-cafeteria .media-hero{grid-column:1; grid-row:auto;}}
+
+/* ===== Negro y dorado ===== */
+#page-cafeteria{--cream:#0E0D0C; --paper:#0E0D0C; --white:#1A1714; --navy:#F2EBDD; --navy-dark:#F2EBDD; --amber:#D4A64A; --amber-light:#3A2F18;
+  --text-muted:#A39A8A; --gray-line:#302B24; --roast:#1A1714; --roast-fg:#F2EBDD; --cherry:#D4A64A; --crema:#D4A64A; --gold:#D4A64A; --alert:#E5604F;
+  background:#0E0D0C; color:#F2EBDD;}
+body{background:#0E0D0C;}
+#page-cafeteria header.cafe-hero{background:#0E0D0C; color:#F2EBDD;}
+#page-cafeteria header.cafe-hero h1{color:#F2EBDD;}
+#page-cafeteria header.cafe-hero h1 em,#page-cafeteria .section-title em,#page-cafeteria .eyebrow{color:var(--gold);}
+#page-cafeteria .section-title{color:#F2EBDD;}
+#page-cafeteria .hero{background:linear-gradient(135deg,#1B1813,#14120F); border:1px solid #3A3123;}
+#page-cafeteria #period-select{background:#1A1714; color:#F2EBDD; border-color:#3A3123;}
+#page-cafeteria #period-select option{background:#1A1714; color:#F2EBDD;}
+#page-cafeteria .btn-primary{background:var(--gold); color:#0E0D0C;}
+#page-cafeteria .btn-primary:hover{background:#E6BB63;}
+#page-cafeteria .btn-ghost{color:#F2EBDD; border-color:#4A4130;}
+#page-cafeteria .panel,#page-cafeteria .kpi-card,#page-cafeteria .cluster-card{background:#1A1714; border-color:#302B24; color:#F2EBDD;}
+#page-cafeteria .gallery figure{background:#1A1714; border-color:#302B24;}
+#page-cafeteria .media-hero figcaption,#page-cafeteria .gallery figcaption{color:var(--text-muted);}
+
+/* ===== Estaciones donde actuar ===== */
+#page-cafeteria .act-group{margin-bottom:26px;}
+#page-cafeteria .act-gl{font-family:var(--display); font-weight:700; font-size:17px; margin-bottom:12px; display:flex; align-items:center; gap:10px;}
+#page-cafeteria .act-gl span{font-size:12px; font-family:var(--body); padding:2px 10px; border-radius:999px; background:#2A251D; color:var(--gold);}
+#page-cafeteria .act-gl.act-alta{color:var(--alert);} #page-cafeteria .act-gl.act-media{color:var(--gold);} #page-cafeteria .act-gl.act-seg{color:var(--text-muted);}
+#page-cafeteria .act-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px;}
+#page-cafeteria .act-card{background:#1A1714; border:1px solid #302B24; border-top:3px solid var(--text-muted); border-radius:18px; padding:18px 18px 16px; min-width:0;}
+#page-cafeteria .act-card.act-alta{border-top-color:var(--alert);} #page-cafeteria .act-card.act-media{border-top-color:var(--gold);}
+#page-cafeteria .act-h{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:8px;}
+#page-cafeteria .act-h b{font-family:var(--display); font-size:20px; font-weight:800; color:#F2EBDD;}
+#page-cafeteria .act-h span{font-size:11px; color:var(--text-muted); text-align:right;}
+#page-cafeteria .act-why{margin:0 0 12px; padding-left:18px; font-size:13.5px; line-height:1.5;}
+#page-cafeteria .act-why li::marker{color:var(--gold);}
+#page-cafeteria .act-m{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px 0; border-top:1px solid #302B24; border-bottom:1px solid #302B24;}
+#page-cafeteria .act-m small,#page-cafeteria .act-todo small{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:2px;}
+#page-cafeteria .act-m b{font-family:var(--display); font-size:17px; color:#F2EBDD;}
+#page-cafeteria .act-note{font-size:12.5px; color:var(--text-muted); margin-top:10px;}
+#page-cafeteria .act-todo{font-size:13px; line-height:1.5; margin-top:10px; color:#F2EBDD;}
+#page-cafeteria .act-todo small{color:var(--gold);}
+
+#page-cafeteria{--a-bg:rgba(60,154,95,.14); --b-bg:rgba(192,57,43,.16); --c-bg:rgba(46,126,189,.15); --d-bg:rgba(212,166,74,.14); --green-bg:rgba(60,154,95,.16); --red-bg:rgba(192,57,43,.18); --sin-bg:#25211B;}
+#page-cafeteria .chip{background:#1A1714; color:#F2EBDD; border-color:#3A3326;}
+#page-cafeteria .chip:hover{border-color:var(--gold);}
+#page-cafeteria .chip.active{background:var(--gold); border-color:var(--gold); color:#0E0D0C;}
+#page-cafeteria .search-box input{background:#1A1714; color:#F2EBDD; border-color:#3A3326;}
+#page-cafeteria .search-box svg{filter:invert(1);}
+#page-cafeteria .note-box{background:rgba(212,166,74,.12); border-left-color:var(--gold); color:#E6D3A3;}
+#page-cafeteria .note-box b{color:#F2D99A;}
+
+#page-cafeteria .accordion-head{background:#1A1714; color:#F2EBDD;}
+#page-cafeteria .accordion-item{border-color:#302B24; background:#1A1714;}
+#page-cafeteria .accordion-head *{color:inherit;}
+#page-cafeteria table.data-table thead th{background:#2A251D; color:var(--gold);}
+#page-cafeteria table.data-table thead th:hover{background:#352E22;}
+#page-cafeteria table.data-table tbody tr:hover{background:#221E19;}
+#page-cafeteria table.data-table tbody td{color:#F2EBDD;}
+#page-cafeteria .consumo-bar{opacity:.85;}
+#page-cafeteria .accordion-head:hover{background:#221E19;}
+#page-cafeteria .accordion-head .h-title{color:#F2EBDD;}
+#page-cafeteria .accordion-body li{color:#D9D0BF; font-size:13px;}
+
+/* detalle por estación: marcas de color */
+#page-cafeteria table.data-table tbody tr.row-falta td{background:rgba(229,72,60,.20);box-shadow:inset 0 1px 0 rgba(229,72,60,.25);}
+#page-cafeteria table.data-table tbody tr.row-falta:hover td{background:rgba(229,72,60,.30);}
+#page-cafeteria table.data-table tbody tr.row-falta td:first-child{box-shadow:inset 4px 0 0 #E5483C;}
+#page-cafeteria table.data-table tbody tr.row-bien td{background:rgba(46,160,90,.20);}
+#page-cafeteria table.data-table tbody tr.row-bien:hover td{background:rgba(46,160,90,.30);}
+#page-cafeteria table.data-table tbody tr.row-bien td:first-child{box-shadow:inset 4px 0 0 #2EA05A;}
+.tbl-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;margin:2px 0 10px;}
+.tbl-legend span{display:inline-flex;align-items:center;gap:6px;}
+.tbl-legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="content">
+<div class="page active" id="page-cafeteria"><header class="cafe-hero">
+  <div class="header-inner">
+    <div>
+      <div class="eyebrow">Sector cafetería · Grupo EMFACO</div>
+      <h1>Café, desperdicio y <em>vale por faltante</em>.</h1>
+      <p>Ventas, costos de café y desperdicio de las estaciones EMFACO en una vista unificada para decidir rápido. Filtrá, explorá el mapa de clusters y revisá el detalle por estación.</p>
+    </div>
+    <div class="header-period">
+      Período
+      <select id="period-select"></select>
+    </div>
+    <figure class="media-hero" id="media-hero" hidden>
+      <video id="hero-video" muted loop playsinline autoplay preload="metadata" hidden></video>
+      
+      <figcaption>Latte art en servicio</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero" id="hero"></div>
+
+  <section class="upload-panel" id="upload-panel">
+    <div class="upload-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    </div>
+    <div class="upload-text">
+      <b>Actualizar con el archivo del mes</b>
+      <span>Arrastrá un CSV acá o hacé clic en "Cargar archivo" — se recalcula todo en tu navegador, sin conexión ni depender de Claude.</span>
+      <div class="data-status" id="data-status">Mostrando datos de: <b>Septiembre 2026</b> (32 estaciones)</div>
+      <div class="upload-error" id="upload-error"></div>
+    </div>
+    <div class="upload-actions">
+      <button class="btn btn-ghost" id="btn-template">Descargar plantilla CSV</button>
+      <button class="btn btn-ghost" id="btn-reset">Restaurar ejemplo</button>
+      <button class="btn btn-primary" id="btn-upload">Cargar archivo</button>
+      <input type="file" id="file-input" accept=".csv">
+    </div>
+  </section>
+
+  <section class="filter-bar" id="filter-bar"></section>
+
+  <section class="kpi-row" id="kpi-row"></section>
+  <section class="kpi-row" id="kpi-row-2"></section>
+
+  <section id="acciones-pend">
+    <div class="eyebrow">Prioridades del mes</div>
+    <div class="section-title">Estaciones donde <em>actuar</em></div>
+    <div class="section-sub" id="act-sub"></div>
+    <div id="act-body"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Clusters</div><div class="section-title">Mapa de <em>rendimiento</em></div>
+    <div class="section-sub">Volumen (bolsas vendidas) vs. eficiencia (desperdicio por bolsa) — el corte de cada eje es la mediana de la red</div>
+    <div class="grid-2" style="grid-template-columns:1.55fr 1fr;">
+      <div class="panel" id="scatter-wrap">
+        <svg id="scatter" viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="tooltip"></div>
+      </div>
+      <div>
+        <div id="cluster-cards"></div>
+        <div class="note-box"><b>Cómo leer "Vale":</b> negativo = sobró plata y café — vale a favor de la estación. Positivo = faltante real, la estación debe explicarlo o reponerlo.</div>
+        <div class="note-box" id="sin-clasificar-note" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Red</div><div class="section-title">Distribución de la <em>red</em></div>
+    <div class="section-sub">Cómo se reparten las estaciones filtradas por cluster, razón social y estado del vale</div>
+    <div class="grid-3">
+      <div class="panel viz-card">
+        <h3>Estaciones por cluster</h3>
+        <div class="viz-sub">A / B / C / D</div>
+        <div id="donut-cluster"></div>
+      </div>
+      <div class="panel viz-card">
+        <h3>Estaciones por razón social</h3>
+        <div class="viz-sub">6 empresas del grupo</div>
+        <div id="donut-company"></div>
+      </div>
+      <div class="panel viz-card">
+        <h3>% con faltante real</h3>
+        <div class="viz-sub">Estaciones que deben vale sobre el total filtrado</div>
+        <div id="gauge-falta"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Vale</div><div class="section-title">Impacto <em>financiero</em></div>
+    <div class="section-sub">Balance de vale por razón social y cobertura de seguro sobre venta por estación</div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:12px;">Balance de vale por razón social</h3>
+        <div id="bar-vale"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:12px;">Seguro % s/venta — 10 estaciones más altas</h3>
+        <div id="bar-seguro"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Resultados</div><div class="section-title">Evolución de febrero a <em>septiembre</em></div>
+    <div class="section-sub">Histórico real de febrero a septiembre, mes por mes: así viene la red en el tiempo. Pilar del Este tiene datos desde mayo, cuando se sumó a la red. El resto tiene los 8 meses completos.</div>
+
+    <div class="hero" id="evo-verdict" style="margin-bottom:18px;"></div>
+
+    <div class="panel">
+      <div class="filter-bar" id="evo-tabs" style="margin-bottom:6px;"></div>
+      <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:2px;" id="evo-chart-title">Ratio de desperdicio promedio de la red</h3>
+      <div class="viz-sub" style="text-align:left;margin-bottom:8px;" id="evo-chart-sub">Desperdicio ÷ bolsas — cuanto más bajo, mejor</div>
+      <svg id="evo-chart" viewBox="0 0 1120 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"></svg>
+    </div>
+
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--a);margin-bottom:8px;">Top 5 · Más mejoraron (<span class="evo-range">Feb → Sep</span>)</h3>
+        <div id="evo-rank-improved"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--b);margin-bottom:8px;">Top 5 · Más empeoraron (<span class="evo-range">Feb → Sep</span>)</h3>
+        <div id="evo-rank-worsened"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--d);margin-bottom:8px;">Ratio promedio más alto sostenido</h3>
+        <div id="evo-rank-sustained"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Tendencia</div><div class="section-title">Mes actual vs. <em>mes anterior</em></div>
+    <div class="section-sub" id="trend-sub">Las 32 estaciones, ordenadas de mayor mejora a mayor empeoramiento — el punto gris es el mes anterior, el de color es el actual.</div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:10px;">Desperdicio — top variaciones</h3>
+        <div id="trend-desp"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:10px;">Bolsas vendidas — top variaciones</h3>
+        <div id="trend-bolsas"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Consumo</div><div class="section-title">Consumo por <em>kilo de café</em></div>
+    <div class="section-sub">Banda verde = rango habitual de la red (85–115). Fuera de la banda, el consumo da muy alto o muy bajo</div>
+    <div class="panel">
+      <div class="consumo-chart" id="consumo-chart"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Prioridades</div><div class="section-title">Rankings <em>rápidos</em></div>
+    <div class="section-sub">Para saber dónde mirar primero</div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:8px;">Top 5 · Mayor desperdicio</h3>
+        <div id="rank-desp"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:12.5px;color:var(--navy);margin-bottom:8px;">Top 5 · Mejor eficiencia (ratio más bajo)</h3>
+        <div id="rank-eff"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Empresas</div><div class="section-title">Razón social × <em>cluster</em></div>
+    <div class="section-sub">Cantidad de estaciones de cada empresa en cada cuadrante de rendimiento</div>
+    <div class="panel">
+      <div id="heatmap"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Acciones</div><div class="section-title">Acciones para <em>hacer</em></div>
+    <div class="section-sub">Por cluster, en orden de prioridad</div>
+    <div id="accordion"></div>
+  </section>
+
+    <section id="terreno" hidden>
+    <div class="eyebrow">Estandarización</div>
+    <div class="section-title">Estándar <em>en la barra</em></div>
+    <div class="section-sub">Cada paso de la preparación tiene un parámetro medible: se calibra, se mide y se repite igual en todas las estaciones.</div>
+    <div class="gallery" id="gallery">
+      <figure hidden><video data-src="media/leche.mp4" data-alt="https://elias-cafe-consultor.netlify.app/media/leche.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Leche a temperatura justa</b><br>Termómetro, purga y textura antes de servir.</figcaption></figure>
+      <figure hidden><video data-src="media/espresso.mp4" data-alt="https://elias-cafe-consultor.netlify.app/media/espresso.mp4" muted loop playsinline autoplay preload="metadata"></video><figcaption><b>Espresso calibrado</b><br>Dosis, tiempo y rendimiento fijos en cada taza.</figcaption></figure>
+    </div>
+  </section>
+
+<section>
+    <div class="eyebrow">Detalle</div><div class="section-title">Detalle por <em>estación</em></div>
+    <div class="section-sub" id="table-count"></div>
+    <div class="tbl-legend"><span><i style="background:#E5483C"></i>Con faltante de vale (toda la fila)</span><span><i style="background:#2EA05A"></i>Las 3 que mejoran y están bien (ratio bajo y menor que el mes anterior)</span></div>
+    <div class="panel" style="padding:0; overflow:hidden;">
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="data-table">
+          <thead>
+            <tr>
+              <th data-key="name">Estación <span class="arrow"></span></th>
+              <th data-key="comp">Razón social <span class="arrow"></span></th>
+              <th data-key="cluster">Cluster <span class="arrow"></span></th>
+              <th class="num" data-key="bolsas">Bolsas <span class="arrow"></span></th>
+              <th class="num" data-key="desp">Desperdicio <span class="arrow"></span></th>
+              <th class="num" data-key="ratio">Ratio <span class="arrow"></span></th>
+              <th class="num" data-key="seguro">Seguro %<span class="arrow"></span></th>
+              <th class="num" data-key="consumo">Consumo/kg<span class="arrow"></span></th>
+              <th class="num" data-key="vale">Vale <span class="arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>EMFACO S.A. · Panel de control operativo · Septiembre 2026<span class="signature">Capacitador y entrenador barista — Elías Jiménez</span></footer>
+</main></div>
+    
+</div>
+<script>
+
+// ---- cafeteria dashboard ----
+(function(){
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const DEFAULT_ROWS = [{"name":"RUTA3","comp":"ELI S.A","vale":-47515,"desp":51,"bolsas":20,"seguro":9.97,"consumo":102.3,"prevDesp":37,"prevBolsas":30},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":83997,"desp":42,"bolsas":28,"seguro":15.29,"consumo":110.75,"prevDesp":27,"prevBolsas":27},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-697136,"desp":110,"bolsas":59,"seguro":28.04,"consumo":96.92,"prevDesp":64,"prevBolsas":60},{"name":"TESEI","comp":"EXFACO","vale":-84949,"desp":49,"bolsas":22,"seguro":11.98,"consumo":111.18,"prevDesp":45,"prevBolsas":25},{"name":"BARCALA","comp":"EMFACO S.A","vale":-530893,"desp":23,"bolsas":50,"seguro":26.14,"consumo":105.04,"prevDesp":0,"prevBolsas":53},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-337229,"desp":51,"bolsas":83,"seguro":37.19,"consumo":90.22,"prevDesp":60,"prevBolsas":70},{"name":"GNECCO 1","comp":"ELI S.A","vale":107882,"desp":12,"bolsas":34,"seguro":19.27,"consumo":113.71,"prevDesp":18,"prevBolsas":39},{"name":"GNECCO 2","comp":"EXFACO","vale":-86853,"desp":19,"bolsas":29,"seguro":15.54,"consumo":107.86,"prevDesp":29,"prevBolsas":31},{"name":"MORENO","comp":"EMFACO S.A","vale":-784023,"desp":21,"bolsas":59,"seguro":31.6,"consumo":107.46,"prevDesp":58,"prevBolsas":68},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-124457.0,"desp":18,"bolsas":32,"seguro":12.61,"consumo":79.34,"prevDesp":12,"prevBolsas":32},{"name":"GBELL","comp":"EMFACO S.A","vale":282897,"desp":40,"bolsas":19,"seguro":8.79,"consumo":94.68,"prevDesp":50,"prevBolsas":19},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-241315.0,"desp":12,"bolsas":25,"seguro":12.97,"consumo":104.28,"prevDesp":19,"prevBolsas":35},{"name":"VICTORICA","comp":"ELI S.A","vale":-16932,"desp":10,"bolsas":26,"seguro":14.98,"consumo":115.62,"prevDesp":22,"prevBolsas":34},{"name":"GUEMES","comp":"ELI S.A","vale":-290190,"desp":18,"bolsas":23,"seguro":13.35,"consumo":116.87,"prevDesp":62,"prevBolsas":30},{"name":"GORRITTI","comp":"ELI S.A","vale":-70193,"desp":18,"bolsas":44,"seguro":22.64,"consumo":103.34,"prevDesp":23,"prevBolsas":46},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":-419101,"desp":69,"bolsas":29,"seguro":13.27,"consumo":93.86,"prevDesp":67,"prevBolsas":24},{"name":"HUDSON","comp":"EMFACO S.A","vale":-371076,"desp":50,"bolsas":40,"seguro":22.14,"consumo":111.95,"prevDesp":91,"prevBolsas":43},{"name":"LUJANERA","comp":"EXFACO","vale":-109769.0,"desp":12,"bolsas":17,"seguro":9.29,"consumo":109.94,"prevDesp":0,"prevBolsas":18},{"name":"RIBERA","comp":"EXFACO","vale":-595578,"desp":29,"bolsas":39,"seguro":19.17,"consumo":99.05,"prevDesp":21,"prevBolsas":35},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":-195449,"desp":120,"bolsas":56,"seguro":29.48,"consumo":107.45,"prevDesp":79,"prevBolsas":56},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-272323,"desp":127,"bolsas":43,"seguro":19.09,"consumo":91.77,"prevDesp":79,"prevBolsas":36},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-829685,"desp":276,"bolsas":55,"seguro":30.03,"consumo":114.2,"prevDesp":131,"prevBolsas":57},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-424337,"desp":19,"bolsas":55,"seguro":28.8,"consumo":105.09,"prevDesp":55,"prevBolsas":61},{"name":"PUERTOS","comp":"EXFACO","vale":232118,"desp":109,"bolsas":36,"seguro":15.73,"consumo":90.42,"prevDesp":65,"prevBolsas":41},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":-481576.0,"desp":42,"bolsas":35,"seguro":20.64,"consumo":119.14,"prevDesp":22,"prevBolsas":35},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-391068,"desp":46,"bolsas":39,"seguro":19.02,"consumo":98.72,"prevDesp":44,"prevBolsas":43},{"name":"PERALTA","comp":"EMFACO S.A","vale":-621775,"desp":82,"bolsas":17,"seguro":7.88,"consumo":97.47,"prevDesp":38,"prevBolsas":32},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-70125,"desp":77,"bolsas":22,"seguro":9.62,"consumo":91,"prevDesp":80,"prevBolsas":26},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":61183,"desp":99,"bolsas":9,"seguro":2.0,"consumo":55.56,"prevDesp":43,"prevBolsas":10},{"name":"JARA","comp":"SALINAS CHICO","vale":-71281,"desp":0,"bolsas":15,"seguro":7.96,"consumo":106.2,"prevDesp":87,"prevBolsas":15},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":10710.0,"desp":52,"bolsas":20,"seguro":8.85,"consumo":91.1,"prevDesp":65,"prevBolsas":28},{"name":"RUTA 14","comp":"LOMFACO","vale":-51.0,"desp":112,"bolsas":70,"seguro":33.02,"consumo":95.93,"prevDesp":40,"prevBolsas":78}];
+
+const HISTORIAL = {"network":[{"mes":"Feb","bolsas":1005,"desperdicio":2356,"valeNeto":-4183968,"faltaReal":8,"ratioProm":3.583,"totalEstaciones":31},{"mes":"Mar","bolsas":1209,"desperdicio":2122,"valeNeto":-387056,"faltaReal":8,"ratioProm":1.947,"totalEstaciones":31},{"mes":"Abr","bolsas":1081,"desperdicio":2438,"valeNeto":-4439397,"faltaReal":7,"ratioProm":2.569,"totalEstaciones":31},{"mes":"May","bolsas":1140,"desperdicio":2069,"valeNeto":-10603563,"faltaReal":5,"ratioProm":1.962,"totalEstaciones":32},{"mes":"Jun","bolsas":1154,"desperdicio":1811,"valeNeto":-4995433,"faltaReal":5,"ratioProm":1.891,"totalEstaciones":32},{"mes":"Jul","bolsas":1155,"desperdicio":1831,"valeNeto":-5533670,"faltaReal":4,"ratioProm":1.926,"totalEstaciones":32},{"mes":"Ago","bolsas":1237,"desperdicio":1533,"valeNeto":-6558617,"faltaReal":2,"ratioProm":1.491,"totalEstaciones":32},{"mes":"Sep","bolsas":1150,"desperdicio":1815,"valeNeto":-7386092.0,"faltaReal":6,"ratioProm":1.868,"totalEstaciones":32}],"stations":[{"name":"RUTA3","comp":"ELI S.A","series":{"Feb":{"bolsas":13,"desp":15,"ratio":1.154,"vale":-44656},"Mar":{"bolsas":15,"desp":89,"ratio":5.933,"vale":-34672},"Abr":{"bolsas":18,"desp":35,"ratio":1.944,"vale":-15436.0},"May":{"bolsas":22,"desp":57,"ratio":2.591,"vale":-243508.0},"Jun":{"bolsas":18,"desp":8,"ratio":0.444,"vale":-91137},"Jul":{"bolsas":20,"desp":33,"ratio":1.65,"vale":-41225},"Ago":{"bolsas":30,"desp":37,"ratio":1.233,"vale":-98175},"Sep":{"bolsas":20,"desp":51,"ratio":2.55,"vale":-47515}},"deltaRatio":1.396,"avgRatio":2.187,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"SAN JUSTO","comp":"EMFACO S.A","series":{"Feb":{"bolsas":24,"desp":50,"ratio":2.083,"vale":-169472},"Mar":{"bolsas":32,"desp":22,"ratio":0.688,"vale":-58816.0},"Abr":{"bolsas":28,"desp":77,"ratio":2.75,"vale":-58361},"May":{"bolsas":30,"desp":0,"ratio":0.0,"vale":76007},"Jun":{"bolsas":31,"desp":42,"ratio":1.355,"vale":-119918.0},"Jul":{"bolsas":27,"desp":37,"ratio":1.37,"vale":-56253.0},"Ago":{"bolsas":27,"desp":27,"ratio":1.0,"vale":-2329.0},"Sep":{"bolsas":28,"desp":42,"ratio":1.5,"vale":83997}},"deltaRatio":-0.583,"avgRatio":1.343,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"ZEBALLOS","comp":"ELI S.A","series":{"Feb":{"bolsas":49,"desp":83,"ratio":1.694,"vale":-404304},"Mar":{"bolsas":54,"desp":59,"ratio":1.093,"vale":-331168},"Abr":{"bolsas":59,"desp":31,"ratio":0.525,"vale":-155822},"May":{"bolsas":62,"desp":16,"ratio":0.258,"vale":-281571},"Jun":{"bolsas":63,"desp":38,"ratio":0.603,"vale":-371110},"Jul":{"bolsas":60,"desp":81,"ratio":1.35,"vale":-72692},"Ago":{"bolsas":60,"desp":64,"ratio":1.067,"vale":-479553.0},"Sep":{"bolsas":59,"desp":110,"ratio":1.864,"vale":-697136}},"deltaRatio":0.17,"avgRatio":1.057,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"TESEI","comp":"EXFACO","series":{"Feb":{"bolsas":15,"desp":71,"ratio":4.733,"vale":89136},"Mar":{"bolsas":34,"desp":5,"ratio":0.147,"vale":-48512},"Abr":{"bolsas":23,"desp":32,"ratio":1.391,"vale":-163965},"May":{"bolsas":25,"desp":60,"ratio":2.4,"vale":-173400},"Jun":{"bolsas":24,"desp":60,"ratio":2.5,"vale":76755},"Jul":{"bolsas":25,"desp":79,"ratio":3.16,"vale":-56814},"Ago":{"bolsas":25,"desp":45,"ratio":1.8,"vale":1054.0},"Sep":{"bolsas":22,"desp":49,"ratio":2.227,"vale":-84949}},"deltaRatio":-2.506,"avgRatio":2.295,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"BARCALA","comp":"EMFACO S.A","series":{"Feb":{"bolsas":50,"desp":13,"ratio":0.26,"vale":-199232.0},"Mar":{"bolsas":63,"desp":35,"ratio":0.556,"vale":-80640},"Abr":{"bolsas":43,"desp":55,"ratio":1.279,"vale":-300798},"May":{"bolsas":68,"desp":28,"ratio":0.412,"vale":-1016770},"Jun":{"bolsas":53,"desp":26,"ratio":0.491,"vale":-283662},"Jul":{"bolsas":53,"desp":0,"ratio":0.0,"vale":-203371},"Ago":{"bolsas":53,"desp":0,"ratio":0.0,"vale":-179367.0},"Sep":{"bolsas":50,"desp":23,"ratio":0.46,"vale":-530893}},"deltaRatio":0.2,"avgRatio":0.432,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"LELOIR","comp":"SERVICIOS LUARCA","series":{"Feb":{"bolsas":70,"desp":97,"ratio":1.386,"vale":525136},"Mar":{"bolsas":74,"desp":251,"ratio":3.392,"vale":181296},"Abr":{"bolsas":67,"desp":158,"ratio":2.358,"vale":-41038},"May":{"bolsas":76,"desp":0,"ratio":0.0,"vale":-490161},"Jun":{"bolsas":69,"desp":76,"ratio":1.101,"vale":-624070},"Jul":{"bolsas":72,"desp":122,"ratio":1.694,"vale":-1089479},"Ago":{"bolsas":70,"desp":60,"ratio":0.857,"vale":-113917.0},"Sep":{"bolsas":83,"desp":51,"ratio":0.614,"vale":-337229}},"deltaRatio":-0.772,"avgRatio":1.425,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GNECCO 1","comp":"ELI S.A","series":{"Feb":{"bolsas":28,"desp":92,"ratio":3.286,"vale":-965088.0},"Mar":{"bolsas":43,"desp":51,"ratio":1.186,"vale":-12480.0},"Abr":{"bolsas":35,"desp":41,"ratio":1.171,"vale":-128996.0},"May":{"bolsas":36,"desp":63,"ratio":1.75,"vale":-212347},"Jun":{"bolsas":34,"desp":31,"ratio":0.912,"vale":-92939},"Jul":{"bolsas":36,"desp":28,"ratio":0.778,"vale":-110755.0},"Ago":{"bolsas":39,"desp":18,"ratio":0.462,"vale":-116212},"Sep":{"bolsas":34,"desp":12,"ratio":0.353,"vale":107882}},"deltaRatio":-2.933,"avgRatio":1.237,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GNECCO 2","comp":"EXFACO","series":{"Feb":{"bolsas":33,"desp":55,"ratio":1.667,"vale":-347408},"Mar":{"bolsas":49,"desp":29,"ratio":0.592,"vale":-120944},"Abr":{"bolsas":26,"desp":19,"ratio":0.731,"vale":-220813.0},"May":{"bolsas":31,"desp":11,"ratio":0.355,"vale":-488478.0},"Jun":{"bolsas":32,"desp":37,"ratio":1.156,"vale":-325618},"Jul":{"bolsas":32,"desp":16,"ratio":0.5,"vale":-330599},"Ago":{"bolsas":31,"desp":29,"ratio":0.935,"vale":-112931.0},"Sep":{"bolsas":29,"desp":19,"ratio":0.655,"vale":-86853}},"deltaRatio":-1.012,"avgRatio":0.824,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"MORENO","comp":"EMFACO S.A","series":{"Feb":{"bolsas":27,"desp":18,"ratio":0.667,"vale":69936},"Mar":{"bolsas":31,"desp":20,"ratio":0.645,"vale":8384.0},"Abr":{"bolsas":15,"desp":36,"ratio":2.4,"vale":90797},"May":{"bolsas":2,"desp":0,"ratio":0.0,"vale":-158984},"Jun":{"bolsas":24,"desp":1,"ratio":0.042,"vale":-68000},"Jul":{"bolsas":46,"desp":22,"ratio":0.478,"vale":-24191.0},"Ago":{"bolsas":68,"desp":58,"ratio":0.853,"vale":-378250},"Sep":{"bolsas":59,"desp":21,"ratio":0.356,"vale":-784023}},"deltaRatio":-0.311,"avgRatio":0.68,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"LIBERTADOR","comp":"ELI S.A","series":{"Feb":{"bolsas":28,"desp":24,"ratio":0.857,"vale":-4720.0},"Mar":{"bolsas":33,"desp":7,"ratio":0.212,"vale":-2496.0},"Abr":{"bolsas":32,"desp":6,"ratio":0.188,"vale":-143616},"May":{"bolsas":45,"desp":22,"ratio":0.489,"vale":-186303},"Jun":{"bolsas":38,"desp":18,"ratio":0.474,"vale":-26690.0},"Jul":{"bolsas":29,"desp":26,"ratio":0.897,"vale":109752},"Ago":{"bolsas":32,"desp":12,"ratio":0.375,"vale":-18462},"Sep":{"bolsas":32,"desp":18,"ratio":0.562,"vale":-124457.0}},"deltaRatio":-0.295,"avgRatio":0.507,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GBELL","comp":"EMFACO S.A","series":{"Feb":{"bolsas":11,"desp":131,"ratio":11.909,"vale":225344},"Mar":{"bolsas":16,"desp":106,"ratio":6.625,"vale":-48064},"Abr":{"bolsas":14,"desp":115,"ratio":8.214,"vale":-14263.0},"May":{"bolsas":17,"desp":45,"ratio":2.647,"vale":-76738},"Jun":{"bolsas":20,"desp":45,"ratio":2.25,"vale":-396950},"Jul":{"bolsas":17,"desp":63,"ratio":3.706,"vale":-30294},"Ago":{"bolsas":19,"desp":50,"ratio":2.632,"vale":-57001},"Sep":{"bolsas":19,"desp":40,"ratio":2.105,"vale":282897}},"deltaRatio":-9.804,"avgRatio":5.011,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"BOULEVARD","comp":"EMFACO S.A","series":{"Feb":{"bolsas":19,"desp":15,"ratio":0.789,"vale":-125920},"Mar":{"bolsas":29,"desp":80,"ratio":2.759,"vale":-261312},"Abr":{"bolsas":27,"desp":6,"ratio":0.222,"vale":-158474},"May":{"bolsas":23,"desp":12,"ratio":0.522,"vale":-329494},"Jun":{"bolsas":28,"desp":0,"ratio":0.0,"vale":-237201},"Jul":{"bolsas":23,"desp":19,"ratio":0.826,"vale":-136578},"Ago":{"bolsas":35,"desp":19,"ratio":0.543,"vale":-167263},"Sep":{"bolsas":25,"desp":12,"ratio":0.48,"vale":-241315.0}},"deltaRatio":-0.309,"avgRatio":0.768,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"VICTORICA","comp":"ELI S.A","series":{"Feb":{"bolsas":21,"desp":19,"ratio":0.905,"vale":82336},"Mar":{"bolsas":28,"desp":37,"ratio":1.321,"vale":-191072},"Abr":{"bolsas":24,"desp":39,"ratio":1.625,"vale":-109480.0},"May":{"bolsas":25,"desp":10,"ratio":0.4,"vale":-159239},"Jun":{"bolsas":27,"desp":20,"ratio":0.741,"vale":-105128},"Jul":{"bolsas":24,"desp":29,"ratio":1.208,"vale":-45849},"Ago":{"bolsas":34,"desp":22,"ratio":0.647,"vale":-103870},"Sep":{"bolsas":26,"desp":10,"ratio":0.385,"vale":-16932}},"deltaRatio":-0.52,"avgRatio":0.904,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GUEMES","comp":"ELI S.A","series":{"Feb":{"bolsas":23,"desp":44,"ratio":1.913,"vale":15520.0},"Mar":{"bolsas":27,"desp":164,"ratio":6.074,"vale":-151760},"Abr":{"bolsas":26,"desp":54,"ratio":2.077,"vale":92191},"May":{"bolsas":23,"desp":0,"ratio":0.0,"vale":-11832.0},"Jun":{"bolsas":31,"desp":44,"ratio":1.419,"vale":-146761},"Jul":{"bolsas":28,"desp":17,"ratio":0.607,"vale":-129081.0},"Ago":{"bolsas":30,"desp":62,"ratio":2.067,"vale":-174335},"Sep":{"bolsas":23,"desp":18,"ratio":0.783,"vale":-290190}},"deltaRatio":-1.13,"avgRatio":1.867,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GORRITTI","comp":"ELI S.A","series":{"Feb":{"bolsas":42,"desp":68,"ratio":1.619,"vale":-57824},"Mar":{"bolsas":59,"desp":37,"ratio":0.627,"vale":-218016},"Abr":{"bolsas":48,"desp":32,"ratio":0.667,"vale":-112778},"May":{"bolsas":44,"desp":26,"ratio":0.591,"vale":-215764},"Jun":{"bolsas":48,"desp":null,"ratio":null,"vale":-207536},"Jul":{"bolsas":49,"desp":3,"ratio":0.061,"vale":-135728},"Ago":{"bolsas":46,"desp":23,"ratio":0.5,"vale":-102935},"Sep":{"bolsas":44,"desp":18,"ratio":0.409,"vale":-70193}},"deltaRatio":-1.21,"avgRatio":0.639,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","series":{"Feb":{"bolsas":22,"desp":71,"ratio":3.227,"vale":320848},"Mar":{"bolsas":29,"desp":75,"ratio":2.586,"vale":-226832.0},"Abr":{"bolsas":27,"desp":177,"ratio":6.556,"vale":-245718},"May":{"bolsas":29,"desp":60,"ratio":2.069,"vale":130186},"Jun":{"bolsas":24,"desp":61,"ratio":2.542,"vale":88213},"Jul":{"bolsas":27,"desp":0,"ratio":0.0,"vale":331381},"Ago":{"bolsas":24,"desp":67,"ratio":2.792,"vale":-174726},"Sep":{"bolsas":29,"desp":69,"ratio":2.379,"vale":-419101}},"deltaRatio":-0.848,"avgRatio":2.769,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"HUDSON","comp":"EMFACO S.A","series":{"Feb":{"bolsas":36,"desp":134,"ratio":3.722,"vale":-166736},"Mar":{"bolsas":61,"desp":171,"ratio":2.803,"vale":-209888},"Abr":{"bolsas":53,"desp":180,"ratio":3.396,"vale":-419509},"May":{"bolsas":53,"desp":113,"ratio":2.132,"vale":-219776},"Jun":{"bolsas":44,"desp":281,"ratio":6.386,"vale":-221493},"Jul":{"bolsas":43,"desp":262,"ratio":6.093,"vale":-6137.0},"Ago":{"bolsas":43,"desp":91,"ratio":2.116,"vale":-274499},"Sep":{"bolsas":40,"desp":50,"ratio":1.25,"vale":-371076}},"deltaRatio":-2.472,"avgRatio":3.487,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"LUJANERA","comp":"EXFACO","series":{"Feb":{"bolsas":17,"desp":53,"ratio":3.118,"vale":-114416.0},"Mar":{"bolsas":17,"desp":23,"ratio":1.353,"vale":-2016.0},"Abr":{"bolsas":19,"desp":39,"ratio":2.053,"vale":4267},"May":{"bolsas":18,"desp":0,"ratio":0.0,"vale":37961},"Jun":{"bolsas":18,"desp":54,"ratio":3.0,"vale":-169507},"Jul":{"bolsas":18,"desp":38,"ratio":2.111,"vale":-114597},"Ago":{"bolsas":18,"desp":0,"ratio":0.0,"vale":-84558},"Sep":{"bolsas":17,"desp":12,"ratio":0.706,"vale":-109769.0}},"deltaRatio":-2.412,"avgRatio":1.543,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"RIBERA","comp":"EXFACO","series":{"Feb":{"bolsas":28,"desp":35,"ratio":1.25,"vale":-88144},"Mar":{"bolsas":34,"desp":25,"ratio":0.735,"vale":-240752},"Abr":{"bolsas":37,"desp":32,"ratio":0.865,"vale":-634797},"May":{"bolsas":37,"desp":20,"ratio":0.541,"vale":-567545},"Jun":{"bolsas":42,"desp":24,"ratio":0.571,"vale":-177055},"Jul":{"bolsas":37,"desp":15,"ratio":0.405,"vale":-923049},"Ago":{"bolsas":35,"desp":21,"ratio":0.6,"vale":-925395},"Sep":{"bolsas":39,"desp":29,"ratio":0.744,"vale":-595578}},"deltaRatio":-0.506,"avgRatio":0.714,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","series":{"Feb":{"bolsas":47,"desp":47,"ratio":1.0,"vale":-17440.0},"Mar":{"bolsas":51,"desp":103,"ratio":2.02,"vale":283888},"Abr":{"bolsas":52,"desp":230,"ratio":4.423,"vale":-601375},"May":{"bolsas":57,"desp":86,"ratio":1.509,"vale":-4862.0},"Jun":{"bolsas":63,"desp":68,"ratio":1.079,"vale":494717},"Jul":{"bolsas":54,"desp":114,"ratio":2.111,"vale":538203},"Ago":{"bolsas":56,"desp":79,"ratio":1.411,"vale":185538},"Sep":{"bolsas":56,"desp":120,"ratio":2.143,"vale":-195449}},"deltaRatio":1.143,"avgRatio":1.962,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"CAMAÑO","comp":"EMFACO S.A","series":{"Feb":{"bolsas":38,"desp":82,"ratio":2.158,"vale":-1452096},"Mar":{"bolsas":50,"desp":0,"ratio":0.0,"vale":412960.0},"Abr":{"bolsas":43,"desp":163,"ratio":3.791,"vale":218994},"May":{"bolsas":37,"desp":112,"ratio":3.027,"vale":-11526.0},"Jun":{"bolsas":43,"desp":51,"ratio":1.186,"vale":-6732.0},"Jul":{"bolsas":41,"desp":93,"ratio":2.268,"vale":-227137.0},"Ago":{"bolsas":36,"desp":79,"ratio":2.194,"vale":-44166.0},"Sep":{"bolsas":43,"desp":127,"ratio":2.953,"vale":-272323}},"deltaRatio":0.795,"avgRatio":2.197,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"SAN VICENTE","comp":"SALINAS CHICO","series":{"Feb":{"bolsas":53,"desp":289,"ratio":5.453,"vale":-117088.0},"Mar":{"bolsas":55,"desp":98,"ratio":1.782,"vale":785888},"Abr":{"bolsas":46,"desp":249,"ratio":5.413,"vale":-545564},"May":{"bolsas":54,"desp":283,"ratio":5.241,"vale":-2584051},"Jun":{"bolsas":56,"desp":153,"ratio":2.732,"vale":-965362},"Jul":{"bolsas":53,"desp":84,"ratio":1.585,"vale":-638197},"Ago":{"bolsas":57,"desp":131,"ratio":2.298,"vale":-488852},"Sep":{"bolsas":55,"desp":276,"ratio":5.018,"vale":-829685}},"deltaRatio":-0.435,"avgRatio":3.69,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"BESCHETD","comp":"EMFACO S.A","series":{"Feb":{"bolsas":34,"desp":154,"ratio":4.529,"vale":118816.0},"Mar":{"bolsas":57,"desp":137,"ratio":2.404,"vale":402480},"Abr":{"bolsas":54,"desp":225,"ratio":4.167,"vale":-145401},"May":{"bolsas":64,"desp":231,"ratio":3.609,"vale":-864535},"Jun":{"bolsas":68,"desp":124,"ratio":1.824,"vale":-896801},"Jul":{"bolsas":62,"desp":50,"ratio":0.806,"vale":-962166},"Ago":{"bolsas":61,"desp":55,"ratio":0.902,"vale":-500956},"Sep":{"bolsas":55,"desp":19,"ratio":0.345,"vale":-424337}},"deltaRatio":-4.184,"avgRatio":2.323,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"PUERTOS","comp":"EXFACO","series":{"Feb":{"bolsas":21,"desp":138,"ratio":6.571,"vale":-22672.0},"Mar":{"bolsas":37,"desp":108,"ratio":2.919,"vale":108080},"Abr":{"bolsas":35,"desp":216,"ratio":6.171,"vale":222666.0},"May":{"bolsas":34,"desp":231,"ratio":6.794,"vale":-833765},"Jun":{"bolsas":36,"desp":129,"ratio":3.583,"vale":-296480},"Jul":{"bolsas":38,"desp":120,"ratio":3.158,"vale":-246976},"Ago":{"bolsas":41,"desp":65,"ratio":1.585,"vale":-227137.0},"Sep":{"bolsas":36,"desp":109,"ratio":3.028,"vale":232118}},"deltaRatio":-3.543,"avgRatio":4.226,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","series":{"Feb":{"bolsas":33,"desp":64,"ratio":1.939,"vale":-238688},"Mar":{"bolsas":32,"desp":65,"ratio":2.031,"vale":-149504},"Abr":{"bolsas":41,"desp":45,"ratio":1.098,"vale":-48314},"May":{"bolsas":33,"desp":63,"ratio":1.909,"vale":59228.0},"Jun":{"bolsas":34,"desp":61,"ratio":1.794,"vale":-46597.0},"Jul":{"bolsas":35,"desp":60,"ratio":1.714,"vale":-3043.0},"Ago":{"bolsas":43,"desp":44,"ratio":1.023,"vale":-291057},"Sep":{"bolsas":39,"desp":46,"ratio":1.179,"vale":-391068}},"deltaRatio":-0.76,"avgRatio":1.586,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"PERALTA","comp":"EMFACO S.A","series":{"Feb":{"bolsas":29,"desp":58,"ratio":2.0,"vale":-111696},"Mar":{"bolsas":33,"desp":79,"ratio":2.394,"vale":-226384},"Abr":{"bolsas":31,"desp":0,"ratio":0.0,"vale":-106488},"May":{"bolsas":14,"desp":48,"ratio":3.429,"vale":-14756},"Jun":{"bolsas":13,"desp":57,"ratio":4.385,"vale":-45951},"Jul":{"bolsas":22,"desp":93,"ratio":4.227,"vale":-85374},"Ago":{"bolsas":32,"desp":38,"ratio":1.188,"vale":-72131},"Sep":{"bolsas":17,"desp":82,"ratio":4.824,"vale":-621775}},"deltaRatio":2.824,"avgRatio":2.806,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"CATAMARCA","comp":"SALINAS CHICO","series":{"Feb":{"bolsas":15,"desp":38,"ratio":2.533,"vale":-19040},"Mar":{"bolsas":16,"desp":37,"ratio":2.312,"vale":-51792.0},"Abr":{"bolsas":17,"desp":26,"ratio":1.529,"vale":175491},"May":{"bolsas":19,"desp":34,"ratio":1.789,"vale":63410.0},"Jun":{"bolsas":19,"desp":83,"ratio":4.368,"vale":-64515.0},"Jul":{"bolsas":22,"desp":100,"ratio":4.545,"vale":-196928},"Ago":{"bolsas":26,"desp":80,"ratio":3.077,"vale":-257278},"Sep":{"bolsas":22,"desp":77,"ratio":3.5,"vale":-70125}},"deltaRatio":0.967,"avgRatio":2.957,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"LURO","comp":"SERVICIOS LUARCA","series":{"Feb":{"bolsas":4,"desp":131,"ratio":32.75,"vale":-5504},"Mar":{"bolsas":10,"desp":14,"ratio":1.4,"vale":-22656},"Abr":{"bolsas":5,"desp":52,"ratio":10.4,"vale":-95965},"May":{"bolsas":4,"desp":17,"ratio":4.25,"vale":-108919.0},"Jun":{"bolsas":5,"desp":17,"ratio":3.4,"vale":48926},"Jul":{"bolsas":5,"desp":33,"ratio":6.6,"vale":-25908},"Ago":{"bolsas":10,"desp":43,"ratio":4.3,"vale":-93602},"Sep":{"bolsas":9,"desp":99,"ratio":11.0,"vale":61183}},"deltaRatio":-21.75,"avgRatio":9.262,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"JARA","comp":"SALINAS CHICO","series":{"Feb":{"bolsas":13,"desp":30,"ratio":2.308,"vale":-46880},"Mar":{"bolsas":13,"desp":13,"ratio":1.0,"vale":-28624},"Abr":{"bolsas":12,"desp":9,"ratio":0.75,"vale":22202},"May":{"bolsas":12,"desp":31,"ratio":2.583,"vale":-18836},"Jun":{"bolsas":13,"desp":56,"ratio":4.308,"vale":-56457},"Jul":{"bolsas":14,"desp":32,"ratio":2.286,"vale":-40375},"Ago":{"bolsas":15,"desp":87,"ratio":5.8,"vale":-119391},"Sep":{"bolsas":15,"desp":0,"ratio":0.0,"vale":-71281}},"deltaRatio":-2.308,"avgRatio":2.379,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"GAUCHO","comp":"SALINAS CHICO","series":{"Feb":{"bolsas":14,"desp":31,"ratio":2.214,"vale":-15456},"Mar":{"bolsas":22,"desp":29,"ratio":1.318,"vale":-88576},"Abr":{"bolsas":21,"desp":24,"ratio":1.143,"vale":-132311},"May":{"bolsas":18,"desp":80,"ratio":4.444,"vale":-247418},"Jun":{"bolsas":21,"desp":43,"ratio":2.048,"vale":-37604},"Jul":{"bolsas":19,"desp":65,"ratio":3.421,"vale":-175814},"Ago":{"bolsas":28,"desp":65,"ratio":2.321,"vale":-286501},"Sep":{"bolsas":20,"desp":52,"ratio":2.6,"vale":10710.0}},"deltaRatio":0.386,"avgRatio":2.439,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"RUTA 14","comp":"LOMFACO","series":{"Feb":{"bolsas":148,"desp":206,"ratio":1.392,"vale":-896560},"Mar":{"bolsas":105,"desp":153,"ratio":1.457,"vale":236944},"Abr":{"bolsas":103,"desp":35,"ratio":0.34,"vale":-666723},"May":{"bolsas":84,"desp":0,"ratio":0.0,"vale":-879087},"Jun":{"bolsas":68,"desp":42,"ratio":0.618,"vale":-304028},"Jul":{"bolsas":86,"desp":37,"ratio":0.43,"vale":-456807.0},"Ago":{"bolsas":78,"desp":40,"ratio":0.513,"vale":-250512.0},"Sep":{"bolsas":70,"desp":112,"ratio":1.6,"vale":-51.0}},"deltaRatio":0.208,"avgRatio":0.794,"firstMonth":"Feb","lastMonth":"Sep"},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","series":{"May":{"bolsas":44,"desp":310,"ratio":7.045,"vale":-570690},"Jun":{"bolsas":47,"desp":61,"ratio":1.298,"vale":681258},"Jul":{"bolsas":38,"desp":60,"ratio":1.579,"vale":52411},"Ago":{"bolsas":35,"desp":22,"ratio":0.629,"vale":-549848},"Sep":{"bolsas":35,"desp":42,"ratio":1.2,"vale":-481576.0}},"deltaRatio":-5.845,"avgRatio":2.35,"firstMonth":"May","lastMonth":"Sep"}],"meses":["Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"]};
+
+const MONTHLY_ROWS = {"Febrero 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-44656,"desp":15,"bolsas":13,"seguro":5.96,"consumo":92.77,"prevDesp":null,"prevBolsas":null},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-169472,"desp":50,"bolsas":24,"seguro":9.96,"consumo":85.08,"prevDesp":null,"prevBolsas":null},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-404304,"desp":83,"bolsas":49,"seguro":17.34,"consumo":72.49,"prevDesp":null,"prevBolsas":null},{"name":"TESEI","comp":"EXFACO","vale":89136,"desp":71,"bolsas":15,"seguro":6.15,"consumo":86.67,"prevDesp":null,"prevBolsas":null},{"name":"BARCALA","comp":"EMFACO S.A","vale":-199232.0,"desp":13,"bolsas":50,"seguro":19.26,"consumo":77.3,"prevDesp":null,"prevBolsas":null},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":525136,"desp":97,"bolsas":70,"seguro":24.89,"consumo":72.51,"prevDesp":null,"prevBolsas":null},{"name":"GNECCO 1","comp":"ELI S.A","vale":-965088.0,"desp":92,"bolsas":28,"seguro":11.59,"consumo":86.07,"prevDesp":null,"prevBolsas":null},{"name":"GNECCO 2","comp":"EXFACO","vale":-347408,"desp":55,"bolsas":33,"seguro":11.56,"consumo":71.76,"prevDesp":null,"prevBolsas":null},{"name":"MORENO","comp":"EMFACO S.A","vale":69936,"desp":18,"bolsas":27,"seguro":12.14,"consumo":90.63,"prevDesp":null,"prevBolsas":null},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-4720.0,"desp":24,"bolsas":28,"seguro":10.47,"consumo":75.68,"prevDesp":null,"prevBolsas":null},{"name":"GBELL","comp":"EMFACO S.A","vale":225344,"desp":131,"bolsas":11,"seguro":4.58,"consumo":95.18,"prevDesp":null,"prevBolsas":null},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-125920,"desp":15,"bolsas":19,"seguro":8.35,"consumo":88.68,"prevDesp":null,"prevBolsas":null},{"name":"VICTORICA","comp":"ELI S.A","vale":82336,"desp":19,"bolsas":21,"seguro":10.27,"consumo":98.71,"prevDesp":null,"prevBolsas":null},{"name":"GUEMES","comp":"ELI S.A","vale":15520.0,"desp":44,"bolsas":23,"seguro":9.15,"consumo":81.48,"prevDesp":null,"prevBolsas":null},{"name":"GORRITTI","comp":"ELI S.A","vale":-57824,"desp":68,"bolsas":42,"seguro":17.07,"consumo":82.9,"prevDesp":null,"prevBolsas":null},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":320848,"desp":71,"bolsas":22,"seguro":8.73,"consumo":82.64,"prevDesp":null,"prevBolsas":null},{"name":"HUDSON","comp":"EMFACO S.A","vale":-166736,"desp":134,"bolsas":36,"seguro":14.11,"consumo":82.08,"prevDesp":null,"prevBolsas":null},{"name":"LUJANERA","comp":"EXFACO","vale":-114416.0,"desp":53,"bolsas":17,"seguro":6.75,"consumo":82.59,"prevDesp":null,"prevBolsas":null},{"name":"RIBERA","comp":"EXFACO","vale":-88144,"desp":35,"bolsas":28,"seguro":12.54,"consumo":90.86,"prevDesp":null,"prevBolsas":null},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":-17440.0,"desp":47,"bolsas":47,"seguro":19.45,"consumo":83.77,"prevDesp":null,"prevBolsas":null},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-1452096,"desp":82,"bolsas":38,"seguro":17.78,"consumo":95.74,"prevDesp":null,"prevBolsas":null},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-117088.0,"desp":289,"bolsas":53,"seguro":23.59,"consumo":94.47,"prevDesp":null,"prevBolsas":null},{"name":"BESCHETD","comp":"EMFACO S.A","vale":118816.0,"desp":154,"bolsas":34,"seguro":13.87,"consumo":86.12,"prevDesp":null,"prevBolsas":null},{"name":"PUERTOS","comp":"EXFACO","vale":-22672.0,"desp":138,"bolsas":21,"seguro":9.09,"consumo":93.1,"prevDesp":null,"prevBolsas":null},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-238688,"desp":64,"bolsas":33,"seguro":16.59,"consumo":102.48,"prevDesp":null,"prevBolsas":null},{"name":"PERALTA","comp":"EMFACO S.A","vale":-111696,"desp":58,"bolsas":29,"seguro":12.91,"consumo":91,"prevDesp":null,"prevBolsas":null},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-19040,"desp":38,"bolsas":15,"seguro":6.95,"consumo":95.2,"prevDesp":null,"prevBolsas":null},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-5504,"desp":131,"bolsas":4,"seguro":1.72,"consumo":118.75,"prevDesp":null,"prevBolsas":null},{"name":"JARA","comp":"SALINAS CHICO","vale":-46880,"desp":30,"bolsas":13,"seguro":5.65,"consumo":89.23,"prevDesp":null,"prevBolsas":null},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-15456,"desp":31,"bolsas":14,"seguro":6.83,"consumo":99.79,"prevDesp":null,"prevBolsas":null},{"name":"RUTA 14","comp":"LOMFACO","vale":-896560,"desp":206,"bolsas":148,"seguro":60.18,"consumo":82.71,"prevDesp":null,"prevBolsas":null}],"Marzo 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-34672,"desp":89,"bolsas":15,"seguro":7.83,"consumo":110.4,"prevDesp":15,"prevBolsas":13},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-58816.0,"desp":22,"bolsas":32,"seguro":12.38,"consumo":78.06,"prevDesp":50,"prevBolsas":24},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-331168,"desp":59,"bolsas":54,"seguro":20.49,"consumo":76.98,"prevDesp":83,"prevBolsas":49},{"name":"TESEI","comp":"EXFACO","vale":-48512,"desp":5,"bolsas":34,"seguro":9.16,"consumo":54.03,"prevDesp":71,"prevBolsas":15},{"name":"BARCALA","comp":"EMFACO S.A","vale":-80640,"desp":35,"bolsas":63,"seguro":21.2,"consumo":67.86,"prevDesp":13,"prevBolsas":50},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":181296,"desp":251,"bolsas":74,"seguro":30.34,"consumo":85.41,"prevDesp":97,"prevBolsas":70},{"name":"GNECCO 1","comp":"ELI S.A","vale":-12480.0,"desp":51,"bolsas":43,"seguro":13.9,"consumo":65.84,"prevDesp":92,"prevBolsas":28},{"name":"GNECCO 2","comp":"EXFACO","vale":-120944,"desp":29,"bolsas":49,"seguro":12.79,"consumo":52.82,"prevDesp":55,"prevBolsas":33},{"name":"MORENO","comp":"EMFACO S.A","vale":8384.0,"desp":20,"bolsas":31,"seguro":12.38,"consumo":80.52,"prevDesp":18,"prevBolsas":27},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-2496.0,"desp":7,"bolsas":33,"seguro":12.78,"consumo":77.67,"prevDesp":24,"prevBolsas":28},{"name":"GBELL","comp":"EMFACO S.A","vale":-48064,"desp":106,"bolsas":16,"seguro":6.02,"consumo":81.88,"prevDesp":131,"prevBolsas":11},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-261312,"desp":80,"bolsas":29,"seguro":10.66,"consumo":76.28,"prevDesp":15,"prevBolsas":19},{"name":"VICTORICA","comp":"ELI S.A","vale":-191072,"desp":37,"bolsas":28,"seguro":11.71,"consumo":84.96,"prevDesp":19,"prevBolsas":21},{"name":"GUEMES","comp":"ELI S.A","vale":-151760,"desp":164,"bolsas":27,"seguro":11.43,"consumo":90.7,"prevDesp":44,"prevBolsas":23},{"name":"GORRITTI","comp":"ELI S.A","vale":-218016,"desp":37,"bolsas":59,"seguro":20.13,"consumo":68.86,"prevDesp":68,"prevBolsas":42},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":-226832.0,"desp":75,"bolsas":29,"seguro":10.88,"consumo":77.66,"prevDesp":71,"prevBolsas":22},{"name":"HUDSON","comp":"EMFACO S.A","vale":-209888,"desp":171,"bolsas":61,"seguro":18.59,"consumo":63.75,"prevDesp":134,"prevBolsas":36},{"name":"LUJANERA","comp":"EXFACO","vale":-2016.0,"desp":23,"bolsas":17,"seguro":7.63,"consumo":91.12,"prevDesp":53,"prevBolsas":17},{"name":"RIBERA","comp":"EXFACO","vale":-240752,"desp":25,"bolsas":34,"seguro":15.23,"consumo":90.35,"prevDesp":35,"prevBolsas":28},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":283888,"desp":103,"bolsas":51,"seguro":23.29,"consumo":93.33,"prevDesp":47,"prevBolsas":47},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":412960.0,"desp":0,"bolsas":50,"seguro":19.95,"consumo":79.8,"prevDesp":82,"prevBolsas":38},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":785888,"desp":98,"bolsas":55,"seguro":28.41,"consumo":105.09,"prevDesp":289,"prevBolsas":53},{"name":"BESCHETD","comp":"EMFACO S.A","vale":402480,"desp":137,"bolsas":57,"seguro":22.23,"consumo":80.39,"prevDesp":154,"prevBolsas":34},{"name":"PUERTOS","comp":"EXFACO","vale":108080,"desp":108,"bolsas":37,"seguro":12.22,"consumo":69,"prevDesp":138,"prevBolsas":21},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-149504,"desp":65,"bolsas":32,"seguro":15.72,"consumo":100.28,"prevDesp":64,"prevBolsas":33},{"name":"PERALTA","comp":"EMFACO S.A","vale":-226384,"desp":79,"bolsas":33,"seguro":13.75,"consumo":85.7,"prevDesp":58,"prevBolsas":29},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-51792.0,"desp":37,"bolsas":16,"seguro":7.19,"consumo":92.12,"prevDesp":38,"prevBolsas":15},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-22656,"desp":14,"bolsas":10,"seguro":2.08,"consumo":43,"prevDesp":131,"prevBolsas":4},{"name":"JARA","comp":"SALINAS CHICO","vale":-28624,"desp":13,"bolsas":13,"seguro":6.95,"consumo":107.85,"prevDesp":30,"prevBolsas":13},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-88576,"desp":29,"bolsas":22,"seguro":8.68,"consumo":80.23,"prevDesp":31,"prevBolsas":14},{"name":"RUTA 14","comp":"LOMFACO","vale":236944,"desp":153,"bolsas":105,"seguro":44.95,"consumo":87.09,"prevDesp":206,"prevBolsas":148}],"Abril 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-15436.0,"desp":35,"bolsas":18,"seguro":8.54,"consumo":96.83,"prevDesp":89,"prevBolsas":15},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-58361,"desp":77,"bolsas":28,"seguro":12.17,"consumo":89.64,"prevDesp":22,"prevBolsas":32},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-155822,"desp":31,"bolsas":59,"seguro":22.83,"consumo":77.92,"prevDesp":59,"prevBolsas":54},{"name":"TESEI","comp":"EXFACO","vale":-163965,"desp":32,"bolsas":23,"seguro":10.22,"consumo":90.3,"prevDesp":5,"prevBolsas":34},{"name":"BARCALA","comp":"EMFACO S.A","vale":-300798,"desp":55,"bolsas":43,"seguro":21.47,"consumo":101.14,"prevDesp":35,"prevBolsas":63},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-41038,"desp":158,"bolsas":67,"seguro":31.07,"consumo":95.1,"prevDesp":251,"prevBolsas":74},{"name":"GNECCO 1","comp":"ELI S.A","vale":-128996.0,"desp":41,"bolsas":35,"seguro":15.94,"consumo":92.26,"prevDesp":51,"prevBolsas":43},{"name":"GNECCO 2","comp":"EXFACO","vale":-220813.0,"desp":19,"bolsas":26,"seguro":12.95,"consumo":100.31,"prevDesp":29,"prevBolsas":49},{"name":"MORENO","comp":"EMFACO S.A","vale":90797,"desp":36,"bolsas":15,"seguro":6.29,"consumo":86.33,"prevDesp":20,"prevBolsas":31},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-143616,"desp":6,"bolsas":32,"seguro":16.24,"consumo":101.69,"prevDesp":7,"prevBolsas":33},{"name":"GBELL","comp":"EMFACO S.A","vale":-14263.0,"desp":115,"bolsas":14,"seguro":7.2,"consumo":111,"prevDesp":106,"prevBolsas":16},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-158474,"desp":6,"bolsas":27,"seguro":11.61,"consumo":86.22,"prevDesp":80,"prevBolsas":29},{"name":"VICTORICA","comp":"ELI S.A","vale":-109480.0,"desp":39,"bolsas":24,"seguro":13.2,"consumo":111.62,"prevDesp":37,"prevBolsas":28},{"name":"GUEMES","comp":"ELI S.A","vale":92191,"desp":54,"bolsas":26,"seguro":10.88,"consumo":85.81,"prevDesp":164,"prevBolsas":27},{"name":"GORRITTI","comp":"ELI S.A","vale":-112778,"desp":32,"bolsas":48,"seguro":20.17,"consumo":84.71,"prevDesp":37,"prevBolsas":59},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":-245718,"desp":177,"bolsas":27,"seguro":11.27,"consumo":90.04,"prevDesp":75,"prevBolsas":29},{"name":"HUDSON","comp":"EMFACO S.A","vale":-419509,"desp":180,"bolsas":53,"seguro":20.39,"consumo":80.32,"prevDesp":171,"prevBolsas":61},{"name":"LUJANERA","comp":"EXFACO","vale":4267,"desp":39,"bolsas":19,"seguro":7.75,"consumo":83.58,"prevDesp":23,"prevBolsas":17},{"name":"RIBERA","comp":"EXFACO","vale":-634797,"desp":32,"bolsas":37,"seguro":16.71,"consumo":91.16,"prevDesp":25,"prevBolsas":34},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":-601375,"desp":230,"bolsas":52,"seguro":24.88,"consumo":100.1,"prevDesp":103,"prevBolsas":51},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":218994,"desp":163,"bolsas":43,"seguro":19.59,"consumo":94.91,"prevDesp":0,"prevBolsas":50},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-545564,"desp":249,"bolsas":46,"seguro":29.46,"consumo":133.5,"prevDesp":98,"prevBolsas":55},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-145401,"desp":225,"bolsas":54,"seguro":25.77,"consumo":99.59,"prevDesp":137,"prevBolsas":57},{"name":"PUERTOS","comp":"EXFACO","vale":222666.0,"desp":216,"bolsas":35,"seguro":14.51,"consumo":89.09,"prevDesp":108,"prevBolsas":37},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-48314,"desp":45,"bolsas":41,"seguro":16.21,"consumo":80.17,"prevDesp":65,"prevBolsas":32},{"name":"PERALTA","comp":"EMFACO S.A","vale":-106488,"desp":0,"bolsas":31,"seguro":14.32,"consumo":92.39,"prevDesp":79,"prevBolsas":33},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":175491,"desp":26,"bolsas":17,"seguro":8.38,"consumo":100.18,"prevDesp":37,"prevBolsas":16},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-95965,"desp":52,"bolsas":5,"seguro":2.23,"consumo":99.4,"prevDesp":14,"prevBolsas":10},{"name":"JARA","comp":"SALINAS CHICO","vale":22202,"desp":9,"bolsas":12,"seguro":6.47,"consumo":108.58,"prevDesp":13,"prevBolsas":13},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-132311,"desp":24,"bolsas":21,"seguro":7.92,"consumo":76.52,"prevDesp":29,"prevBolsas":22},{"name":"RUTA 14","comp":"LOMFACO","vale":-666723,"desp":35,"bolsas":103,"seguro":43.09,"consumo":84.02,"prevDesp":153,"prevBolsas":105}],"Mayo 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-243508.0,"desp":57,"bolsas":22,"seguro":9.62,"consumo":90.05,"prevDesp":35,"prevBolsas":18},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":76007,"desp":0,"bolsas":30,"seguro":13.64,"consumo":90.97,"prevDesp":77,"prevBolsas":28},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-281571,"desp":16,"bolsas":62,"seguro":25.82,"consumo":83.53,"prevDesp":31,"prevBolsas":59},{"name":"TESEI","comp":"EXFACO","vale":-173400,"desp":60,"bolsas":25,"seguro":12,"consumo":98.4,"prevDesp":32,"prevBolsas":23},{"name":"BARCALA","comp":"EMFACO S.A","vale":-1016770,"desp":28,"bolsas":68,"seguro":25.05,"consumo":74.09,"prevDesp":55,"prevBolsas":43},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-490161,"desp":0,"bolsas":76,"seguro":37.16,"consumo":97.8,"prevDesp":158,"prevBolsas":67},{"name":"GNECCO 1","comp":"ELI S.A","vale":-212347,"desp":63,"bolsas":36,"seguro":17.46,"consumo":98.72,"prevDesp":41,"prevBolsas":35},{"name":"GNECCO 2","comp":"EXFACO","vale":-488478.0,"desp":11,"bolsas":31,"seguro":15.67,"consumo":101.45,"prevDesp":19,"prevBolsas":26},{"name":"MORENO","comp":"EMFACO S.A","vale":-158984,"desp":0,"bolsas":2,"seguro":0.76,"consumo":76,"prevDesp":36,"prevBolsas":15},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-186303,"desp":22,"bolsas":45,"seguro":21.8,"consumo":97.36,"prevDesp":6,"prevBolsas":32},{"name":"GBELL","comp":"EMFACO S.A","vale":-76738,"desp":45,"bolsas":17,"seguro":8.57,"consumo":103.47,"prevDesp":115,"prevBolsas":14},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-329494,"desp":12,"bolsas":23,"seguro":11.91,"consumo":104.09,"prevDesp":6,"prevBolsas":27},{"name":"VICTORICA","comp":"ELI S.A","vale":-159239,"desp":10,"bolsas":25,"seguro":14.84,"consumo":119.08,"prevDesp":39,"prevBolsas":24},{"name":"GUEMES","comp":"ELI S.A","vale":-11832.0,"desp":0,"bolsas":23,"seguro":12.48,"consumo":108.52,"prevDesp":54,"prevBolsas":26},{"name":"GORRITTI","comp":"ELI S.A","vale":-215764,"desp":26,"bolsas":44,"seguro":22.46,"consumo":102.68,"prevDesp":32,"prevBolsas":48},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":130186,"desp":60,"bolsas":29,"seguro":12.71,"consumo":89.72,"prevDesp":177,"prevBolsas":27},{"name":"HUDSON","comp":"EMFACO S.A","vale":-219776,"desp":113,"bolsas":53,"seguro":21.64,"consumo":83.79,"prevDesp":180,"prevBolsas":53},{"name":"LUJANERA","comp":"EXFACO","vale":37961,"desp":0,"bolsas":18,"seguro":8.84,"consumo":98.17,"prevDesp":39,"prevBolsas":19},{"name":"RIBERA","comp":"EXFACO","vale":-567545,"desp":20,"bolsas":37,"seguro":17.93,"consumo":97.43,"prevDesp":32,"prevBolsas":37},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":-4862.0,"desp":86,"bolsas":57,"seguro":28.43,"consumo":101.26,"prevDesp":230,"prevBolsas":52},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-11526.0,"desp":112,"bolsas":37,"seguro":18.39,"consumo":102.43,"prevDesp":163,"prevBolsas":43},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-2584051,"desp":283,"bolsas":54,"seguro":33.02,"consumo":127.52,"prevDesp":249,"prevBolsas":46},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-864535,"desp":231,"bolsas":64,"seguro":30.28,"consumo":98.22,"prevDesp":225,"prevBolsas":54},{"name":"PUERTOS","comp":"EXFACO","vale":-833765,"desp":231,"bolsas":34,"seguro":16.23,"consumo":102.24,"prevDesp":216,"prevBolsas":35},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":-570690,"desp":310,"bolsas":44,"seguro":20.85,"consumo":101.82,"prevDesp":null,"prevBolsas":null},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":59228.0,"desp":63,"bolsas":33,"seguro":16.58,"consumo":102.39,"prevDesp":45,"prevBolsas":41},{"name":"PERALTA","comp":"EMFACO S.A","vale":-14756,"desp":48,"bolsas":14,"seguro":6.34,"consumo":94,"prevDesp":0,"prevBolsas":31},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":63410.0,"desp":34,"bolsas":19,"seguro":8.35,"consumo":89.68,"prevDesp":26,"prevBolsas":17},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-108919.0,"desp":17,"bolsas":4,"seguro":2.04,"consumo":106,"prevDesp":52,"prevBolsas":5},{"name":"JARA","comp":"SALINAS CHICO","vale":-18836,"desp":31,"bolsas":12,"seguro":6.54,"consumo":111.58,"prevDesp":9,"prevBolsas":12},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-247418,"desp":80,"bolsas":18,"seguro":7.77,"consumo":90.78,"prevDesp":24,"prevBolsas":21},{"name":"RUTA 14","comp":"LOMFACO","vale":-879087,"desp":0,"bolsas":84,"seguro":39.55,"consumo":94.18,"prevDesp":35,"prevBolsas":103}],"Junio 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-91137,"desp":8,"bolsas":18,"seguro":9.8,"consumo":109.39,"prevDesp":57,"prevBolsas":22},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-119918.0,"desp":42,"bolsas":31,"seguro":14.27,"consumo":93.42,"prevDesp":0,"prevBolsas":30},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-371110,"desp":38,"bolsas":63,"seguro":27.15,"consumo":86.79,"prevDesp":16,"prevBolsas":62},{"name":"TESEI","comp":"EXFACO","vale":76755,"desp":60,"bolsas":24,"seguro":11.43,"consumo":97.71,"prevDesp":60,"prevBolsas":25},{"name":"BARCALA","comp":"EMFACO S.A","vale":-283662,"desp":26,"bolsas":53,"seguro":25.43,"consumo":96.45,"prevDesp":28,"prevBolsas":68},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-624070,"desp":76,"bolsas":69,"seguro":36.55,"consumo":107.04,"prevDesp":0,"prevBolsas":76},{"name":"GNECCO 1","comp":"ELI S.A","vale":-92939,"desp":31,"bolsas":34,"seguro":17.34,"consumo":102.88,"prevDesp":63,"prevBolsas":36},{"name":"GNECCO 2","comp":"EXFACO","vale":-325618,"desp":37,"bolsas":32,"seguro":15.77,"consumo":99.72,"prevDesp":11,"prevBolsas":31},{"name":"MORENO","comp":"EMFACO S.A","vale":-68000,"desp":1,"bolsas":24,"seguro":10,"consumo":83.38,"prevDesp":0,"prevBolsas":2},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-26690.0,"desp":18,"bolsas":38,"seguro":16.85,"consumo":89.16,"prevDesp":22,"prevBolsas":45},{"name":"GBELL","comp":"EMFACO S.A","vale":-396950,"desp":45,"bolsas":20,"seguro":7.75,"consumo":79.75,"prevDesp":45,"prevBolsas":17},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-237201,"desp":0,"bolsas":28,"seguro":13.77,"consumo":98.32,"prevDesp":12,"prevBolsas":23},{"name":"VICTORICA","comp":"ELI S.A","vale":-105128,"desp":20,"bolsas":27,"seguro":14.92,"consumo":111.26,"prevDesp":10,"prevBolsas":25},{"name":"GUEMES","comp":"ELI S.A","vale":-146761,"desp":44,"bolsas":31,"seguro":13.17,"consumo":86.35,"prevDesp":0,"prevBolsas":23},{"name":"GORRITTI","comp":"ELI S.A","vale":-207536,"desp":null,"bolsas":48,"seguro":24.04,"consumo":100.17,"prevDesp":26,"prevBolsas":44},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":88213,"desp":61,"bolsas":24,"seguro":13.05,"consumo":111.33,"prevDesp":60,"prevBolsas":29},{"name":"HUDSON","comp":"EMFACO S.A","vale":-221493,"desp":281,"bolsas":44,"seguro":21.14,"consumo":102.5,"prevDesp":113,"prevBolsas":53},{"name":"LUJANERA","comp":"EXFACO","vale":-169507,"desp":54,"bolsas":18,"seguro":8.86,"consumo":101.39,"prevDesp":0,"prevBolsas":18},{"name":"RIBERA","comp":"EXFACO","vale":-177055,"desp":24,"bolsas":42,"seguro":18.07,"consumo":86.64,"prevDesp":20,"prevBolsas":37},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":494717,"desp":68,"bolsas":63,"seguro":26.5,"consumo":85.19,"prevDesp":86,"prevBolsas":57},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-6732.0,"desp":51,"bolsas":43,"seguro":18.98,"consumo":89.47,"prevDesp":112,"prevBolsas":37},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-965362,"desp":153,"bolsas":56,"seguro":30.93,"consumo":113.2,"prevDesp":283,"prevBolsas":54},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-896801,"desp":124,"bolsas":68,"seguro":31.77,"consumo":95.25,"prevDesp":231,"prevBolsas":64},{"name":"PUERTOS","comp":"EXFACO","vale":-296480,"desp":129,"bolsas":36,"seguro":16.2,"consumo":93.58,"prevDesp":231,"prevBolsas":34},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":681258,"desp":61,"bolsas":47,"seguro":21.63,"consumo":93.34,"prevDesp":310,"prevBolsas":44},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-46597.0,"desp":61,"bolsas":34,"seguro":16.71,"consumo":100.06,"prevDesp":63,"prevBolsas":33},{"name":"PERALTA","comp":"EMFACO S.A","vale":-45951,"desp":57,"bolsas":13,"seguro":5.51,"consumo":89.23,"prevDesp":48,"prevBolsas":14},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-64515.0,"desp":83,"bolsas":19,"seguro":8.97,"consumo":98.84,"prevDesp":34,"prevBolsas":19},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":48926,"desp":17,"bolsas":5,"seguro":2.61,"consumo":107.8,"prevDesp":17,"prevBolsas":4},{"name":"JARA","comp":"SALINAS CHICO","vale":-56457,"desp":56,"bolsas":13,"seguro":7.61,"consumo":121.31,"prevDesp":31,"prevBolsas":12},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-37604,"desp":43,"bolsas":21,"seguro":8.06,"consumo":78.81,"prevDesp":80,"prevBolsas":18},{"name":"RUTA 14","comp":"LOMFACO","vale":-304028,"desp":42,"bolsas":68,"seguro":30.42,"consumo":90.09,"prevDesp":0,"prevBolsas":84}],"Julio 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-41225,"desp":33,"bolsas":20,"seguro":11.12,"consumo":112.9,"prevDesp":8,"prevBolsas":18},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-56253.0,"desp":37,"bolsas":27,"seguro":13.54,"consumo":101.7,"prevDesp":42,"prevBolsas":31},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-72692,"desp":81,"bolsas":60,"seguro":27.38,"consumo":92.62,"prevDesp":38,"prevBolsas":63},{"name":"TESEI","comp":"EXFACO","vale":-56814,"desp":79,"bolsas":25,"seguro":11.71,"consumo":96.84,"prevDesp":60,"prevBolsas":24},{"name":"BARCALA","comp":"EMFACO S.A","vale":-203371,"desp":0,"bolsas":53,"seguro":26.82,"consumo":101.19,"prevDesp":26,"prevBolsas":53},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-1089479,"desp":122,"bolsas":72,"seguro":38.44,"consumo":108.46,"prevDesp":76,"prevBolsas":69},{"name":"GNECCO 1","comp":"ELI S.A","vale":-110755.0,"desp":28,"bolsas":36,"seguro":19.57,"consumo":109.53,"prevDesp":31,"prevBolsas":34},{"name":"GNECCO 2","comp":"EXFACO","vale":-330599,"desp":16,"bolsas":32,"seguro":16.23,"consumo":101.97,"prevDesp":37,"prevBolsas":32},{"name":"MORENO","comp":"EMFACO S.A","vale":-24191.0,"desp":22,"bolsas":46,"seguro":21.12,"consumo":92.28,"prevDesp":1,"prevBolsas":24},{"name":"LIBERTADOR","comp":"ELI S.A","vale":109752,"desp":26,"bolsas":29,"seguro":14.72,"consumo":102.41,"prevDesp":18,"prevBolsas":38},{"name":"GBELL","comp":"EMFACO S.A","vale":-30294,"desp":63,"bolsas":17,"seguro":7.91,"consumo":96.76,"prevDesp":45,"prevBolsas":20},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-136578,"desp":19,"bolsas":23,"seguro":12.17,"consumo":106.65,"prevDesp":0,"prevBolsas":28},{"name":"VICTORICA","comp":"ELI S.A","vale":-45849,"desp":29,"bolsas":24,"seguro":14.48,"consumo":121.92,"prevDesp":20,"prevBolsas":27},{"name":"GUEMES","comp":"ELI S.A","vale":-129081.0,"desp":17,"bolsas":28,"seguro":13.96,"consumo":100.36,"prevDesp":44,"prevBolsas":31},{"name":"GORRITTI","comp":"ELI S.A","vale":-135728,"desp":3,"bolsas":49,"seguro":22.92,"consumo":93.61,"prevDesp":null,"prevBolsas":48},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":331381,"desp":0,"bolsas":27,"seguro":13.54,"consumo":100.26,"prevDesp":61,"prevBolsas":24},{"name":"HUDSON","comp":"EMFACO S.A","vale":-6137.0,"desp":262,"bolsas":43,"seguro":20.8,"consumo":102.86,"prevDesp":281,"prevBolsas":44},{"name":"LUJANERA","comp":"EXFACO","vale":-114597,"desp":38,"bolsas":18,"seguro":9.71,"consumo":109.94,"prevDesp":54,"prevBolsas":18},{"name":"RIBERA","comp":"EXFACO","vale":-923049,"desp":15,"bolsas":37,"seguro":17.48,"consumo":94.92,"prevDesp":24,"prevBolsas":42},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":538203,"desp":114,"bolsas":54,"seguro":28.71,"consumo":108.43,"prevDesp":68,"prevBolsas":63},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-227137.0,"desp":93,"bolsas":41,"seguro":18.8,"consumo":94,"prevDesp":51,"prevBolsas":43},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-638197,"desp":84,"bolsas":53,"seguro":31.71,"consumo":121.23,"prevDesp":153,"prevBolsas":56},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-962166,"desp":50,"bolsas":62,"seguro":33.99,"consumo":110.45,"prevDesp":124,"prevBolsas":68},{"name":"PUERTOS","comp":"EXFACO","vale":-246976,"desp":120,"bolsas":38,"seguro":16.64,"consumo":90.74,"prevDesp":129,"prevBolsas":36},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":52411,"desp":60,"bolsas":38,"seguro":22.59,"consumo":120.45,"prevDesp":61,"prevBolsas":47},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-3043.0,"desp":60,"bolsas":35,"seguro":17.89,"consumo":103.97,"prevDesp":61,"prevBolsas":34},{"name":"PERALTA","comp":"EMFACO S.A","vale":-85374,"desp":93,"bolsas":22,"seguro":9.11,"consumo":87.05,"prevDesp":57,"prevBolsas":13},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-196928,"desp":100,"bolsas":22,"seguro":9.92,"consumo":94.73,"prevDesp":83,"prevBolsas":19},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-25908,"desp":33,"bolsas":5,"seguro":2.62,"consumo":111.4,"prevDesp":17,"prevBolsas":5},{"name":"JARA","comp":"SALINAS CHICO","vale":-40375,"desp":32,"bolsas":14,"seguro":7.88,"consumo":114.79,"prevDesp":56,"prevBolsas":13},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-175814,"desp":65,"bolsas":19,"seguro":9.71,"consumo":105.63,"prevDesp":43,"prevBolsas":21},{"name":"RUTA 14","comp":"LOMFACO","vale":-456807.0,"desp":37,"bolsas":86,"seguro":42.36,"consumo":98.93,"prevDesp":42,"prevBolsas":68}],"Agosto 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-98175,"desp":37,"bolsas":30,"seguro":10.88,"consumo":73.73,"prevDesp":33,"prevBolsas":20},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":-2329.0,"desp":27,"bolsas":27,"seguro":14.69,"consumo":109.78,"prevDesp":37,"prevBolsas":27},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-479553.0,"desp":64,"bolsas":60,"seguro":29.05,"consumo":97.88,"prevDesp":81,"prevBolsas":60},{"name":"TESEI","comp":"EXFACO","vale":1054.0,"desp":45,"bolsas":25,"seguro":12.69,"consumo":103.32,"prevDesp":79,"prevBolsas":25},{"name":"BARCALA","comp":"EMFACO S.A","vale":-179367.0,"desp":0,"bolsas":53,"seguro":26.75,"consumo":100.96,"prevDesp":0,"prevBolsas":53},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-113917.0,"desp":60,"bolsas":70,"seguro":39.51,"consumo":113.73,"prevDesp":122,"prevBolsas":72},{"name":"GNECCO 1","comp":"ELI S.A","vale":-116212,"desp":18,"bolsas":39,"seguro":20.18,"consumo":103.95,"prevDesp":28,"prevBolsas":36},{"name":"GNECCO 2","comp":"EXFACO","vale":-112931.0,"desp":29,"bolsas":31,"seguro":16.21,"consumo":105.55,"prevDesp":16,"prevBolsas":32},{"name":"MORENO","comp":"EMFACO S.A","vale":-378250,"desp":58,"bolsas":68,"seguro":30.25,"consumo":89.82,"prevDesp":22,"prevBolsas":46},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-18462,"desp":12,"bolsas":32,"seguro":13.43,"consumo":84.31,"prevDesp":26,"prevBolsas":29},{"name":"GBELL","comp":"EMFACO S.A","vale":-57001,"desp":50,"bolsas":19,"seguro":8.77,"consumo":94.89,"prevDesp":63,"prevBolsas":17},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-167263,"desp":19,"bolsas":35,"seguro":12.2,"consumo":70.23,"prevDesp":19,"prevBolsas":23},{"name":"VICTORICA","comp":"ELI S.A","vale":-103870,"desp":22,"bolsas":34,"seguro":14.55,"consumo":86.24,"prevDesp":29,"prevBolsas":24},{"name":"GUEMES","comp":"ELI S.A","vale":-174335,"desp":62,"bolsas":30,"seguro":14.28,"consumo":97.23,"prevDesp":17,"prevBolsas":28},{"name":"GORRITTI","comp":"ELI S.A","vale":-102935,"desp":23,"bolsas":46,"seguro":23.28,"consumo":101.7,"prevDesp":3,"prevBolsas":49},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":-174726,"desp":67,"bolsas":24,"seguro":13.39,"consumo":114.38,"prevDesp":0,"prevBolsas":27},{"name":"HUDSON","comp":"EMFACO S.A","vale":-274499,"desp":91,"bolsas":43,"seguro":23.73,"consumo":112.51,"prevDesp":262,"prevBolsas":43},{"name":"LUJANERA","comp":"EXFACO","vale":-84558,"desp":0,"bolsas":18,"seguro":9.87,"consumo":109.67,"prevDesp":38,"prevBolsas":18},{"name":"RIBERA","comp":"EXFACO","vale":-925395,"desp":21,"bolsas":35,"seguro":18.18,"consumo":104.46,"prevDesp":15,"prevBolsas":37},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":185538,"desp":79,"bolsas":56,"seguro":31.43,"consumo":113.66,"prevDesp":114,"prevBolsas":54},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-44166.0,"desp":79,"bolsas":36,"seguro":18.99,"consumo":107.69,"prevDesp":93,"prevBolsas":41},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-488852,"desp":131,"bolsas":57,"seguro":31.78,"consumo":113.81,"prevDesp":84,"prevBolsas":53},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-500956,"desp":55,"bolsas":61,"seguro":32.34,"consumo":106.93,"prevDesp":50,"prevBolsas":62},{"name":"PUERTOS","comp":"EXFACO","vale":-227137.0,"desp":65,"bolsas":41,"seguro":18.8,"consumo":93.32,"prevDesp":120,"prevBolsas":38},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":-549848,"desp":22,"bolsas":35,"seguro":23.72,"consumo":136.17,"prevDesp":60,"prevBolsas":38},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-291057,"desp":44,"bolsas":43,"seguro":18.61,"consumo":87.56,"prevDesp":60,"prevBolsas":35},{"name":"PERALTA","comp":"EMFACO S.A","vale":-72131,"desp":38,"bolsas":32,"seguro":14.21,"consumo":90.03,"prevDesp":93,"prevBolsas":22},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-257278,"desp":80,"bolsas":26,"seguro":11.67,"consumo":92.85,"prevDesp":100,"prevBolsas":22},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":-93602,"desp":43,"bolsas":10,"seguro":2.53,"consumo":54.9,"prevDesp":33,"prevBolsas":5},{"name":"JARA","comp":"SALINAS CHICO","vale":-119391,"desp":87,"bolsas":15,"seguro":8.12,"consumo":114,"prevDesp":32,"prevBolsas":14},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":-286501,"desp":65,"bolsas":28,"seguro":13.27,"consumo":97.07,"prevDesp":65,"prevBolsas":19},{"name":"RUTA 14","comp":"LOMFACO","vale":-250512.0,"desp":40,"bolsas":78,"seguro":37.68,"consumo":97.13,"prevDesp":37,"prevBolsas":86}],"Septiembre 2026":[{"name":"RUTA3","comp":"ELI S.A","vale":-47515,"desp":51,"bolsas":20,"seguro":9.97,"consumo":102.3,"prevDesp":37,"prevBolsas":30},{"name":"SAN JUSTO","comp":"EMFACO S.A","vale":83997,"desp":42,"bolsas":28,"seguro":15.29,"consumo":110.75,"prevDesp":27,"prevBolsas":27},{"name":"ZEBALLOS","comp":"ELI S.A","vale":-697136,"desp":110,"bolsas":59,"seguro":28.04,"consumo":96.92,"prevDesp":64,"prevBolsas":60},{"name":"TESEI","comp":"EXFACO","vale":-84949,"desp":49,"bolsas":22,"seguro":11.98,"consumo":111.18,"prevDesp":45,"prevBolsas":25},{"name":"BARCALA","comp":"EMFACO S.A","vale":-530893,"desp":23,"bolsas":50,"seguro":26.14,"consumo":105.04,"prevDesp":0,"prevBolsas":53},{"name":"LELOIR","comp":"SERVICIOS LUARCA","vale":-337229,"desp":51,"bolsas":83,"seguro":37.19,"consumo":90.22,"prevDesp":60,"prevBolsas":70},{"name":"GNECCO 1","comp":"ELI S.A","vale":107882,"desp":12,"bolsas":34,"seguro":19.27,"consumo":113.71,"prevDesp":18,"prevBolsas":39},{"name":"GNECCO 2","comp":"EXFACO","vale":-86853,"desp":19,"bolsas":29,"seguro":15.54,"consumo":107.86,"prevDesp":29,"prevBolsas":31},{"name":"MORENO","comp":"EMFACO S.A","vale":-784023,"desp":21,"bolsas":59,"seguro":31.6,"consumo":107.46,"prevDesp":58,"prevBolsas":68},{"name":"LIBERTADOR","comp":"ELI S.A","vale":-124457.0,"desp":18,"bolsas":32,"seguro":12.61,"consumo":79.34,"prevDesp":12,"prevBolsas":32},{"name":"GBELL","comp":"EMFACO S.A","vale":282897,"desp":40,"bolsas":19,"seguro":8.79,"consumo":94.68,"prevDesp":50,"prevBolsas":19},{"name":"BOULEVARD","comp":"EMFACO S.A","vale":-241315.0,"desp":12,"bolsas":25,"seguro":12.97,"consumo":104.28,"prevDesp":19,"prevBolsas":35},{"name":"VICTORICA","comp":"ELI S.A","vale":-16932,"desp":10,"bolsas":26,"seguro":14.98,"consumo":115.62,"prevDesp":22,"prevBolsas":34},{"name":"GUEMES","comp":"ELI S.A","vale":-290190,"desp":18,"bolsas":23,"seguro":13.35,"consumo":116.87,"prevDesp":62,"prevBolsas":30},{"name":"GORRITTI","comp":"ELI S.A","vale":-70193,"desp":18,"bolsas":44,"seguro":22.64,"consumo":103.34,"prevDesp":23,"prevBolsas":46},{"name":"RUTA 25","comp":"SERVICIOS LUARCA","vale":-419101,"desp":69,"bolsas":29,"seguro":13.27,"consumo":93.86,"prevDesp":67,"prevBolsas":24},{"name":"HUDSON","comp":"EMFACO S.A","vale":-371076,"desp":50,"bolsas":40,"seguro":22.14,"consumo":111.95,"prevDesp":91,"prevBolsas":43},{"name":"LUJANERA","comp":"EXFACO","vale":-109769.0,"desp":12,"bolsas":17,"seguro":9.29,"consumo":109.94,"prevDesp":0,"prevBolsas":18},{"name":"RIBERA","comp":"EXFACO","vale":-595578,"desp":29,"bolsas":39,"seguro":19.17,"consumo":99.05,"prevDesp":21,"prevBolsas":35},{"name":"JAUREGUI","comp":"SERVICIOS LUARCA","vale":-195449,"desp":120,"bolsas":56,"seguro":29.48,"consumo":107.45,"prevDesp":79,"prevBolsas":56},{"name":"CAMAÑO","comp":"EMFACO S.A","vale":-272323,"desp":127,"bolsas":43,"seguro":19.09,"consumo":91.77,"prevDesp":79,"prevBolsas":36},{"name":"SAN VICENTE","comp":"SALINAS CHICO","vale":-829685,"desp":276,"bolsas":55,"seguro":30.03,"consumo":114.2,"prevDesp":131,"prevBolsas":57},{"name":"BESCHETD","comp":"EMFACO S.A","vale":-424337,"desp":19,"bolsas":55,"seguro":28.8,"consumo":105.09,"prevDesp":55,"prevBolsas":61},{"name":"PUERTOS","comp":"EXFACO","vale":232118,"desp":109,"bolsas":36,"seguro":15.73,"consumo":90.42,"prevDesp":65,"prevBolsas":41},{"name":"PILAR DEL ESTE","comp":"EMFACO S.A","vale":-481576.0,"desp":42,"bolsas":35,"seguro":20.64,"consumo":119.14,"prevDesp":22,"prevBolsas":35},{"name":"CONSTITUCION","comp":"SERVICIOS LUARCA","vale":-391068,"desp":46,"bolsas":39,"seguro":19.02,"consumo":98.72,"prevDesp":44,"prevBolsas":43},{"name":"PERALTA","comp":"EMFACO S.A","vale":-621775,"desp":82,"bolsas":17,"seguro":7.88,"consumo":97.47,"prevDesp":38,"prevBolsas":32},{"name":"CATAMARCA","comp":"SALINAS CHICO","vale":-70125,"desp":77,"bolsas":22,"seguro":9.62,"consumo":91,"prevDesp":80,"prevBolsas":26},{"name":"LURO","comp":"SERVICIOS LUARCA","vale":61183,"desp":99,"bolsas":9,"seguro":2.0,"consumo":55.56,"prevDesp":43,"prevBolsas":10},{"name":"JARA","comp":"SALINAS CHICO","vale":-71281,"desp":0,"bolsas":15,"seguro":7.96,"consumo":106.2,"prevDesp":87,"prevBolsas":15},{"name":"GAUCHO","comp":"SALINAS CHICO","vale":10710.0,"desp":52,"bolsas":20,"seguro":8.85,"consumo":91.1,"prevDesp":65,"prevBolsas":28},{"name":"RUTA 14","comp":"LOMFACO","vale":-51.0,"desp":112,"bolsas":70,"seguro":33.02,"consumo":95.93,"prevDesp":40,"prevBolsas":78}]};
+
+const CLUSTER_META = {
+  A: {title:"Alto volumen + Buen rendimiento", sub:"El estándar a imitar", color:"var(--a)", hex:"#3C9A5F"},
+  B: {title:"Alto volumen + Mal rendimiento", sub:"Prioridad de auditoría", color:"var(--b)", hex:"#C0392B"},
+  C: {title:"Bajo volumen + Buen rendimiento", sub:"Chicas pero prolijas", color:"var(--c)", hex:"#2E7EBD"},
+  D: {title:"Bajo volumen + Mal rendimiento", sub:"Foco de capacitación", color:"var(--d)", hex:"#C7821A"},
+};
+const COMPANY_HEX = {
+  "EMFACO S.A":"#D9922A", "ELI S.A":"#7CB342", "SERVICIOS LUARCA":"#2E9BD6",
+  "LOMFACO":"#2E9E6B", "SALINAS CHICO":"#C0392B", "EXFACO":"#9096A8", "SIN ASIGNAR":"#8A8F9E",
+};
+
+const ACTIONS = {
+  A: [
+    "Usar el procedimiento de armado y descarte de estas estaciones como referencia en las próximas capacitaciones — son el benchmark interno de la red.",
+    "Relevar puntualmente a las de ratio más bajo para documentar qué están haciendo distinto y replicarlo.",
+    "No requieren auditoría correctiva — sólo seguimiento de mantenimiento del estándar en las visitas de rutina.",
+  ],
+  B: [
+    "Hudson primero y sola si sigue en el tope: auditoría in situ prioritaria — revisar aforador/báscula, técnica de descarte y carga de stock antes de asumir que es un problema de preparación.",
+    "Confirmar que el personal aplica el protocolo de vida útil del café molido en las estaciones de mayor ratio.",
+    "Sesión de refuerzo de estandarización y revisión del estado del molinillo — el desgaste del filo aumenta el desperdicio por mala molienda.",
+    "Pedir a estas estaciones el desperdicio diario (no sólo el acumulado del período) para distinguir si es un pico puntual o un patrón sostenido.",
+  ],
+  C: [
+    "Riesgo operativo bajo — el foco acá es comercial, no de auditoría: indagar si el volumen bajo responde a tránsito de clientes limitado o falta de impulso de venta.",
+    "Buenas candidatas para pilotear promociones nuevas: ya administran bien el café que usan, así que un aumento de volumen debería sostener la eficiencia.",
+    "Confirmar que el desperdicio bajo no se deba a un registro incompleto del turno.",
+  ],
+  D: [
+    "Es la combinación más ineficiente de la red: hay que trabajar volumen y desperdicio al mismo tiempo, no por separado.",
+    "Las de ratio más alto son prioridad de visita presencial — revisar gestión del stock de café abierto y reforzar la técnica de dosificación.",
+    "Las que muestran faltante real (positivo, deben vale) y además ratio alto: confirmar que la carga de venta en el sistema esté completa antes de reforzar capacitación.",
+    "Las que están apenas por encima del corte son buen objetivo de corto plazo — con un ajuste menor pasan al cluster C.",
+  ],
+};
+
+/* ============================================================
+   COMPUTE
+   ============================================================ */
+function median(arr){
+  const s = [...arr].sort((a,b)=>a-b);
+  const n = s.length;
+  if(n === 0) return null;
+  const mid = Math.floor(n/2);
+  return n % 2 ? s[mid] : (s[mid-1]+s[mid])/2;
+}
+
+function computeDataset(rows){
+  const medianBolsas = median(rows.map(r => r.bolsas));
+  const validRatios = rows.filter(r => r.desp !== null && r.desp !== undefined).map(r => r.desp / r.bolsas);
+  const medianRatio = median(validRatios);
+
+  const data = rows.map(r => {
+    const hasDesp = r.desp !== null && r.desp !== undefined && !isNaN(r.desp);
+    const ratio = hasDesp ? Math.round((r.desp / r.bolsas) * 100) / 100 : null;
+    let cluster = null;
+    if(hasDesp){
+      const highVol = r.bolsas >= medianBolsas;
+      const goodEff = ratio <= medianRatio;
+      cluster = highVol && goodEff ? "A" : highVol && !goodEff ? "B" : !highVol && goodEff ? "C" : "D";
+    }
+    return {
+      name: r.name, comp: r.comp || "Sin razón social", vale: r.vale,
+      desp: hasDesp ? r.desp : null, bolsas: r.bolsas, ratio, cluster,
+      seguro: r.seguro !== undefined ? r.seguro : null,
+      consumo: r.consumo !== undefined ? r.consumo : null,
+      prevDesp: r.prevDesp !== undefined ? r.prevDesp : null,
+      prevBolsas: r.prevBolsas !== undefined ? r.prevBolsas : null,
+    };
+  });
+
+  return { data, medianBolsas, medianRatio };
+}
+
+let APP = computeDataset(DEFAULT_ROWS);
+let dataLabel = "Septiembre 2026";
+window.__ULTIMO_MES_RATIOS__ = { mes: "Septiembre 2026", ratios: {} };
+HISTORIAL.stations.forEach(st => {
+  const sep = st.series["Sep"];
+  if(sep) window.__ULTIMO_MES_RATIOS__.ratios[st.name] = sep.ratio;
+});
+let state = { cluster: "ALL", comp: "ALL", estado: "ALL", search: "", sortKey: "bolsas", sortDir: -1 };
+
+/* ============================================================
+   UTIL
+   ============================================================ */
+function fmtMoney(n){
+  if(n === null || n === undefined) return "—";
+  const a = Math.abs(Math.round(n));
+  const s = a.toLocaleString("es-AR");
+  return (n < 0 ? "-$" : "$") + s;
+}
+function fmtRatio(r){ return (r === null || r === undefined) ? "—" : String(r).replace(".", ","); }
+function fmtNum(n, dec){ return n === null || n === undefined ? "—" : n.toLocaleString("es-AR", {maximumFractionDigits: dec||0, minimumFractionDigits: dec||0}); }
+function titleCase(s){ return String(s).toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase()); }
+function filteredBase(){
+  return APP.data.filter(d => {
+    if(state.cluster !== "ALL" && d.cluster !== state.cluster) return false;
+    if(state.comp !== "ALL" && d.comp !== state.comp) return false;
+    if(state.estado === "FALTA" && !(d.vale > 0)) return false;
+    if(state.estado === "SOBRA" && !(d.vale < 0)) return false;
+    return true;
+  });
+}
+function filteredWithSearch(){
+  return filteredBase().filter(d => {
+    if(state.search){
+      const hay = (d.name + " " + d.comp).toLowerCase();
+      if(!hay.includes(state.search)) return false;
+    }
+    return true;
+  });
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+function renderHero(){
+  const rows = filteredBase();
+  const total = rows.length;
+  const netVale = rows.reduce((s,d)=>s+d.vale, 0);
+  const faltaCount = rows.filter(d=>d.vale>0).length;
+  const faltaPct = total ? Math.round((faltaCount/total)*100) : 0;
+  const totalDespAll = rows.filter(d => d.desp !== null).reduce((s,d)=>s+d.desp,0);
+  const withPrev = rows.filter(d => d.prevDesp !== null);
+  const curDespPrevSubset = withPrev.reduce((s,d)=>s+d.desp,0);
+  const prevDesp = withPrev.reduce((s,d)=>s+d.prevDesp,0);
+  const despDelta = prevDesp ? Math.round(((curDespPrevSubset-prevDesp)/prevDesp)*100) : null;
+  const despTrend = despDelta === null ? "sin dato del mes anterior" : `${despDelta>0?'▲':'▼'} ${Math.abs(despDelta)}% vs. mes anterior`;
+
+  let color, verdict, sub;
+  if(faltaPct <= 10){ color="var(--a)"; verdict="Red saludable"; sub="La gran mayoría de las estaciones muestra vale a favor este período"; }
+  else if(faltaPct <= 25){ color="var(--d)"; verdict="Atención moderada"; sub="Un grupo de estaciones necesita seguimiento de faltante real"; }
+  else { color="var(--b)"; verdict="Requiere acción"; sub="Una porción importante de la red tiene faltante real este período"; }
+
+  document.getElementById("hero").innerHTML = `
+    <div class="hero-verdict">
+      <div class="hero-dot" style="background:${color}"></div>
+      <div class="hero-verdict-text"><b>${verdict}</b><span>${sub}</span></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="v">${fmtMoney(netVale)}</div><div class="l">Balance de vale neto</div></div>
+      <div class="hero-stat"><div class="v">${faltaCount} <span style="font-size:13px;color:#B7BBE0;">(${faltaPct}%)</span></div><div class="l">Con faltante real</div></div>
+      <div class="hero-stat"><div class="v">${totalDespAll}</div><div class="l">Desperdicio total (u.)</div><div class="trend ${despDelta!==null && despDelta>0?'up':despDelta!==null?'down':''}">${despTrend}</div></div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   FILTERS
+   ============================================================ */
+function renderFilters(){
+  const el = document.getElementById("filter-bar");
+  const clusterItems = [
+    {key:"ALL", label:"Todos"},
+    {key:"A", label:"A", color:CLUSTER_META.A.color},
+    {key:"B", label:"B", color:CLUSTER_META.B.color},
+    {key:"C", label:"C", color:CLUSTER_META.C.color},
+    {key:"D", label:"D", color:CLUSTER_META.D.color},
+  ];
+  const companies = ["ALL", ...Object.keys(COMPANY_HEX).filter(c => APP.data.some(d=>d.comp===c))];
+
+  el.innerHTML = `
+    <div class="filter-group">
+      <span class="filter-label">Cluster</span>
+      ${clusterItems.map(it => `<div class="chip ${state.cluster===it.key?'active':''}" data-type="cluster" data-val="${it.key}">${it.color?`<span class="dot" style="background:${it.color}"></span>`:''}${it.label}</div>`).join("")}
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Empresa</span>
+      ${companies.map(c => `<div class="chip ${state.comp===c?'active':''}" data-type="comp" data-val="${c}">${c==="ALL"?"Todas":c}</div>`).join("")}
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Estado</span>
+      <div class="chip ${state.estado==='ALL'?'active':''}" data-type="estado" data-val="ALL">Todos</div>
+      <div class="chip ${state.estado==='FALTA'?'active':''}" data-type="estado" data-val="FALTA">Falta real</div>
+      <div class="chip ${state.estado==='SOBRA'?'active':''}" data-type="estado" data-val="SOBRA">Sobra</div>
+    </div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar estación...">
+    </div>
+  `;
+  el.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      state[chip.dataset.type] = chip.dataset.val;
+      renderAll();
+    });
+  });
+  const si = document.getElementById("search-input");
+  si.value = state.search;
+  si.addEventListener("input", (e) => { state.search = e.target.value.toLowerCase(); renderTable(); });
+}
+
+/* ============================================================
+   KPI CARDS
+   ============================================================ */
+function renderKPIs(){
+  const rows = filteredBase();
+  const total = rows.length;
+  const totalBolsas = rows.reduce((s,d)=>s+d.bolsas,0);
+  const totalDesp = rows.filter(d=>d.desp!==null).reduce((s,d)=>s+d.desp,0);
+  const netVale = rows.reduce((s,d)=>s+d.vale,0);
+  const faltaCount = rows.filter(d=>d.vale>0).length;
+  const avgSeguro = rows.filter(d=>d.seguro!==null).reduce((s,d,_,a)=>s+d.seguro/a.length,0);
+  const avgConsumo = rows.filter(d=>d.consumo!==null).reduce((s,d,_,a)=>s+d.consumo/a.length,0);
+
+  const withPrev = rows.filter(d => d.prevBolsas !== null);
+  const curB = withPrev.reduce((s,d)=>s+d.bolsas,0);
+  const prevB = withPrev.reduce((s,d)=>s+d.prevBolsas,0);
+  const bolsasDelta = prevB ? Math.round(((curB-prevB)/prevB)*100) : null;
+
+  const withPrevD = rows.filter(d => d.prevDesp !== null);
+  const curD = withPrevD.reduce((s,d)=>s+d.desp,0);
+  const prevD = withPrevD.reduce((s,d)=>s+d.prevDesp,0);
+  const despDelta = prevD ? Math.round(((curD-prevD)/prevD)*100) : null;
+
+  const bolsasNote = bolsasDelta === null ? "sin dato del mes anterior" : `${bolsasDelta>=0?'▲':'▼'} ${Math.abs(bolsasDelta)}% vs. mes anterior`;
+  const despNote = despDelta === null ? "sin dato del mes anterior" : `${despDelta>=0?'▲':'▼'} ${Math.abs(despDelta)}% vs. mes anterior`;
+
+  document.getElementById("kpi-row").innerHTML = `
+    <div class="kpi-card"><div class="kpi-label">Estaciones (filtro actual)</div><div class="kpi-value">${total}</div><div class="kpi-note">de ${APP.data.length} en total</div></div>
+    <div class="kpi-card"><div class="kpi-label">Bolsas de café vendidas</div><div class="kpi-value">${fmtNum(totalBolsas)}</div><div class="kpi-note ${bolsasDelta!==null && bolsasDelta<0?'up':bolsasDelta!==null?'down':''}">${bolsasNote}</div></div>
+    <div class="kpi-card"><div class="kpi-label">Desperdicio total (u.)</div><div class="kpi-value warn">${fmtNum(totalDesp)}</div><div class="kpi-note ${despDelta!==null && despDelta>0?'up':despDelta!==null?'down':''}">${despNote}</div></div>
+    <div class="kpi-card"><div class="kpi-label">Balance de vale neto</div><div class="kpi-value ${netVale<0?'good':'warn'}">${fmtMoney(netVale)}</div><div class="kpi-note">${netVale<0?'a favor de las estaciones':'estaciones deben responder'}</div></div>
+  `;
+  document.getElementById("kpi-row-2").innerHTML = `
+    <div class="kpi-card"><div class="kpi-label">Con faltante real</div><div class="kpi-value warn">${faltaCount}</div><div class="kpi-note">deben vale — requieren seguimiento</div></div>
+    <div class="kpi-card"><div class="kpi-label">Seguro % s/venta promedio</div><div class="kpi-value">${fmtRatio(Math.round(avgSeguro*10)/10)}%</div><div class="kpi-note">cobertura de café sobre venta</div></div>
+    <div class="kpi-card"><div class="kpi-label">Consumo x kilo promedio</div><div class="kpi-value">${fmtRatio(Math.round(avgConsumo*10)/10)}</div><div class="kpi-note">rango habitual: 85 – 115</div></div>
+    <div class="kpi-card"><div class="kpi-label">Mediana bolsas / ratio red</div><div class="kpi-value" style="font-size:17px;">${APP.medianBolsas.toFixed(0)} / ${fmtRatio(Math.round(APP.medianRatio*100)/100)}</div><div class="kpi-note">corte de los 4 clusters</div></div>
+  `;
+}
+
+/* ============================================================
+   SCATTER
+   ============================================================ */
+function renderScatter(){
+  const svg = document.getElementById("scatter");
+  const W = 620, H = 420, ml=48, mr=16, mt=16, mb=42;
+  const pw = W-ml-mr, ph = H-mt-mb;
+  const maxX = 80, maxY = 7;
+  const px = x => ml + (x/maxX)*pw;
+  const py = y => mt + ph - (Math.min(y,maxY)/maxY)*ph;
+  const mx = px(APP.medianBolsas), my = py(APP.medianRatio);
+
+  let parts = [];
+  parts.push(`<rect x="${mx}" y="${mt}" width="${ml+pw-mx}" height="${my-mt}" fill="var(--a-bg)"/>`);
+  parts.push(`<rect x="${mx}" y="${my}" width="${ml+pw-mx}" height="${mt+ph-my}" fill="var(--b-bg)"/>`);
+  parts.push(`<rect x="${ml}" y="${mt}" width="${mx-ml}" height="${my-mt}" fill="var(--c-bg)"/>`);
+  parts.push(`<rect x="${ml}" y="${my}" width="${mx-ml}" height="${mt+ph-my}" fill="var(--d-bg)"/>`);
+
+  for(let gx=0; gx<=maxX; gx+=20){
+    parts.push(`<line x1="${px(gx)}" y1="${mt}" x2="${px(gx)}" y2="${mt+ph}" stroke="var(--gray-line)" stroke-width="1"/>`);
+    parts.push(`<text x="${px(gx)}" y="${mt+ph+15}" font-size="9" fill="var(--text-muted)" text-anchor="middle">${gx}</text>`);
+  }
+  for(let gy=0; gy<=maxY; gy+=1){
+    parts.push(`<line x1="${ml}" y1="${py(gy)}" x2="${ml+pw}" y2="${py(gy)}" stroke="var(--gray-line)" stroke-width="1"/>`);
+    parts.push(`<text x="${ml-8}" y="${py(gy)+3}" font-size="9" fill="var(--text-muted)" text-anchor="end">${gy}</text>`);
+  }
+  parts.push(`<line x1="${mx}" y1="${mt}" x2="${mx}" y2="${mt+ph}" stroke="var(--navy)" stroke-width="1.2" stroke-dasharray="4,3"/>`);
+  parts.push(`<line x1="${ml}" y1="${my}" x2="${ml+pw}" y2="${my}" stroke="var(--navy)" stroke-width="1.2" stroke-dasharray="4,3"/>`);
+  parts.push(`<text x="${ml+pw/2}" y="${H-6}" font-size="10.5" fill="var(--navy)" text-anchor="middle" font-weight="bold">Bolsas de café vendidas</text>`);
+  parts.push(`<text x="11" y="${mt+ph/2}" font-size="10.5" fill="var(--navy)" text-anchor="middle" font-weight="bold" transform="rotate(-90 11 ${mt+ph/2})">Desperdicio / bolsa</text>`);
+
+  const visible = filteredWithSearch();
+  const visibleNames = new Set(visible.map(d=>d.name));
+
+  APP.data.filter(d => d.cluster).forEach(d => {
+    const x = px(d.bolsas), y = py(d.ratio);
+    const isDim = !visibleNames.has(d.name);
+    const color = CLUSTER_META[d.cluster].hex;
+    parts.push(`<circle class="pt ${isDim?'dim':''}" data-name="${d.name}" cx="${x}" cy="${y}" r="5.8" fill="${color}" stroke="white" stroke-width="1.3"/>`);
+    const anchor = x > ml+pw-90 ? "end" : "start";
+    const dx = anchor==="end" ? -8 : 8;
+    parts.push(`<text class="pt-label ${isDim?'dim':''}" x="${x+dx}" y="${y+3}" text-anchor="${anchor}">${titleCase(d.name)}</text>`);
+  });
+
+  svg.innerHTML = parts.join("");
+
+  const tooltip = document.getElementById("tooltip");
+  svg.querySelectorAll(".pt").forEach(pt => {
+    pt.addEventListener("mousemove", (e) => {
+      const d = APP.data.find(x => x.name === pt.dataset.name);
+      const rect = document.getElementById("scatter-wrap").getBoundingClientRect();
+      tooltip.innerHTML = `<b>${titleCase(d.name)}</b><br>${d.comp}<br>Bolsas: ${d.bolsas} · Desp: ${d.desp} · Ratio: ${fmtRatio(d.ratio)}<br>Vale: ${fmtMoney(d.vale)}`;
+      tooltip.style.left = (e.clientX - rect.left + 14) + "px";
+      tooltip.style.top = (e.clientY - rect.top - 10) + "px";
+      tooltip.style.opacity = 1;
+    });
+    pt.addEventListener("mouseleave", () => tooltip.style.opacity = 0);
+    pt.addEventListener("click", () => {
+      state.search = pt.dataset.name.toLowerCase();
+      const si = document.getElementById("search-input");
+      if(si) si.value = titleCase(pt.dataset.name);
+      renderTable();
+    });
+  });
+}
+
+/* ============================================================
+   CLUSTER CARDS
+   ============================================================ */
+function renderClusterCards(){
+  const el = document.getElementById("cluster-cards");
+  const base = filteredBase();
+  el.innerHTML = Object.keys(CLUSTER_META).map(key => {
+    const meta = CLUSTER_META[key];
+    const items = base.filter(d => d.cluster === key);
+    if(items.length === 0){
+      return `<div class="cluster-card" data-cluster="${key}" style="border-left-color:${meta.color}; opacity:.45;">
+        <div class="ct"><b>Cluster ${key}</b><span>0 estaciones</span></div><div class="cs">${meta.title}</div></div>`;
+    }
+    const avgB = (items.reduce((s,d)=>s+d.bolsas,0)/items.length).toFixed(0);
+    const avgR = (items.reduce((s,d)=>s+d.ratio,0)/items.length).toFixed(2).replace(".",",");
+    return `<div class="cluster-card ${state.cluster===key?'active':''}" data-cluster="${key}" style="border-left-color:${meta.color}">
+      <div class="ct"><b>Cluster ${key}</b><span>${items.length} estaciones</span></div>
+      <div class="cs">${meta.title}</div>
+      <div class="stats"><span>Bolsas prom. <b>${avgB}</b></span><span>Ratio prom. <b>${avgR}</b></span></div>
+    </div>`;
+  }).join("");
+  el.querySelectorAll(".cluster-card").forEach(card => {
+    card.addEventListener("click", () => {
+      state.cluster = state.cluster === card.dataset.cluster ? "ALL" : card.dataset.cluster;
+      renderAll();
+    });
+  });
+
+  const sinClasificar = base.filter(d => !d.cluster);
+  const noteEl = document.getElementById("sin-clasificar-note");
+  if(sinClasificar.length === 0){ noteEl.style.display = "none"; }
+  else {
+    noteEl.style.display = "block";
+    const names = sinClasificar.map(d => `<b>${titleCase(d.name)}</b>`).join(", ");
+    noteEl.innerHTML = `${names} ${sinClasificar.length===1?"no tiene":"no tienen"} dato de desperdicio — ${sinClasificar.length===1?"queda":"quedan"} fuera de los 4 clusters.`;
+  }
+}
+
+/* ============================================================
+   DONUTS
+   ============================================================ */
+function svgDonut(segments, size, thickness){
+  const r = (size - thickness) / 2;
+  const cx = size/2, cy = size/2;
+  const circumference = 2 * Math.PI * r;
+  const total = segments.reduce((s,x)=>s+x.value, 0) || 1;
+  let offset = 0;
+  let parts = [`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`];
+  parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--cream)" stroke-width="${thickness}"/>`);
+  segments.forEach(seg => {
+    if(seg.value === 0) return;
+    const frac = seg.value / total;
+    const len = frac * circumference;
+    parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${thickness}" stroke-dasharray="${len} ${circumference-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"/>`);
+    offset += len;
+  });
+  parts.push(`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-size="20" font-weight="bold" fill="var(--navy)" font-family="Cambria,serif">${total}</text>`);
+  parts.push(`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="9" fill="var(--text-muted)">estaciones</text>`);
+  parts.push(`</svg>`);
+  return parts.join("");
+}
+
+function renderDonutCluster(){
+  const base = filteredBase();
+  const segments = Object.keys(CLUSTER_META).map(k => ({
+    key:k, value: base.filter(d=>d.cluster===k).length, color: CLUSTER_META[k].hex, label: `Cluster ${k}`
+  }));
+  const el = document.getElementById("donut-cluster");
+  el.innerHTML = svgDonut(segments, 140, 24) + `<div class="donut-legend">${segments.map(s=>`<div class="li"><span class="sw" style="background:${s.color}"></span>${s.label} (${s.value})</div>`).join("")}</div>`;
+}
+
+function renderDonutCompany(){
+  const base = filteredBase();
+  const companies = [...new Set(base.map(d=>d.comp))];
+  const segments = companies.map(c => ({ value: base.filter(d=>d.comp===c).length, color: COMPANY_HEX[c] || "#999", label: c }));
+  const el = document.getElementById("donut-company");
+  el.innerHTML = svgDonut(segments, 140, 24) + `<div class="donut-legend">${segments.map(s=>`<div class="li"><span class="sw" style="background:${s.color}"></span>${s.label} (${s.value})</div>`).join("")}</div>`;
+}
+
+function renderGaugeFalta(){
+  const base = filteredBase();
+  const total = base.length || 1;
+  const falta = base.filter(d=>d.vale>0).length;
+  const pct = Math.round((falta/total)*100);
+  const size = 160, r = 62, cx = size/2, cy = size/2 + 10;
+  const circumference = Math.PI * r; // half circle
+  const fillLen = (pct/100) * circumference;
+  const color = pct <= 10 ? "var(--a)" : pct <= 25 ? "var(--d)" : "var(--b)";
+  const svg = `<svg width="${size}" height="${size/2+30}" viewBox="0 0 ${size} ${size/2+30}">
+    <path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="var(--cream)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="${color}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${fillLen} ${circumference-fillLen}"/>
+  </svg>`;
+  document.getElementById("gauge-falta").innerHTML = svg + `<div class="gauge-value">${pct}%</div><div class="gauge-label">${falta} de ${total} estaciones</div>`;
+}
+
+/* ============================================================
+   BAR: VALE POR RAZÓN SOCIAL
+   ============================================================ */
+function renderBarVale(){
+  const base = filteredBase();
+  const companies = [...new Set(base.map(d=>d.comp))];
+  const items = companies.map(c => ({ label:c, value: base.filter(d=>d.comp===c).reduce((s,d)=>s+d.vale,0), color: COMPANY_HEX[c] }));
+  items.sort((a,b) => Math.abs(b.value) - Math.abs(a.value));
+  const maxAbs = Math.max(...items.map(i=>Math.abs(i.value)), 1);
+  document.getElementById("bar-vale").innerHTML = items.map(it => `
+    <div class="bar-row">
+      <div class="lbl">${it.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.abs(it.value)/maxAbs*100}%; background:${it.value<0?'var(--green)':'var(--red)'}"></div></div>
+      <div class="bar-val">${fmtMoney(it.value)}</div>
+    </div>`).join("") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos para este filtro.</div>`;
+}
+
+function renderBarSeguro(){
+  const base = filteredWithSearch().filter(d => d.seguro !== null).slice().sort((a,b)=>b.seguro-a.seguro).slice(0,10);
+  const maxV = Math.max(...base.map(d=>d.seguro), 1);
+  document.getElementById("bar-seguro").innerHTML = base.map(d => `
+    <div class="bar-row">
+      <div class="lbl">${titleCase(d.name)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.seguro/maxV*100}%; background:${CLUSTER_META[d.cluster]?CLUSTER_META[d.cluster].hex:'var(--navy)'}"></div></div>
+      <div class="bar-val">${fmtRatio(d.seguro)}%</div>
+    </div>`).join("") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos para este filtro.</div>`;
+}
+
+/* ============================================================
+   TREND — dumbbell chart, ALL stations, mes anterior vs. actual
+   ============================================================ */
+function renderTrendAll(containerId, valueKey, prevKey, goodDirection){
+  const base = filteredWithSearch().filter(d => d[prevKey] !== null && d[prevKey] !== undefined && d[valueKey] !== null && d[valueKey] !== undefined);
+  const withDelta = base.map(d => ({...d, delta: d[valueKey] - d[prevKey]}));
+  withDelta.sort((a,b) => a.delta - b.delta);
+  const maxV = Math.max(...withDelta.flatMap(d => [d[valueKey], d[prevKey]]), 1);
+
+  const el = document.getElementById(containerId);
+  if(withDelta.length === 0){
+    el.innerHTML = `<div style="color:var(--text-muted);font-size:11px;">Sin datos comparables para este filtro.</div>`;
+    return;
+  }
+
+  const legend = `<div class="dumbbell-legend">
+    <div class="li"><span class="dot" style="background:var(--text-muted)"></span>Mes anterior</div>
+    <div class="li"><span class="dot" style="background:var(--navy)"></span>Mes actual</div>
+  </div>`;
+
+  const rows = withDelta.map(d => {
+    const improved = goodDirection === "down" ? d.delta < 0 : d.delta > 0;
+    const worsened = goodDirection === "down" ? d.delta > 0 : d.delta < 0;
+    const color = improved ? "#3C9A5F" : worsened ? "#C0392B" : "var(--text-muted)";
+    const prevPct = Math.min(d[prevKey] / maxV * 100, 100);
+    const curPct = Math.min(d[valueKey] / maxV * 100, 100);
+    const fillFrom = Math.min(prevPct, curPct);
+    const fillTo = Math.max(prevPct, curPct);
+    const deltaTxt = (d.delta > 0 ? "+" : "") + fmtNum(d.delta);
+    return `<div class="dumbbell-row">
+      <div class="lbl">${titleCase(d.name)}</div>
+      <div class="dumbbell-track">
+        <div class="dumbbell-fill" style="left:${fillFrom}%; width:${fillTo-fillFrom}%; background:${color};"></div>
+        <div class="dumbbell-prev" style="left:${prevPct}%;" title="Mes anterior: ${d[prevKey]}"></div>
+        <div class="dumbbell-cur" style="left:${curPct}%; background:${color};" title="Mes actual: ${d[valueKey]}"></div>
+      </div>
+      <div class="dumbbell-val">${d[prevKey]} → <b style="color:${color}">${d[valueKey]}</b> <span style="color:${color}">(${deltaTxt})</span></div>
+    </div>`;
+  }).join("");
+
+  el.innerHTML = legend + `<div class="dumbbell-wrap">${rows}</div>`;
+}
+
+/* ============================================================
+   CONSUMO BAND CHART
+   ============================================================ */
+function renderConsumo(){
+  const base = filteredWithSearch().filter(d => d.consumo !== null).slice().sort((a,b)=>a.consumo-b.consumo);
+  const maxV = 160;
+  const bandTop = (1 - 115/maxV) * 100;
+  const bandHeight = ((115-85)/maxV) * 100;
+  const el = document.getElementById("consumo-chart");
+  if(base.length === 0){
+    el.innerHTML = `<div style="color:var(--text-muted);font-size:11px;">Sin datos para este filtro.</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="consumo-band" style="top:${bandTop}%; height:${bandHeight}%;"></div>
+    <div class="consumo-bars">${base.map(d => {
+      const outside = d.consumo < 85 || d.consumo > 115;
+      return `<div class="consumo-bar" title="${titleCase(d.name)}: ${fmtRatio(d.consumo)}" style="height:${d.consumo/maxV*100}%; background:${outside?'var(--red)':'var(--navy)'}"></div>`;
+    }).join("")}</div>`;
+}
+
+/* ============================================================
+   RANKINGS
+   ============================================================ */
+function renderRankings(){
+  const base = filteredWithSearch().filter(d => d.desp !== null);
+  const medalColors = ["#D9922A", "#9096A8", "#B87A3D", "#C7821A", "#C7821A"];
+
+  const topDesp = [...base].sort((a,b)=>b.desp-a.desp).slice(0,5);
+  const maxDesp = Math.max(...topDesp.map(d=>d.desp), 1);
+  document.getElementById("rank-desp").innerHTML = topDesp.map((d,i) => `
+    <div class="rank-item">
+      <div class="rank-medal" style="background:${medalColors[i]||'#999'}">${i+1}</div>
+      <div class="rank-info"><div class="n">${titleCase(d.name)}</div><div class="track"><div class="fill" style="width:${d.desp/maxDesp*100}%; background:var(--b)"></div></div></div>
+      <div class="rank-val">${d.desp} u.</div>
+    </div>`).join("") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos.</div>`;
+
+  const topEff = [...base].sort((a,b)=>a.ratio-b.ratio).slice(0,5);
+  const maxEff = Math.max(...topEff.map(d=>d.ratio), 0.1);
+  document.getElementById("rank-eff").innerHTML = topEff.map((d,i) => `
+    <div class="rank-item">
+      <div class="rank-medal" style="background:${medalColors[i]||'#999'}">${i+1}</div>
+      <div class="rank-info"><div class="n">${titleCase(d.name)}</div><div class="track"><div class="fill" style="width:${Math.max(d.ratio/maxEff*100,4)}%; background:var(--a)"></div></div></div>
+      <div class="rank-val">${fmtRatio(d.ratio)}</div>
+    </div>`).join("") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos.</div>`;
+}
+
+/* ============================================================
+   HEATMAP
+   ============================================================ */
+function renderHeatmap(){
+  const base = filteredWithSearch();
+  const companies = [...new Set(APP.data.map(d=>d.comp))];
+  const clusters = ["A","B","C","D"];
+  const maxCount = Math.max(...companies.flatMap(c => clusters.map(k => base.filter(d=>d.comp===c && d.cluster===k).length)), 1);
+
+  let html = `<table class="heat-table"><thead><tr><th>Razón social</th>${clusters.map(k=>`<th>${k}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
+  companies.forEach(c => {
+    const counts = clusters.map(k => base.filter(d=>d.comp===c && d.cluster===k).length);
+    const total = counts.reduce((s,v)=>s+v,0);
+    html += `<tr><td>${c}</td>${counts.map((v,i) => {
+      const alpha = v === 0 ? 0 : 0.15 + (v/maxCount)*0.65;
+      return `<td><div class="heat-cell" style="background:rgba(${hexToRgb(CLUSTER_META[clusters[i]].hex)},${alpha}); padding:6px;">${v||''}</div></td>`;
+    }).join("")}<td style="font-weight:bold;color:var(--navy);">${total}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById("heatmap").innerHTML = html;
+}
+function hexToRgb(hex){
+  const v = parseInt(hex.slice(1),16);
+  return `${(v>>16)&255},${(v>>8)&255},${v&255}`;
+}
+
+/* ============================================================
+   ACCORDION
+   ============================================================ */
+function renderAccordion(){
+  const el = document.getElementById("accordion");
+  el.innerHTML = Object.keys(CLUSTER_META).map(key => {
+    const meta = CLUSTER_META[key];
+    const actions = ACTIONS[key].map(a => `<li>${a}</li>`).join("");
+    return `<div class="accordion-item" data-key="${key}">
+      <div class="accordion-head">
+        <div class="badge" style="background:${meta.color}">${key}</div>
+        <div><div class="h-title">Cluster ${key} — ${meta.title}</div><div class="h-sub">${meta.sub}</div></div>
+        <div class="chev">&#9660;</div>
+      </div>
+      <div class="accordion-body"><ul>${actions}</ul></div>
+    </div>`;
+  }).join("");
+  el.querySelectorAll(".accordion-head").forEach(head => {
+    head.addEventListener("click", () => head.parentElement.classList.toggle("open"));
+  });
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+function renderTable(){
+  const tbody = document.getElementById("table-body");
+  let rows = filteredWithSearch();
+
+  rows.sort((a,b) => {
+    let av = a[state.sortKey], bv = b[state.sortKey];
+    if(av === null || av === undefined) av = -Infinity;
+    if(bv === null || bv === undefined) bv = -Infinity;
+    if(typeof av === "string") return av.localeCompare(bv) * state.sortDir;
+    return (av-bv) * state.sortDir;
+  });
+
+  document.getElementById("table-count").textContent = `${rows.length} de ${APP.data.length} estaciones`;
+  const maxBolsas = Math.max(...APP.data.map(d=>d.bolsas), 1);
+
+  const bienSet = new Set(
+    APP.data.filter(d => d.vale !== null && d.vale <= 0 && d.desp > 0 && d.bolsas > 0 && d.prevBolsas > 0 && d.prevDesp > 0 && (d.desp/d.bolsas) < (d.prevDesp/d.prevBolsas))
+      .sort((a,b) => (a.desp/a.bolsas) - (b.desp/b.bolsas)).slice(0,3).map(d => d.name)
+  );
+  tbody.innerHTML = rows.map(d => {
+    const rowCls = (d.vale !== null && d.vale > 0) ? "row-falta" : (bienSet.has(d.name) ? "row-bien" : "");
+    const valeClass = d.vale === null ? "" : (d.vale < 0 ? "pos" : "neg");
+    const tag = d.cluster ? `<span class="cluster-tag" style="background:${CLUSTER_META[d.cluster].hex}">${d.cluster}</span>` : `<span class="cluster-tag" style="background:#8A8F9E">S/C</span>`;
+    let trendArrow = "";
+    if(d.prevDesp !== null && d.desp !== null){
+      const up = d.desp > d.prevDesp;
+      trendArrow = `<span class="trend-arrow ${up?'up':'down'}">${up?'▲':'▼'}</span>`;
+    }
+    return `<tr class="${rowCls}">
+      <td class="name">${titleCase(d.name)}</td>
+      <td class="muted">${d.comp}</td>
+      <td>${tag}</td>
+      <td class="num"><div class="mini-bar-cell" style="justify-content:flex-end;"><div class="mini-bar-track"><div class="mini-bar-fill" style="width:${d.bolsas/maxBolsas*100}%"></div></div>${d.bolsas}</div></td>
+      <td class="num">${d.desp === null ? "—" : d.desp}${trendArrow}</td>
+      <td class="num">${fmtRatio(d.ratio)}</td>
+      <td class="num">${d.seguro===null?"—":fmtRatio(d.seguro)}</td>
+      <td class="num">${d.consumo===null?"—":fmtRatio(d.consumo)}</td>
+      <td class="num ${valeClass}">${fmtMoney(d.vale)}</td>
+    </tr>`;
+  }).join("");
+}
+
+document.querySelectorAll("#data-table thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.key;
+    if(state.sortKey === key){ state.sortDir *= -1; } else { state.sortKey = key; state.sortDir = -1; }
+    document.querySelectorAll("#data-table thead .arrow").forEach(a => a.textContent = "");
+    th.querySelector(".arrow").textContent = state.sortDir === 1 ? "▲" : "▼";
+    renderTable();
+  });
+});
+
+/* ============================================================
+   MASTER RENDER
+   ============================================================ */
+/* ============================================================
+   EVOLUCIÓN FEB-JUN (historical trend, 5 real months)
+   ============================================================ */
+function renderEvoVerdict(){
+  const net = HISTORIAL.network;
+  const first = net[0], last = net[net.length - 1];
+  const ratioDeltaPct = Math.round(((last.ratioProm - first.ratioProm) / first.ratioProm) * 100);
+  const faltaDelta = last.faltaReal - first.faltaReal;
+  const mejorando = ratioDeltaPct < 0;
+  document.querySelectorAll(".evo-range").forEach(e => { e.textContent = first.mes + " → " + last.mes; });
+  const worst = HISTORIAL.stations.filter(s => s.deltaRatio !== undefined && s.deltaRatio !== null && s.firstMonth === HISTORIAL.meses[0]).sort((a,b) => b.deltaRatio - a.deltaRatio)[0];
+  const worstName = worst ? titleCase(worst.name) : "—";
+  const worstDelta = worst ? " · ratio " + (worst.deltaRatio>0?"+":"") + fmtRatio(worst.deltaRatio) : "";
+  const color = mejorando ? "var(--a)" : "var(--b)";
+  document.getElementById("evo-verdict").innerHTML = `
+    <div class="hero-verdict">
+      <div class="hero-dot" style="background:${color}"></div>
+      <div class="hero-verdict-text"><b>${mejorando ? "La red viene mejorando" : "La red viene empeorando"}</b><span>Ratio de desperdicio ${first.mes} → ${last.mes}: ${fmtRatio(first.ratioProm)} → ${fmtRatio(last.ratioProm)} (${ratioDeltaPct>0?'+':''}${ratioDeltaPct}%)</span></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="v">${last.faltaReal}</div><div class="l">Con falta real hoy</div><div class="trend ${faltaDelta<=0?'down':'up'}">${faltaDelta<=0?'▼':'▲'} ${Math.abs(faltaDelta)} vs. ${first.mes}</div></div>
+      <div class="hero-stat"><div class="v">${fmtRatio(last.ratioProm)}</div><div class="l">Ratio promedio red</div></div>
+      <div class="hero-stat"><div class="v">${worstName}</div><div class="l">Mayor empeoramiento desde ${first.mes}${worstDelta}</div></div>
+    </div>
+  `;
+}
+
+function svgLineChart(containerId, points, opts){
+  const W = opts.wide ? 1120 : 560, H = opts.wide ? 260 : 220, ml = opts.wide ? 70 : 40, mr = 16, mt = 16, mb = 34;
+  const pw = W - ml - mr, ph = H - mt - mb;
+  const values = points.map(p => p.value);
+  const maxV = opts.max !== undefined ? opts.max : Math.max(...values) * 1.15;
+  const minV = opts.min !== undefined ? opts.min : Math.min(0, Math.min(...values)) * (Math.min(...values) < 0 ? 1.15 : 1);
+  const px = i => ml + (i / (points.length - 1)) * pw;
+  const py = v => mt + ph - ((v - minV) / (maxV - minV)) * ph;
+  const axisFmt = opts.axisFmt || (v => Math.round(v).toLocaleString("es-AR"));
+
+  let parts = [];
+  for (let g = 0; g <= 4; g++) {
+    const v = minV + (g / 4) * (maxV - minV);
+    const y = py(v);
+    parts.push(`<line x1="${ml}" y1="${y}" x2="${ml+pw}" y2="${y}" stroke="var(--gray-line)" stroke-width="1"/>`);
+    parts.push(`<text x="${ml-10}" y="${y+3}" font-size="10" fill="var(--text-muted)" text-anchor="end">${axisFmt(v)}</text>`);
+  }
+  points.forEach((p, i) => {
+    parts.push(`<text x="${px(i)}" y="${H-8}" font-size="11" fill="var(--navy)" text-anchor="middle" font-weight="bold">${p.label}</text>`);
+  });
+
+  const pathD = points.map((p, i) => `${i===0?'M':'L'} ${px(i)} ${py(p.value)}`).join(' ');
+  const areaD = pathD + ` L ${px(points.length-1)} ${py(minV)} L ${px(0)} ${py(minV)} Z`;
+  parts.push(`<path d="${areaD}" fill="${opts.color}" opacity="0.08"/>`);
+  parts.push(`<path d="${pathD}" fill="none" stroke="${opts.color}" stroke-width="2.5"/>`);
+  points.forEach((p, i) => {
+    parts.push(`<circle cx="${px(i)}" cy="${py(p.value)}" r="5" fill="${opts.color}" stroke="white" stroke-width="1.5"/>`);
+    parts.push(`<text x="${px(i)}" y="${py(p.value)-12}" font-size="12" fill="${opts.color}" text-anchor="middle" font-weight="bold">${p.display !== undefined ? p.display : p.value}</text>`);
+  });
+
+  document.getElementById(containerId).innerHTML = parts.join("");
+}
+
+const EVO_METRICS = {
+  ratio: { label: "Ratio de desperdicio", color: "#C0392B", sub: "Desperdicio ÷ bolsas — cuanto más bajo, mejor", get: n => n.ratioProm, fmt: v => fmtRatio(v), axisFmt: v => fmtRatio(Math.round(v*10)/10) },
+  bolsas: { label: "Bolsas vendidas", color: "#2E7EBD", sub: "Total de bolsas de café vendidas por toda la red, por mes", get: n => n.bolsas, fmt: v => fmtNum(v), axisFmt: v => fmtNum(v) },
+  desperdicio: { label: "Desperdicio total", color: "#C7821A", sub: "Unidades de desperdicio de toda la red, por mes", get: n => n.desperdicio, fmt: v => fmtNum(v), axisFmt: v => fmtNum(v) },
+  valeNeto: { label: "Balance de vale", color: "#3C9A5F", sub: "Balance neto en pesos — negativo es a favor de las estaciones", get: n => n.valeNeto, fmt: v => fmtMoney(v), axisFmt: v => (v/1000000).toFixed(1)+"M" },
+  faltaReal: { label: "Estaciones con falta real", color: "#8E44AD", sub: "Cantidad de estaciones que deben vale, por mes", get: n => n.faltaReal, fmt: v => String(v), axisFmt: v => String(Math.round(v)) },
+};
+let evoMetric = "ratio";
+
+function renderEvoTabs(){
+  const el = document.getElementById("evo-tabs");
+  el.innerHTML = Object.keys(EVO_METRICS).map(key => `
+    <div class="chip ${evoMetric===key?'active':''}" data-evo="${key}">${EVO_METRICS[key].label}</div>
+  `).join("");
+  el.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      evoMetric = chip.dataset.evo;
+      renderEvoTabs();
+      renderEvoChart();
+    });
+  });
+}
+
+function renderEvoChart(){
+  const net = HISTORIAL.network;
+  const m = EVO_METRICS[evoMetric];
+  document.getElementById("evo-chart-title").textContent = m.label + " de la red";
+  document.getElementById("evo-chart-sub").textContent = m.sub;
+  const points = net.map(n => ({ label: n.mes, value: m.get(n), display: m.fmt(m.get(n)) }));
+  svgLineChart("evo-chart", points, { color: m.color, min: evoMetric === "valeNeto" ? undefined : 0, wide: true, axisFmt: m.axisFmt });
+}
+
+function renderEvoRankings(){
+  const stations = HISTORIAL.stations.filter(s => s.deltaRatio !== undefined);
+
+  const improved = [...stations].sort((a,b) => a.deltaRatio - b.deltaRatio).slice(0, 5);
+  const worsened = [...stations].sort((a,b) => b.deltaRatio - a.deltaRatio).slice(0, 5);
+  const sustained = [...stations].filter(s => s.avgRatio !== undefined).sort((a,b) => b.avgRatio - a.avgRatio).slice(0, 5);
+
+  function rankHtml(list, key, fmt, colorFn) {
+    return list.map((s, i) => `
+      <div class="rank-item">
+        <div class="rank-medal" style="background:${colorFn(s)}">${i+1}</div>
+        <div class="rank-info"><div class="n">${titleCase(s.name)}</div><div style="font-size:9.5px;color:var(--text-muted);">${s.firstMonth} → ${s.lastMonth}</div></div>
+        <div class="rank-val">${fmt(s[key])}</div>
+      </div>`).join("");
+  }
+
+  document.getElementById("evo-rank-improved").innerHTML = rankHtml(improved, "deltaRatio", v => fmtRatio(v), () => "#3C9A5F") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos.</div>`;
+  document.getElementById("evo-rank-worsened").innerHTML = rankHtml(worsened, "deltaRatio", v => "+"+fmtRatio(v), () => "#C0392B") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos.</div>`;
+  document.getElementById("evo-rank-sustained").innerHTML = rankHtml(sustained, "avgRatio", v => fmtRatio(v), () => "#C7821A") || `<div style="color:var(--text-muted);font-size:11px;">Sin datos.</div>`;
+}
+
+
+/* ---- estaciones donde actuar ---- */
+const AUD_ULT = {HUDSON:["12/09",71],BOULEVARD:["21/07",97],GORRITTI:["07/07",92],LELOIR:["06/07",81],LURO:["18/09",88],TESEI:["04/06",92],PUERTOS:["10/06",91],"SAN JUSTO":["11/06",96],"CAMAÑO":["09/09",92],MORENO:["08/09",93],LIBERTADOR:["08/09",93],"PILAR DEL ESTE":["11/09",92],JARA:["16/09",92],CATAMARCA:["16/09",85],CONSTITUCION:["17/09",83],GAUCHO:["18/09",91],"SAN VICENTE":["22/09",69],"GNECCO 1":["23/09",65],"GNECCO 2":["23/09",83]};
+const ACT_SEP = {
+  cap:{"PILAR DEL ESTE":"28/08",JAUREGUI:"07/09",PERALTA:"17/09",CATAMARCA:"17/09",LURO:"18/09",JARA:"18/09",CONSTITUCION:"19/09"},
+  repaso:["BARCALA","GBELL","GNECCO 2","MORENO","GORRITTI","GUEMES","LELOIR"],
+  recorrida:["JAUREGUI","BESCHETD","GORRITTI","LUJANERA"]
+};
+const AUD_SEP_FECHAS = ["08/09","09/09","11/09","12/09","16/09","17/09","18/09","22/09","23/09"];
+function actPeriodNote(name){
+  if(dataLabel !== "Septiembre 2026") return "";
+  const parts=[];
+  if(ACT_SEP.cap[name]) parts.push("Capacitada el "+ACT_SEP.cap[name]);
+  if(ACT_SEP.repaso.indexOf(name)>-1) parts.push("Repaso con referente el 25/09");
+  const a=AUD_ULT[name];
+  if(a && AUD_SEP_FECHAS.indexOf(a[0])>-1) parts.push("Auditada el "+a[0]+" ("+a[1]+" pts)");
+  if(ACT_SEP.recorrida.indexOf(name)>-1) parts.push("Recorrida el 13/09");
+  return parts.length ? parts.join(" · ") : "Sin actividad entre el 25/08 y el 25/09";
+}
+function renderActionStations(){
+  const items=[];
+  APP.data.forEach(d=>{
+    if(d.ratio===null) return;
+    const prev=(d.prevDesp!==null&&d.prevBolsas)?Math.round(d.prevDesp/d.prevBolsas*100)/100:null;
+    let pts=0; const why=[]; const todo=[];
+    const aud=AUD_ULT[d.name];
+    if(d.vale>0){ pts+=3; why.push("Faltante real: "+fmtMoney(d.vale)); todo.push(d.ratio<1 ? "Desperdicio bajo con faltante: verificar que se esté registrando el desperdicio y controlar los vales." : "Revisar el faltante con la encargada y controlar el registro de vales."); }
+    if(d.ratio>=4){ pts+=3; why.push("Desperdicio muy alto: ratio "+fmtRatio(d.ratio)); }
+    else if(d.ratio>=2.5){ pts+=2; why.push("Desperdicio alto: ratio "+fmtRatio(d.ratio)); }
+    if(prev!==null && d.ratio-prev>=0.5 && d.ratio>=1.5){ pts+=2; why.push("Empeoró: ratio "+fmtRatio(prev)+" a "+fmtRatio(d.ratio)); }
+    if(d.ratio>=2.5 || (prev!==null && d.ratio-prev>=0.5 && d.ratio>=1.5)) todo.push("Controlar dosificación, almacenamiento y calibración, y reforzar la capacitación.");
+    if(aud && aud[1]<70){ pts+=2; why.push("Auditoría baja: "+aud[1]+" pts"); todo.push("Repetir la auditoría y reforzar los puntos críticos."); }
+    if(d.consumo!==null && (d.consumo<85||d.consumo>115)){ pts+=1; why.push("Consumo por kilo fuera de rango: "+String(d.consumo).replace(".",",")); todo.push("Verificar el consumo por kilo (rango habitual 85 a 115)."); }
+    if(pts>=2) items.push({d,pts,why,todo:todo.filter((t,i)=>todo.indexOf(t)===i),prev});
+  });
+  items.sort((a,b)=>b.pts-a.pts || b.d.ratio-a.d.ratio);
+  const lvl=p=>p>=5?"alta":p>=3?"media":"seg";
+  const lbl={alta:"Prioridad alta",media:"Prioridad media",seg:"Seguimiento"};
+  const cnt={alta:0,media:0,seg:0}; items.forEach(i=>cnt[lvl(i.pts)]++);
+  document.getElementById("act-sub").textContent = items.length+" de "+APP.data.length+" estaciones con acción pendiente en "+dataLabel+": "+cnt.alta+" de prioridad alta, "+cnt.media+" media y "+cnt.seg+" de seguimiento. Criterios: faltante real, desperdicio alto, empeoramiento contra el mes anterior, auditoría baja y consumo fuera de rango.";
+  const body=document.getElementById("act-body");
+  if(!items.length){ body.innerHTML='<div class="panel" style="color:var(--text-muted)">Ninguna estación cumple los criterios de acción este mes.</div>'; return; }
+  body.innerHTML = ["alta","media","seg"].filter(k=>cnt[k]).map(k=>{
+    return '<div class="act-group"><div class="act-gl act-'+k+'">'+lbl[k]+' <span>'+cnt[k]+'</span></div><div class="act-grid">'+
+    items.filter(i=>lvl(i.pts)===k).map(i=>{
+      const d=i.d, note=actPeriodNote(d.name), a=AUD_ULT[d.name];
+      return '<div class="act-card act-'+k+'"><div class="act-h"><b>'+titleCase(d.name)+'</b><span>'+d.comp+'</span></div>'+
+      '<ul class="act-why">'+i.why.map(w=>'<li>'+w+'</li>').join("")+'</ul>'+
+      '<div class="act-m"><div><small>Ratio</small><b>'+fmtRatio(d.ratio)+'</b></div><div><small>Desperdicio</small><b>'+d.desp+'</b></div><div><small>Bolsas</small><b>'+d.bolsas+'</b></div><div><small>Auditoría</small><b>'+(a?a[1]+' pts':'—')+'</b></div></div>'+
+      (note?'<div class="act-note">'+note+'</div>':'')+
+      '<div class="act-todo"><small>Acción sugerida</small>'+i.todo.join(" ")+'</div></div>';
+    }).join("")+'</div></div>';
+  }).join("");
+}
+
+function renderAll(){
+  renderHero();
+  renderActionStations();
+  renderFilters();
+  renderKPIs();
+  renderScatter();
+  renderClusterCards();
+  renderDonutCluster();
+  renderDonutCompany();
+  renderGaugeFalta();
+  renderBarVale();
+  renderBarSeguro();
+  renderEvoVerdict();
+  renderEvoTabs();
+  renderEvoChart();
+  renderEvoRankings();
+  renderTrendAll("trend-desp", "desp", "prevDesp", "down");
+  renderTrendAll("trend-bolsas", "bolsas", "prevBolsas", "up");
+  renderConsumo();
+  renderRankings();
+  renderHeatmap();
+  renderTable();
+}
+
+/* ============================================================
+   CSV IMPORT
+   ============================================================ */
+const REQUIRED_COLS = ["estacion", "razonsocial", "bolsas", "desperdicio", "vale"];
+const OPTIONAL_COLS = ["seguro", "consumo", "bolsasmesanterior", "desperdiciomesanterior"];
+
+function normalizeHeader(h){
+  return h.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+}
+function detectDelimiter(line){
+  const commas = (line.match(/,/g) || []).length;
+  const semis = (line.match(/;/g) || []).length;
+  return semis > commas ? ";" : ",";
+}
+function parseCSVLine(line, delim){
+  const out = []; let cur = ""; let inQuotes = false;
+  for(let i=0; i<line.length; i++){
+    const c = line[i];
+    if(c === '"'){ inQuotes = !inQuotes; continue; }
+    if(c === delim && !inQuotes){ out.push(cur); cur = ""; continue; }
+    cur += c;
+  }
+  out.push(cur);
+  return out.map(s => s.trim());
+}
+function parseNumber(raw){
+  if(raw === undefined || raw === null) return null;
+  let s = String(raw).trim().replace(/\$/g, "").replace(/%/g, "").replace(/\s/g, "");
+  if(s === "" || s === "-" || s === "—") return null;
+  const hasComma = s.includes(","), hasDot = s.includes(".");
+  if(hasComma && hasDot){
+    if(s.lastIndexOf(",") > s.lastIndexOf(".")) s = s.replace(/\./g, "").replace(",", ".");
+    else s = s.replace(/,/g, "");
+  } else if(hasComma){ s = s.replace(",", "."); }
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
+  if(lines.length < 2) throw new Error("El archivo no tiene filas suficientes (necesita encabezado + al menos una estación).");
+  const delim = detectDelimiter(lines[0]);
+  const headerRaw = parseCSVLine(lines[0], delim);
+  const header = headerRaw.map(normalizeHeader);
+
+  const colIndex = {};
+  [...REQUIRED_COLS, ...OPTIONAL_COLS].forEach(col => {
+    let idx = header.indexOf(col);
+    if(idx === -1){
+      const aliases = {
+        estacion: ["estacion","sucursal","nombre"], razonsocial: ["razonsocial","razon","empresa","compania"],
+        bolsas: ["bolsas","bolsasdecafe","totalbolsas"], desperdicio: ["desperdicio","desp"],
+        vale: ["vale","importe","saldo"], seguro: ["seguro","seguroxventa","segurosventa"],
+        consumo: ["consumo","consumoxkilo","consumoporkilo"],
+        bolsasmesanterior: ["bolsasmesanterior","bolsasanterior","bolsasprev"],
+        desperdiciomesanterior: ["desperdiciomesanterior","desperdicioanterior","despprev"],
+      }[col] || [col];
+      idx = header.findIndex(h => aliases.includes(h));
+    }
+    colIndex[col] = idx;
+  });
+  const missing = REQUIRED_COLS.filter(c => colIndex[c] === -1);
+  if(missing.length > 0) throw new Error(`Faltan columnas en el CSV: ${missing.join(", ")}. Descargá la plantilla para ver el formato exacto.`);
+
+  const rows = [];
+  for(let i=1; i<lines.length; i++){
+    const cells = parseCSVLine(lines[i], delim);
+    const name = (cells[colIndex.estacion] || "").trim();
+    if(!name) continue;
+    const comp = (cells[colIndex.razonsocial] || "").trim() || "Sin razón social";
+    const bolsas = parseNumber(cells[colIndex.bolsas]);
+    const desp = parseNumber(cells[colIndex.desperdicio]);
+    const vale = parseNumber(cells[colIndex.vale]);
+    if(bolsas === null || vale === null) throw new Error(`La fila de "${name}" tiene Bolsas o Vale vacío/inválido. Revisá esa línea en el archivo.`);
+    rows.push({
+      name: name.toUpperCase(), comp, bolsas, desp, vale,
+      seguro: colIndex.seguro>-1 ? parseNumber(cells[colIndex.seguro]) : null,
+      consumo: colIndex.consumo>-1 ? parseNumber(cells[colIndex.consumo]) : null,
+      prevBolsas: colIndex.bolsasmesanterior>-1 ? parseNumber(cells[colIndex.bolsasmesanterior]) : null,
+      prevDesp: colIndex.desperdiciomesanterior>-1 ? parseNumber(cells[colIndex.desperdiciomesanterior]) : null,
+    });
+  }
+  if(rows.length === 0) throw new Error("No se encontró ninguna fila de estación válida en el archivo.");
+  return rows;
+}
+
+function showUploadError(msg){
+  const el = document.getElementById("upload-error");
+  if(!msg){ el.classList.remove("show"); el.textContent = ""; return; }
+  el.textContent = msg; el.classList.add("show");
+}
+function setDataStatus(label, count){
+  document.getElementById("data-status").innerHTML = `Mostrando datos de: <b>${label}</b> (${count} estaciones)`;
+  selectPeriodInDropdown(label);
+}
+function populatePeriodSelect(){
+  const sel = document.getElementById("period-select");
+  sel.innerHTML = Object.keys(MONTHLY_ROWS).map(m => `<option value="${m}">${m}</option>`).join("");
+}
+function selectPeriodInDropdown(label){
+  const sel = document.getElementById("period-select");
+  let opt = Array.from(sel.options).find(o => o.value === label);
+  if(!opt){
+    opt = document.createElement("option");
+    opt.value = label; opt.textContent = label;
+    sel.appendChild(opt);
+  }
+  sel.value = label;
+}
+function loadRowsIntoApp(rows, label){
+  APP = computeDataset(rows);
+  dataLabel = label;
+  state.cluster = "ALL"; state.comp = "ALL"; state.estado = "ALL"; state.search = "";
+  setDataStatus(label, rows.length);
+  showUploadError(null);
+  renderAll();
+}
+function readFileSmartEncodingCaf(file, onText, onError){
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const buf = e.target.result;
+    let text;
+    try{ text = new TextDecoder("utf-8", { fatal: true }).decode(buf); }
+    catch(err){ text = new TextDecoder("windows-1252").decode(buf); }
+    onText(text);
+  };
+  reader.onerror = onError;
+  reader.readAsArrayBuffer(file);
+}
+function handleFile(file){
+  if(!file) return;
+  if(!file.name.toLowerCase().endsWith(".csv")){
+    showUploadError("Por ahora el dashboard lee archivos .csv — exportá tu Excel como CSV (Archivo > Guardar como > CSV) y volvé a intentar.");
+    return;
+  }
+  readFileSmartEncodingCaf(file,
+    (text) => { try{ const rows = parseCSV(text); loadRowsIntoApp(rows, file.name.replace(/\.csv$/i, "")); } catch(err){ showUploadError(err.message); } },
+    () => showUploadError("No se pudo leer el archivo. Probá de nuevo.")
+  );
+}
+function downloadTemplate(){
+  const header = "Estacion;RazonSocial;Bolsas;Desperdicio;Vale;Seguro;Consumo;BolsasMesAnterior;DesperdicioMesAnterior";
+  const example = [
+    "RUTA3;ELI S.A;18;8;-91137;9.8;109.39;20;10",
+    "PILAR DEL ESTE;EMFACO S.A;47;61;681258;21.63;93.34;;",
+    "GORRITTI;ELI S.A;48;;-207536;24.04;100.17;47;59",
+  ];
+  const csv = [header, ...example].join("\r\n");
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "plantilla_panel_operativo.csv";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+const uploadPanel = document.getElementById("upload-panel");
+const fileInput = document.getElementById("file-input");
+document.getElementById("btn-upload").addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+document.getElementById("btn-template").addEventListener("click", downloadTemplate);
+document.getElementById("btn-reset").addEventListener("click", () => loadRowsIntoApp(DEFAULT_ROWS, "Septiembre 2026"));
+["dragenter", "dragover"].forEach(evt => uploadPanel.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); uploadPanel.classList.add("dragover"); }));
+["dragleave", "drop"].forEach(evt => uploadPanel.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); uploadPanel.classList.remove("dragover"); }));
+uploadPanel.addEventListener("drop", (e) => { const file = e.dataTransfer.files && e.dataTransfer.files[0]; handleFile(file); });
+
+populatePeriodSelect();
+document.getElementById("period-select").addEventListener("change", (e) => {
+  const label = e.target.value;
+  if(MONTHLY_ROWS[label]) loadRowsIntoApp(MONTHLY_ROWS[label], label);
+});
+
+setDataStatus("Septiembre 2026", DEFAULT_ROWS.length);
+renderAccordion();
+renderAll();
+
+})();
+
+/* ---- videos: primero la carpeta /media, si no está se usa el sitio de Elías ---- */
+(function(){
+  var REMOTE="https://elias-cafe-consultor.netlify.app/media/";
+  function load(v,urls,onok){
+    var i=0;
+    v.addEventListener("loadeddata",function(){ onok(); if(v.play) v.play().catch(function(){}); });
+    v.addEventListener("error",function(){ i++; if(i<urls.length) v.src=urls[i]; });
+    v.src=urls[0];
+  }
+  var hv=document.getElementById("hero-video"), hf=document.getElementById("media-hero");
+  load(hv,["media/latte.mp4",REMOTE+"latte.mp4"],function(){ hv.hidden=false; hf.hidden=false; });
+  document.querySelectorAll("#gallery video[data-src]").forEach(function(v){
+    load(v,[v.getAttribute("data-src"),v.getAttribute("data-alt")],function(){ v.hidden=false; v.closest("figure").hidden=false; v.closest("section").hidden=false; });
+  });
+})();
+</script>
+</body>
+</html>
