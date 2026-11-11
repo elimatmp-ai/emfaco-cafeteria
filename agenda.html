@@ -461,8 +461,9 @@ form.addEventListener("submit",async e=>{
   send.disabled=true;send.textContent="Enviando…";
   try{
     const body=new URLSearchParams(new FormData(form)).toString();
-    const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});
-    if(!r.ok)throw new Error(r.status);
+    const ext=/github\.io$/.test(location.hostname);
+    const r=await fetch(ext?"https://emfaco-cafeteria.netlify.app/":"/",{method:"POST",mode:ext?"no-cors":"cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});
+    if(!ext&&!r.ok)throw new Error(r.status);
     msg.className="msg ok";msg.textContent="¡Listo! Recibí tu pedido. Te confirmo el turno por WhatsApp.";
     form.reset();document.querySelectorAll(".slot").forEach(x=>x.setAttribute("aria-pressed","false"));
     document.getElementById("picked").textContent="";document.getElementById("turno").value="";showStation();
